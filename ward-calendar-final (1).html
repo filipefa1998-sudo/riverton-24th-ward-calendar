@@ -1,0 +1,4826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riverton 24th Tongan Ward Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .month-nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .month-nav button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .month-nav h2 {
+            color: #2d3748;
+            font-size: 1.5em;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #dd6b20;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .calendar-container {
+            padding: 30px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: #e2e8f0;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .day-header {
+            background: #2d3748;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .day-cell {
+            background: white;
+            min-height: 120px;
+            padding: 8px;
+            position: relative;
+        }
+
+        .day-cell.other-month {
+            background: #f7fafc;
+            opacity: 0.5;
+        }
+
+        .day-cell.today {
+            background: #fef5e7;
+            border: 2px solid #f59e0b;
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .event {
+            font-size: 0.75em;
+            padding: 4px 6px;
+            margin: 3px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        .event:hover {
+            transform: translateX(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Event Category Colors */
+        .event.temple { background: #9f7aea; color: white; }
+        .event.service { background: #48bb78; color: white; }
+        .event.activity { background: #f6ad55; color: white; }
+        .event.young-men { background: #4299e1; color: white; }
+        .event.young-women { background: #ec4899; color: white; }
+        .event.combined-youth { background: #8b5cf6; color: white; }
+        .event.primary { background: #f59e0b; color: white; }
+        .event.relief-society { background: #ed64a6; color: white; }
+        .event.elders-quorum { background: #059669; color: white; }
+        .event.emergency { background: #f56565; color: white; }
+        .event.baptism { background: #06b6d4; color: white; }
+        .event.sunday { background: #805ad5; color: white; }
+        .event.stake { background: #d97706; color: white; }
+        .event.admin { background: #718096; color: white; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #a0aec0;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #2d3748;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .event-details {
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .event-details h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .event-details p {
+            margin: 10px 0;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .event-details strong {
+            color: #2d3748;
+        }
+
+        /* Template Styles */
+        .template-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .template-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .template-item:hover {
+            background: #edf2f7;
+            transform: translateX(3px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .template-item h4 {
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .template-item p {
+            color: #718096;
+            font-size: 0.9em;
+            margin: 3px 0;
+        }
+
+        .template-item .category-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            color: white;
+            margin-top: 8px;
+        }
+
+        .template-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .template-actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .btn-use-template {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-use-template:hover {
+            background: #38a169;
+        }
+
+        .btn-edit-template {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-edit-template:hover {
+            background: #3182ce;
+        }
+
+        .btn-delete-template {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-delete-template:hover {
+            background: #e53e3e;
+        }
+
+        .template-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #9f7aea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-container label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #718096;
+        }
+
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        /* Recurring Events Styles */
+        .recurring-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .recurring-section.active {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .recurring-pattern {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .weekday-selector {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .weekday-btn {
+            padding: 10px 5px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .weekday-btn:hover {
+            border-color: #667eea;
+        }
+
+        .weekday-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .recurring-badge {
+            display: inline-block;
+            background: #9f7aea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin-left: 5px;
+            font-weight: 600;
+        }
+
+        .recurrence-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .recurrence-preview h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .recurrence-preview ul {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .recurrence-preview li {
+            padding: 5px 0;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        .info-banner {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .info-banner p {
+            color: #234e52;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Assignment Styles */
+        .assignment-list {
+            margin-top: 15px;
+        }
+
+        .assignment-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            position: relative;
+        }
+
+        .assignment-item h4 {
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .assignment-item p {
+            color: #718096;
+            font-size: 0.9em;
+            margin: 3px 0;
+        }
+
+        .assignment-role {
+            display: inline-block;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .remove-assignment-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .remove-assignment-btn:hover {
+            background: #e53e3e;
+        }
+
+        .task-list {
+            margin-top: 15px;
+        }
+
+        .task-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            border-color: #667eea;
+        }
+
+        .task-item.completed {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .task-text {
+            flex: 1;
+            color: #2d3748;
+            font-size: 0.95em;
+        }
+
+        .task-assigned {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .remove-task-btn {
+            background: none;
+            border: none;
+            color: #f56565;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 0 5px;
+            transition: all 0.2s;
+        }
+
+        .remove-task-btn:hover {
+            color: #e53e3e;
+            transform: scale(1.2);
+        }
+
+        .add-assignment-form,
+        .add-task-form {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .assignment-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .my-assignments-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .my-assignments-banner h3 {
+            margin-bottom: 5px;
+        }
+
+        /* Filtering & Views Styles */
+        .filter-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
+        .filter-section h3 {
+            color: #2d3748;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .filter-chip.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .filter-chip .count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.85em;
+        }
+
+        .filter-chip.active .count {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .view-switcher {
+            display: flex;
+            gap: 8px;
+            background: #f7fafc;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #718096;
+            transition: all 0.2s;
+        }
+
+        .view-btn:hover {
+            color: #2d3748;
+        }
+
+        .view-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-toggle-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .filter-toggle-btn:hover {
+            background: #3182ce;
+        }
+
+        /* Week View */
+        .week-view {
+            display: none;
+        }
+
+        .week-view.active {
+            display: block;
+        }
+
+        .week-header {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 2px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+
+        .week-time-label {
+            background: #2d3748;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .week-day-header {
+            background: #2d3748;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 2px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .week-time-slot {
+            background: #f7fafc;
+            padding: 8px;
+            text-align: right;
+            font-size: 0.8em;
+            color: #718096;
+            border-right: 2px solid #e2e8f0;
+        }
+
+        .week-day-slot {
+            background: white;
+            min-height: 60px;
+            padding: 4px;
+            position: relative;
+        }
+
+        .week-event {
+            background: #667eea;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-bottom: 2px;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Agenda View */
+        .agenda-view {
+            display: none;
+        }
+
+        .agenda-view.active {
+            display: block;
+        }
+
+        .agenda-date-group {
+            margin-bottom: 25px;
+        }
+
+        .agenda-date-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .agenda-event-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .agenda-event-card:hover {
+            transform: translateX(3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .agenda-event-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .agenda-event-details {
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        /* List View */
+        .list-view {
+            display: none;
+        }
+
+        .list-view.active {
+            display: block;
+        }
+
+        .list-event-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .list-event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .list-event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .list-event-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .list-event-category {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .list-event-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        .active-filters-bar {
+            background: #edf2f7;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .active-filters-bar.visible {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .active-filter-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .active-filter-tag .remove {
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .clear-filters-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        /* Photo Gallery Styles */
+        .photo-gallery-section {
+            margin-top: 20px;
+        }
+
+        .photo-upload-area {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .photo-upload-area:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .photo-upload-area.dragover {
+            border-color: #667eea;
+            background: #e6f2ff;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            color: #cbd5e0;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            color: #4a5568;
+            font-size: 1em;
+        }
+
+        .upload-subtext {
+            color: #a0aec0;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-item .remove-photo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #f56565;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-item:hover .remove-photo {
+            opacity: 1;
+        }
+
+        .photo-item .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 8px;
+            font-size: 0.85em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-item:hover .photo-caption {
+            opacity: 1;
+        }
+
+        /* Photo Lightbox */
+        .photo-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .lightbox-prev {
+            left: -70px;
+        }
+
+        .lightbox-next {
+            right: -70px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f56565;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: #e53e3e;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .lightbox-counter {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .photo-count-badge {
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .empty-gallery {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0aec0;
+        }
+
+        .empty-gallery-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .photo-badge-indicator {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #667eea;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            padding: 8px 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .language-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .language-flag {
+            font-size: 1.3em;
+        }
+
+        .language-text {
+            color: #2d3748;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .month-nav {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .month-nav h2 {
+                order: -1;
+            }
+
+            .action-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .calendar {
+                gap: 1px;
+            }
+
+            .day-header {
+                padding: 10px 5px;
+                font-size: 0.8em;
+            }
+
+            .day-cell {
+                min-height: 100px;
+                padding: 5px;
+            }
+
+            .event {
+                font-size: 0.7em;
+                padding: 3px 4px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .controls,
+            .legend {
+                display: none;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .event {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle" id="languageToggle">
+        <span class="language-flag" id="languageFlag">🇹🇴</span>
+        <span class="language-text" id="languageText">Lea Tonga</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="headerWardName">🏛️ Riverton 24th Tongan Ward Calendar</h1>
+            <p>Strengthening Faith, Family, and Community</p>
+        </div>
+
+        <div class="controls">
+            <div class="month-nav">
+                <button id="prevMonth">← Previous</button>
+                <h2 id="currentMonth">Loading...</h2>
+                <button id="nextMonth">Next →</button>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
+                <button class="btn btn-info" id="templatesBtn">📋 Templates</button>
+                <button class="filter-toggle-btn" id="filterToggleBtn">
+                    <span>🔍</span>
+                    <span>Filters & Views</span>
+                </button>
+                <button class="btn btn-primary" id="wardInfoBtn">ℹ️ Ward Info</button>
+                <button class="btn btn-secondary" id="exportBtn">📥 Export Data</button>
+                <button class="btn btn-secondary" id="importBtn">📤 Import JSON</button>
+                <button class="btn btn-secondary" id="importICalBtn">📅 Import iCal</button>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filterBar" style="display: none;">
+            <div class="filter-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>🔍 Filter & Search</h3>
+                    <button class="clear-filters-btn" id="clearFiltersBtn" style="display: none;">Clear All Filters</button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search events by title, location, or description...">
+                </div>
+
+                <div class="active-filters-bar" id="activeFiltersBar"></div>
+            </div>
+
+            <div class="filter-section">
+                <h3>📂 Filter by Category</h3>
+                <div class="filter-chips" id="categoryFilters">
+                    <!-- Category filters will be populated here -->
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>👁️ Calendar View</h3>
+                    <div class="view-switcher">
+                        <button class="view-btn active" data-view="month">📅 Month</button>
+                        <button class="view-btn" data-view="week">📊 Week</button>
+                        <button class="view-btn" data-view="agenda">📋 Agenda</button>
+                        <button class="view-btn" data-view="list">📝 List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9f7aea;"></div>
+                    <span>Temple & Family History</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #48bb78;"></div>
+                    <span>Service Projects</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f6ad55;"></div>
+                    <span>Ward Activity</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4299e1;"></div>
+                    <span>Young Men</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ec4899;"></div>
+                    <span>Young Women</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #8b5cf6;"></div>
+                    <span>Combined Youth</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f59e0b;"></div>
+                    <span>Primary</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ed64a6;"></div>
+                    <span>Relief Society</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #059669;"></div>
+                    <span>Elders Quorum</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f56565;"></div>
+                    <span>Emergency Prep</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #06b6d4;"></div>
+                    <span>Baptism</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #805ad5;"></div>
+                    <span>Sunday Services</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #d97706;"></div>
+                    <span>Stake Event</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #718096;"></div>
+                    <span>Administrative</span>
+                </div>
+            </div>
+
+            <!-- Month View -->
+            <div class="month-view active" id="monthView">
+                <div class="calendar" id="calendar"></div>
+            </div>
+
+            <!-- Week View -->
+            <div class="week-view" id="weekView">
+                <div id="weekViewContent"></div>
+            </div>
+
+            <!-- Agenda View -->
+            <div class="agenda-view" id="agendaView">
+                <div id="agendaViewContent"></div>
+            </div>
+
+            <!-- List View -->
+            <div class="list-view" id="listView">
+                <div id="listViewContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Event</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="tab-container">
+                <button class="tab active" data-tab="detailsTab">📝 Details</button>
+                <button class="tab" data-tab="assignmentsTab">👥 Assignments</button>
+                <button class="tab" data-tab="photosTab">📸 Photos</button>
+            </div>
+
+            <form id="eventForm">
+                <!-- Details Tab -->
+                <div class="tab-content active" id="detailsTab">
+                <div class="form-group">
+                    <label for="useTemplate">Use Template (Optional)</label>
+                    <select id="useTemplate">
+                        <option value="">-- Start from scratch --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventTitle">Event Title *</label>
+                    <input type="text" id="eventTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventCategory">Category *</label>
+                    <select id="eventCategory" required>
+                        <option value="">Select a category...</option>
+                        <option value="temple">Temple & Family History</option>
+                        <option value="service">Service Projects</option>
+                        <option value="activity">Ward Activity</option>
+                        <option value="young-men">Young Men Activity</option>
+                        <option value="young-women">Young Women Activity</option>
+                        <option value="combined-youth">Combined Youth Activity</option>
+                        <option value="primary">Primary Activity</option>
+                        <option value="relief-society">Relief Society</option>
+                        <option value="elders-quorum">Elders Quorum</option>
+                        <option value="emergency">Emergency Preparedness</option>
+                        <option value="baptism">Baptism</option>
+                        <option value="sunday">Sunday Services</option>
+                        <option value="stake">Stake Event</option>
+                        <option value="admin">Administrative</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventStartDate">Start Date *</label>
+                    <input type="date" id="eventStartDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventEndDate">End Date (optional - for multi-day events)</label>
+                    <input type="date" id="eventEndDate">
+                </div>
+                <div class="form-group">
+                    <label for="eventStartTime">Start Time</label>
+                    <input type="time" id="eventStartTime">
+                </div>
+                <div class="form-group">
+                    <label for="eventEndTime">End Time</label>
+                    <input type="time" id="eventEndTime">
+                </div>
+                <div class="form-group">
+                    <label for="eventLocation">Location</label>
+                    <input type="text" id="eventLocation" placeholder="e.g., Church Building, Temple, Community Center">
+                </div>
+                <div class="form-group">
+                    <label for="eventDescription">Description</label>
+                    <textarea id="eventDescription" placeholder="Additional details about the event..."></textarea>
+                </div>
+
+                <!-- Recurring Events Section -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="isRecurring">
+                    <label for="isRecurring">🔄 Make this a recurring event</label>
+                </div>
+
+                <div class="recurring-section" id="recurringSection" style="display: none;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.2em;">Recurrence Pattern</h3>
+                    
+                    <div class="form-group">
+                        <label for="recurringFrequency">Repeat *</label>
+                        <select id="recurringFrequency">
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+
+                    <!-- Weekly Options -->
+                    <div id="weeklyOptions" style="display: none;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2d3748;">Repeat on:</label>
+                        <div class="weekday-selector">
+                            <button type="button" class="weekday-btn" data-day="0">Sun</button>
+                            <button type="button" class="weekday-btn" data-day="1">Mon</button>
+                            <button type="button" class="weekday-btn" data-day="2">Tue</button>
+                            <button type="button" class="weekday-btn" data-day="3">Wed</button>
+                            <button type="button" class="weekday-btn" data-day="4">Thu</button>
+                            <button type="button" class="weekday-btn" data-day="5">Fri</button>
+                            <button type="button" class="weekday-btn" data-day="6">Sat</button>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Options -->
+                    <div id="monthlyOptions" style="display: none;">
+                        <div class="form-group">
+                            <label for="monthlyPattern">Monthly Pattern *</label>
+                            <select id="monthlyPattern">
+                                <option value="date">On day of month (e.g., 15th)</option>
+                                <option value="weekday">On day of week (e.g., 2nd Sunday)</option>
+                            </select>
+                        </div>
+
+                        <div id="monthlyWeekdayOptions" style="display: none;">
+                            <div class="recurring-pattern">
+                                <div class="form-group">
+                                    <label for="monthlyPosition">Position</label>
+                                    <select id="monthlyPosition">
+                                        <option value="1">First</option>
+                                        <option value="2">Second</option>
+                                        <option value="3">Third</option>
+                                        <option value="4">Fourth</option>
+                                        <option value="-1">Last</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="monthlyWeekday">Day</label>
+                                    <select id="monthlyWeekday">
+                                        <option value="0">Sunday</option>
+                                        <option value="1">Monday</option>
+                                        <option value="2">Tuesday</option>
+                                        <option value="3">Wednesday</option>
+                                        <option value="4">Thursday</option>
+                                        <option value="5">Friday</option>
+                                        <option value="6">Saturday</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Repeat Interval -->
+                    <div class="recurring-pattern">
+                        <div class="form-group">
+                            <label for="recurringInterval">Every</label>
+                            <input type="number" id="recurringInterval" value="1" min="1" max="52">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <p id="intervalLabel" style="padding: 12px; color: #4a5568;">week(s)</p>
+                        </div>
+                    </div>
+
+                    <!-- End Condition -->
+                    <div class="form-group">
+                        <label for="recurringEndType">Ends *</label>
+                        <select id="recurringEndType">
+                            <option value="never">Never</option>
+                            <option value="date">On a specific date</option>
+                            <option value="count">After number of occurrences</option>
+                        </select>
+                    </div>
+
+                    <div id="recurringEndDateGroup" class="form-group" style="display: none;">
+                        <label for="recurringEndDate">End Date</label>
+                        <input type="date" id="recurringEndDate">
+                    </div>
+
+                    <div id="recurringEndCountGroup" class="form-group" style="display: none;">
+                        <label for="recurringEndCount">Number of Occurrences</label>
+                        <input type="number" id="recurringEndCount" value="52" min="1" max="520">
+                    </div>
+
+                    <div class="info-banner">
+                        <p>💡 Recurring events will automatically appear on your calendar. You can edit individual occurrences or all future events.</p>
+                    </div>
+
+                    <div class="recurrence-preview" id="recurrencePreview">
+                        <h4>Preview - Next Occurrences:</h4>
+                        <ul id="previewList"></ul>
+                    </div>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="saveAsTemplate">
+                    <label for="saveAsTemplate">💾 Save this event as a template for future use</label>
+                </div>
+                </div><!-- End Details Tab -->
+
+                <!-- Assignments Tab -->
+                <div class="tab-content" id="assignmentsTab">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">Event Assignments</h3>
+                    <p style="color: #718096; margin-bottom: 20px;">Assign people and track responsibilities for this event.</p>
+
+                    <!-- Assignments List -->
+                    <div id="assignmentsList" class="assignment-list">
+                        <!-- Assignments will be added here -->
+                    </div>
+
+                    <!-- Add Assignment Form -->
+                    <div class="add-assignment-form">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">➕ Add Assignment</h4>
+                        <div class="form-group">
+                            <label for="assignmentName">Name *</label>
+                            <input type="text" id="assignmentName" placeholder="e.g., John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="assignmentRole">Role *</label>
+                            <input type="text" id="assignmentRole" placeholder="e.g., Setup Coordinator, Speaker">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="assignmentPhone">Phone</label>
+                                <input type="tel" id="assignmentPhone" placeholder="801-555-1234">
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentEmail">Email</label>
+                                <input type="email" id="assignmentEmail" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="addAssignmentBtn">➕ Add Assignment</button>
+                    </div>
+
+                    <!-- Tasks Section -->
+                    <h3 style="color: #2d3748; margin: 30px 0 15px;">Task Checklist</h3>
+                    <p style="color: #718096; margin-bottom: 20px;">Track preparation tasks and mark them as complete.</p>
+
+                    <!-- Tasks List -->
+                    <div id="tasksList" class="task-list">
+                        <!-- Tasks will be added here -->
+                    </div>
+
+                    <!-- Add Task Form -->
+                    <div class="add-task-form">
+                        <h4 style="color: #2d3748; margin-bottom: 10px;">➕ Add Task</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taskDescription">Task Description *</label>
+                                <input type="text" id="taskDescription" placeholder="e.g., Reserve cultural hall">
+                            </div>
+                            <div class="form-group">
+                                <label for="taskAssignedTo">Assigned To</label>
+                                <select id="taskAssignedTo">
+                                    <option value="">-- Select or type below --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="addTaskBtn">➕ Add Task</button>
+                    </div>
+                </div><!-- End Assignments Tab -->
+
+                <!-- Photos Tab -->
+                <div class="tab-content" id="photosTab">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">📸 Event Photos</h3>
+                    <p style="color: #718096; margin-bottom: 20px;">Upload and share photos from this event. Create a visual archive of ward activities!</p>
+
+                    <!-- Photo Upload Area -->
+                    <div class="photo-upload-area" id="photoUploadArea">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Click to upload photos or drag and drop</div>
+                        <div class="upload-subtext">Supports JPG, PNG, GIF (Max 5MB per photo)</div>
+                        <input type="file" id="photoInput" accept="image/*" multiple style="display: none;">
+                    </div>
+
+                    <!-- Photo Gallery -->
+                    <div id="photoGallery" class="photo-gallery-section">
+                        <h4 style="color: #2d3748; margin-bottom: 15px;">
+                            Gallery
+                            <span class="photo-count-badge" id="photoCount">0 photos</span>
+                        </h4>
+                        <div id="photoGrid" class="photo-grid">
+                            <!-- Photos will be displayed here -->
+                        </div>
+                        <div id="emptyGallery" class="empty-gallery">
+                            <div class="empty-gallery-icon">🖼️</div>
+                            <p>No photos yet. Upload photos to document this event!</p>
+                        </div>
+                    </div>
+
+                    <div class="info-banner" style="margin-top: 20px;">
+                        <p>💡 <strong>Tip:</strong> Photos are stored locally in your browser. Export your calendar data regularly to back up photos!</p>
+                    </div>
+                </div><!-- End Photos Tab -->
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">💾 Save Event</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Event Modal -->
+    <div class="modal" id="viewEventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Event Details</h2>
+                <button class="close-btn" id="closeViewModal">&times;</button>
+            </div>
+            <div class="event-details" id="eventDetailsContent"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="editEventBtn">✏️ Edit</button>
+                <button class="btn btn-danger" id="deleteEventBtn">🗑️ Delete</button>
+                <button class="btn btn-secondary" id="closeViewBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ward Info Modal -->
+    <div class="modal" id="wardInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ward Information</h2>
+                <button class="close-btn" id="closeWardInfoModal">&times;</button>
+            </div>
+            <div class="event-details">
+                <h3>🏛️ Riverton 24th Tongan Ward</h3>
+                
+                <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">Sunday Service Times</h4>
+                    <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
+                        Sacrament Meeting: 9:00 AM - 10:00 AM
+                    </div>
+                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                        Sunday School: 10:10 AM - 11:00 AM
+                    </div>
+                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                        Priesthood/Relief Society: 11:10 AM - 12:00 PM
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">📍 Location</h4>
+                    <p style="margin: 5px 0;">12288 South 1840 West</p>
+                    <p style="margin: 5px 0;">Riverton, Utah 84065</p>
+                    <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=12288+South+1840+West+Riverton+Utah+84065', '_blank')" style="margin-top: 10px;">
+                        📍 Open in Maps
+                    </button>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📱 Share Ward Info</h4>
+                    <p style="margin-bottom: 15px; color: #4a5568;">Scan QR Code to share service times and location</p>
+                    <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
+                    <button class="btn btn-secondary" id="downloadQRBtn" style="margin-top: 10px;">
+                        💾 Download QR Code
+                    </button>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">📞 Contact Information</h4>
+                    <p style="margin: 5px 0;"><strong>Bishop:</strong> [Bishop Name]</p>
+                    <p style="margin: 5px 0;"><strong>Ward Clerk:</strong> [Clerk Name]</p>
+                    <p style="margin: 5px 0;"><strong>Phone:</strong> [Ward Phone]</p>
+                </div>
+
+                <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <p style="margin: 0; font-style: italic; color: #4a5568;">
+                        "That we may be one, and when we pray unto thee in our hearts, we may be heard in the heavens." - D&C 42:3
+                    </p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="editWardInfoBtn">✏️ Edit Ward Info</button>
+                <button class="btn btn-secondary" id="closeWardInfoBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Ward Info Modal -->
+    <div class="modal" id="editWardInfoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Ward Information</h2>
+                <button class="close-btn" id="closeEditWardInfoModal">&times;</button>
+            </div>
+            <form id="wardInfoForm">
+                <div class="form-group">
+                    <label for="wardName">Ward Name</label>
+                    <input type="text" id="wardName" value="Riverton 24th Tongan Ward">
+                </div>
+                <div class="form-group">
+                    <label for="sacramentTime">Sacrament Meeting Time</label>
+                    <input type="text" id="sacramentTime" value="9:00 AM - 10:00 AM">
+                </div>
+                <div class="form-group">
+                    <label for="sundaySchoolTime">Sunday School Time</label>
+                    <input type="text" id="sundaySchoolTime" value="10:10 AM - 11:00 AM">
+                </div>
+                <div class="form-group">
+                    <label for="priesthood Time">Priesthood/RS Time</label>
+                    <input type="text" id="priesthoodTime" value="11:10 AM - 12:00 PM">
+                </div>
+                <div class="form-group">
+                    <label for="wardAddress">Ward Address</label>
+                    <input type="text" id="wardAddress" value="12288 South 1840 West, Riverton, Utah 84065">
+                </div>
+                <div class="form-group">
+                    <label for="bishopName">Bishop Name</label>
+                    <input type="text" id="bishopName" placeholder="Enter bishop's name">
+                </div>
+                <div class="form-group">
+                    <label for="clerkName">Ward Clerk Name</label>
+                    <input type="text" id="clerkName" placeholder="Enter clerk's name">
+                </div>
+                <div class="form-group">
+                    <label for="wardPhone">Ward Phone</label>
+                    <input type="tel" id="wardPhone" placeholder="Enter ward phone">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">💾 Save Ward Info</button>
+                    <button type="button" class="btn btn-secondary" id="cancelWardInfoBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" accept=".json" style="display: none;">
+    <input type="file" id="importICalFile" accept=".ics,.ical" style="display: none;">
+
+    <!-- Templates Modal -->
+    <div class="modal" id="templatesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📋 Event Templates</h2>
+                <button class="close-btn" id="closeTemplatesModal">&times;</button>
+            </div>
+            <div class="event-details">
+                <p style="margin-bottom: 20px; color: #4a5568;">Save frequently used events as templates for quick creation. Perfect for recurring meetings, activities, and standard events.</p>
+                
+                <div id="templatesList" class="template-list">
+                    <!-- Templates will be populated here -->
+                </div>
+
+                <div id="emptyTemplatesState" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">📋</div>
+                    <p>No templates yet!</p>
+                    <p style="font-size: 0.9em; color: #718096;">Create an event and check "Save as template" to get started.</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeTemplatesBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Template Name Modal -->
+    <div class="modal" id="saveTemplateModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Save as Template</h2>
+                <button class="close-btn" id="closeSaveTemplateModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="templateName">Template Name *</label>
+                <input type="text" id="templateName" placeholder="e.g., Ward Council Meeting" required>
+                <p style="margin-top: 8px; font-size: 0.9em; color: #718096;">Give this template a descriptive name so you can easily find it later.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="confirmSaveTemplate">💾 Save Template</button>
+                <button class="btn btn-secondary" id="cancelSaveTemplate">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Lightbox -->
+    <div class="photo-lightbox" id="photoLightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="closeLightbox">×</button>
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+        </div>
+    </div>
+
+    <!-- Import Help Modal -->
+    <div class="modal" id="importHelpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📅 How to Import iCal Files</h2>
+                <button class="close-btn" id="closeImportHelpModal">&times;</button>
+            </div>
+            <div class="event-details">
+                <h3>Exporting from Google Calendar</h3>
+                <ol style="line-height: 1.8; color: #4a5568;">
+                    <li>Go to <a href="https://calendar.google.com" target="_blank" style="color: #667eea;">calendar.google.com</a></li>
+                    <li>Click the <strong>Settings gear</strong> (⚙️) → <strong>Settings</strong></li>
+                    <li>In the left sidebar, click your calendar name</li>
+                    <li>Scroll down to <strong>"Integrate calendar"</strong></li>
+                    <li>Click <strong>"Export"</strong> under the calendar name</li>
+                    <li>A .ics file will download</li>
+                    <li>Click <strong>📅 Import iCal</strong> button and select the file</li>
+                </ol>
+
+                <h3 style="margin-top: 25px;">Exporting from Outlook</h3>
+                <ol style="line-height: 1.8; color: #4a5568;">
+                    <li>Open Outlook Calendar</li>
+                    <li>Click <strong>File</strong> → <strong>Save Calendar</strong></li>
+                    <li>Choose date range</li>
+                    <li>Select <strong>"iCalendar Format (.ics)"</strong></li>
+                    <li>Click <strong>Save</strong></li>
+                    <li>Click <strong>📅 Import iCal</strong> button and select the file</li>
+                </ol>
+
+                <h3 style="margin-top: 25px;">Exporting from Apple Calendar</h3>
+                <ol style="line-height: 1.8; color: #4a5568;">
+                    <li>Open Calendar app on Mac</li>
+                    <li>Select the calendar in the sidebar</li>
+                    <li>Click <strong>File</strong> → <strong>Export</strong> → <strong>Export</strong></li>
+                    <li>Save the .ics file</li>
+                    <li>Click <strong>📅 Import iCal</strong> button and select the file</li>
+                </ol>
+
+                <div style="margin-top: 25px; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #48bb78;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">✨ Smart Import Features:</h4>
+                    <ul style="line-height: 1.8; color: #4a5568; margin-left: 20px;">
+                        <li>Automatically detects event categories based on keywords</li>
+                        <li>Preserves event titles, dates, times, locations, and descriptions</li>
+                        <li>Option to merge with existing events or replace all</li>
+                        <li>Supports all standard iCal formats (.ics, .ical)</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #fef5e7; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">💡 Tips:</h4>
+                    <ul style="line-height: 1.8; color: #4a5568; margin-left: 20px;">
+                        <li>Review imported events after upload - you can edit any details</li>
+                        <li>Categories are auto-assigned but can be changed</li>
+                        <li>Large files may take a moment to process</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="startImportBtn">📅 Import iCal Now</button>
+                <button class="btn btn-secondary" id="closeImportHelpBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        // State management
+        let currentDate = new Date();
+        let events = JSON.parse(localStorage.getItem('wardCalendarEvents')) || [];
+        let templates = JSON.parse(localStorage.getItem('wardCalendarTemplates')) || [];
+        let recurringRules = JSON.parse(localStorage.getItem('wardCalendarRecurringRules')) || [];
+        let currentEventId = null;
+        let pendingTemplateData = null;
+        let selectedWeekdays = new Set();
+        let currentAssignments = [];
+        let currentTasks = [];
+        let currentPhotos = [];
+        let currentLightboxIndex = 0;
+        let currentView = 'month';
+        let currentLanguage = localStorage.getItem('calendarLanguage') || 'en';
+        let activeFilters = {
+            categories: new Set(),
+            search: ''
+        };
+        let wardInfo = JSON.parse(localStorage.getItem('wardInfo')) || {
+            wardName: 'Riverton 24th Tongan Ward',
+            sacramentTime: '9:00 AM - 10:00 AM',
+            sundaySchoolTime: '10:10 AM - 11:00 AM',
+            priesthoodTime: '11:10 AM - 12:00 PM',
+            wardAddress: '12288 South 1840 West, Riverton, Utah 84065',
+            bishopName: '',
+            clerkName: '',
+            wardPhone: ''
+        };
+        let qrCodeInstance = null;
+
+        // Translation Dictionary
+        const translations = {
+            en: {
+                // Header
+                wardCalendar: 'Ward Calendar',
+                
+                // Navigation
+                previous: 'Previous',
+                next: 'Next',
+                today: 'Today',
+                
+                // Buttons
+                addEvent: '+ Add Event',
+                templates: '📋 Templates',
+                filtersViews: '🔍 Filters & Views',
+                wardInfo: 'ℹ️ Ward Info',
+                exportData: '📥 Export Data',
+                importJSON: '📤 Import JSON',
+                importICal: '📅 Import iCal',
+                save: '💾 Save Event',
+                cancel: 'Cancel',
+                close: 'Close',
+                edit: 'Edit',
+                delete: 'Delete',
+                remove: 'Remove',
+                
+                // Days
+                sunday: 'Sunday',
+                monday: 'Monday',
+                tuesday: 'Tuesday',
+                wednesday: 'Wednesday',
+                thursday: 'Thursday',
+                friday: 'Friday',
+                saturday: 'Saturday',
+                
+                // Months
+                january: 'January',
+                february: 'February',
+                march: 'March',
+                april: 'April',
+                may: 'May',
+                june: 'June',
+                july: 'July',
+                august: 'August',
+                september: 'September',
+                october: 'October',
+                november: 'November',
+                december: 'December',
+                
+                // Categories
+                temple: 'Temple & Family History',
+                service: 'Service Projects',
+                activity: 'Ward Activity',
+                youngMen: 'Young Men Activity',
+                youngWomen: 'Young Women Activity',
+                combinedYouth: 'Combined Youth Activity',
+                primary: 'Primary Activity',
+                reliefSociety: 'Relief Society',
+                eldersQuorum: 'Elders Quorum',
+                emergency: 'Emergency Preparedness',
+                baptism: 'Baptism',
+                sunday: 'Sunday Services',
+                stake: 'Stake Event',
+                admin: 'Administrative',
+                
+                // Form Labels
+                eventTitle: 'Event Title',
+                category: 'Category',
+                startDate: 'Start Date',
+                endDate: 'End Date (optional - for multi-day events)',
+                startTime: 'Start Time',
+                endTime: 'End Time',
+                location: 'Location',
+                description: 'Description',
+                required: '*',
+                
+                // Tabs
+                details: '📝 Details',
+                assignments: '👥 Assignments',
+                photos: '📸 Photos',
+                
+                // Recurring
+                makeRecurring: '🔄 Make this a recurring event',
+                recurrencePattern: 'Recurrence Pattern',
+                repeat: 'Repeat',
+                weekly: 'Weekly',
+                monthly: 'Monthly',
+                yearly: 'Yearly',
+                repeatOn: 'Repeat on:',
+                ends: 'Ends',
+                never: 'Never',
+                onDate: 'On a specific date',
+                afterOccurrences: 'After number of occurrences',
+                
+                // Assignments
+                eventAssignments: 'Event Assignments',
+                addAssignment: '➕ Add Assignment',
+                name: 'Name',
+                role: 'Role',
+                phone: 'Phone',
+                email: 'Email',
+                taskChecklist: 'Task Checklist',
+                addTask: '➕ Add Task',
+                taskDescription: 'Task Description',
+                assignedTo: 'Assigned To',
+                
+                // Photos
+                eventPhotos: 'Event Photos',
+                clickToUpload: 'Click to upload photos or drag and drop',
+                supportsFormats: 'Supports JPG, PNG, GIF (Max 5MB per photo)',
+                gallery: 'Gallery',
+                photos: 'photos',
+                noPhotosYet: 'No photos yet. Upload photos to document this event!',
+                
+                // Filtering
+                filterSearch: '🔍 Filter & Search',
+                searchPlaceholder: 'Search events by title, location, or description...',
+                filterByCategory: '📂 Filter by Category',
+                calendarView: '👁️ Calendar View',
+                monthView: '📅 Month',
+                weekView: '📊 Week',
+                agendaView: '📋 Agenda',
+                listView: '📝 List',
+                clearAllFilters: 'Clear All Filters',
+                activeFilters: 'Active Filters:',
+                
+                // Templates
+                eventTemplates: 'Event Templates',
+                useTemplate: 'Use Template (Optional)',
+                startFromScratch: '-- Start from scratch --',
+                saveAsTemplate: '💾 Save this event as a template for future use',
+                templateName: 'Template Name',
+                
+                // Messages
+                confirmDelete: 'Are you sure you want to delete this event?',
+                confirmRemovePhoto: 'Remove this photo?',
+                templateSaved: 'Template saved successfully!',
+                pleaseEnterBoth: 'Please enter both name and role',
+                pleaseEnterTask: 'Please enter a task description',
+                
+                // Ward Info
+                wardInformation: 'Ward Information',
+                wardName: 'Ward Name',
+                sacramentTime: 'Sacrament Meeting Time',
+                sundaySchoolTime: 'Sunday School Time',
+                priesthoodTime: 'Priesthood/Relief Society Time',
+                wardAddress: 'Ward Address',
+                bishopName: "Bishop's Name",
+                clerkName: "Ward Clerk's Name",
+                wardPhone: 'Ward Phone',
+                
+                // Misc
+                time: 'Time',
+                date: 'Date',
+                through: 'through',
+                of: 'of',
+                to: 'to'
+            },
+            to: {
+                // Header
+                wardCalendar: 'Kalenda ʻo e Siasi',
+                
+                // Navigation  
+                previous: 'Muʻa',
+                next: 'Tuʻu',
+                today: 'ʻAhó Ní',
+                
+                // Buttons
+                addEvent: '+ Fakaū ha Fai',
+                templates: '📋 Ngaahi Fakaʻūʻāinga',
+                filtersViews: '🔍 Ngaahi Sivi',
+                wardInfo: 'ℹ️ Fakamatala Siasi',
+                exportData: '📥 ʻAve Kituʻa',
+                importJSON: '📤 Fakaū Mai',
+                importICal: '📅 Fakaū iCal',
+                save: '💾 Fakaū',
+                cancel: 'Taʻofi',
+                close: 'Tapuni',
+                edit: 'Fakalelei',
+                delete: 'Holoki',
+                remove: 'Toʻo',
+                
+                // Days
+                sunday: 'Sāpate',
+                monday: 'Mōnite',
+                tuesday: 'Tūsite',
+                wednesday: 'Pulelulu',
+                thursday: 'Tuʻapulelulu',
+                friday: 'Falaite',
+                saturday: 'Tokonaki',
+                
+                // Months
+                january: 'Sanuali',
+                february: 'Fepueli',
+                march: 'Maʻasi',
+                april: 'ʻEpeleli',
+                may: 'Mē',
+                june: 'Sune',
+                july: 'Siulai',
+                august: 'ʻAokosi',
+                september: 'Sēpitema',
+                october: 'ʻOkatopa',
+                november: 'Nōvema',
+                december: 'Tīsema',
+                
+                // Categories
+                temple: 'Falelotu Tapu mo e Famili',
+                service: 'Ngāue Tokoni',
+                activity: 'Fakataha Siasi',
+                youngMen: 'Tamaiki Taʻahine',
+                youngWomen: 'Tamaiki Fefine',
+                combinedYouth: 'Kautaha Talavou',
+                primary: 'Palaimalí',
+                reliefSociety: 'Kautaha Tokoni',
+                eldersQuorum: 'Kuólomu ʻo e Kau Mātuʻa',
+                emergency: 'Teuteu ki he Faingataʻa',
+                baptism: 'Papitaiso',
+                sunday: 'Ngaahi Lotu Sāpate',
+                stake: 'Fai Siteeki',
+                admin: 'Pule',
+                
+                // Form Labels
+                eventTitle: 'Hingoa Fai',
+                category: 'Faʻahinga',
+                startDate: 'ʻAho Kamata',
+                endDate: 'ʻAho ʻOsi (taʻefakahinohino)',
+                startTime: 'Taimi Kamata',
+                endTime: 'Taimi ʻOsi',
+                location: 'Feituʻu',
+                description: 'Fakamatala',
+                required: '*',
+                
+                // Tabs
+                details: '📝 Ngaahi Fakamatala',
+                assignments: '👥 Ngaahi Tohi',
+                photos: '📸 Ngaahi Fakaʻata',
+                
+                // Recurring
+                makeRecurring: '🔄 Ngaohi ko ha fai fakamaʻu',
+                recurrencePattern: 'Founga Fakamaʻu',
+                repeat: 'Toe',
+                weekly: 'Uike Taʻetaha',
+                monthly: 'Māhina Taʻetaha',
+                yearly: 'Taʻu Taʻetaha',
+                repeatOn: 'Toe ʻi he:',
+                ends: 'ʻOsi',
+                never: 'ʻIkai',
+                onDate: 'ʻI ha ʻaho',
+                afterOccurrences: 'Hili ha lau',
+                
+                // Assignments
+                eventAssignments: 'Ngaahi Tohi Fai',
+                addAssignment: '➕ Fakaū ha Tohi',
+                name: 'Hingoa',
+                role: 'Ngāue',
+                phone: 'Telefoni',
+                email: 'ʻĪmailí',
+                taskChecklist: 'Lisi Ngāue',
+                addTask: '➕ Fakaū ha Ngāue',
+                taskDescription: 'Fakamatala Ngāue',
+                assignedTo: 'Tohi ki',
+                
+                // Photos
+                eventPhotos: 'Ngaahi Fakaʻata Fai',
+                clickToUpload: 'Lolomi ke hū ngaahi fakaʻata pe tō mai',
+                supportsFormats: 'Lava JPG, PNG, GIF (Lahi taha 5MB)',
+                gallery: 'Fale Fakaʻata',
+                photos: 'ngaahi fakaʻata',
+                noPhotosYet: 'ʻOkuʻikai haʻi fakaʻata! Hū ha ngaahi fakaʻata ke fakamatala!',
+                
+                // Filtering
+                filterSearch: '🔍 Sivi mo Kumi',
+                searchPlaceholder: 'Kumi fai ʻi he hingoa, feituʻu, pe fakamatala...',
+                filterByCategory: '📂 Sivi ʻi he Faʻahinga',
+                calendarView: '👁️ Vakai Kalenda',
+                monthView: '📅 Māhina',
+                weekView: '📊 Uike',
+                agendaView: '📋 Agenita',
+                listView: '📝 Lisi',
+                clearAllFilters: 'Toʻo Kotoa Sivi',
+                activeFilters: 'Ngaahi Sivi:',
+                
+                // Templates
+                eventTemplates: 'Ngaahi Fakaʻūʻāinga Fai',
+                useTemplate: 'Fakaʻāonga ha Fakaʻūʻāinga',
+                startFromScratch: '-- Kamata mei muʻa --',
+                saveAsTemplate: '💾 Fakaū ko ha fakaʻūʻāinga',
+                templateName: 'Hingoa Fakaʻūʻāinga',
+                
+                // Messages
+                confirmDelete: 'ʻOkū ke pehē ko e tonu ke holoki ʻa e fai ní?',
+                confirmRemovePhoto: 'Toʻo ʻa e fakaʻata ní?',
+                templateSaved: 'Kuo fakaū lelei ʻa e fakaʻūʻāinga!',
+                pleaseEnterBoth: 'Kataki ʻo fakaū ʻa e hingoa mo e ngāue',
+                pleaseEnterTask: 'Kataki ʻo fakaū ha fakamatala ngāue',
+                
+                // Ward Info
+                wardInformation: 'Fakamatala Siasi',
+                wardName: 'Hingoa Siasi',
+                sacramentTime: 'Taimi Lotu Sakalaméti',
+                sundaySchoolTime: 'Taimi Sukulu Sāpate',
+                priesthoodTime: 'Taimi Tauhi/Kautaha',
+                wardAddress: 'Tuʻasila Siasi',
+                bishopName: 'Hingoa Pīsope',
+                clerkName: 'Hingoa Kalaʻake',
+                wardPhone: 'Telefoni Siasi',
+                
+                // Misc
+                time: 'Taimi',
+                date: 'ʻAho',
+                through: 'ki',
+                of: 'ʻo e',
+                to: 'ki'
+            }
+        };
+
+        function t(key) {
+            return translations[currentLanguage][key] || translations.en[key] || key;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderWardName();
+            populateTemplateDropdown();
+            populateCategoryFilters();
+            applyLanguage();
+            renderCalendar();
+            setupEventListeners();
+        });
+
+        function updateHeaderWardName() {
+            const header = document.getElementById('headerWardName');
+            if (header) {
+                header.textContent = `🏛️ ${wardInfo.wardName} Calendar`;
+            }
+        }
+
+        function populateCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            const categories = [
+                { id: 'temple', name: 'Temple & Family History', color: '#9f7aea' },
+                { id: 'service', name: 'Service Projects', color: '#48bb78' },
+                { id: 'activity', name: 'Ward Activity', color: '#f6ad55' },
+                { id: 'young-men', name: 'Young Men', color: '#4299e1' },
+                { id: 'young-women', name: 'Young Women', color: '#ec4899' },
+                { id: 'combined-youth', name: 'Combined Youth', color: '#8b5cf6' },
+                { id: 'primary', name: 'Primary', color: '#f59e0b' },
+                { id: 'relief-society', name: 'Relief Society', color: '#ed64a6' },
+                { id: 'elders-quorum', name: 'Elders Quorum', color: '#059669' },
+                { id: 'emergency', name: 'Emergency Prep', color: '#f56565' },
+                { id: 'baptism', name: 'Baptism', color: '#06b6d4' },
+                { id: 'sunday', name: 'Sunday Services', color: '#805ad5' },
+                { id: 'stake', name: 'Stake Event', color: '#d97706' },
+                { id: 'admin', name: 'Administrative', color: '#718096' }
+            ];
+
+            container.innerHTML = categories.map(cat => {
+                const count = getEventCountByCategory(cat.id);
+                return `
+                    <div class="filter-chip" data-category="${cat.id}" onclick="toggleCategoryFilter('${cat.id}')">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: ${cat.color};"></span>
+                        <span>${cat.name}</span>
+                        <span class="count">${count}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getEventCountByCategory(category) {
+            const allEvents = generateRecurringInstances(currentDate.getFullYear(), currentDate.getMonth());
+            return allEvents.filter(e => e.category === category).length;
+        }
+
+        function populateTemplateDropdown() {
+            const select = document.getElementById('useTemplate');
+            const currentOptions = select.innerHTML;
+            
+            // Keep the first option
+            select.innerHTML = '<option value="">-- Start from scratch --</option>';
+            
+            templates.forEach(template => {
+                const option = document.createElement('option');
+                option.value = template.id;
+                option.textContent = template.name;
+                select.appendChild(option);
+            });
+        }
+
+        function setupEventListeners() {
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            document.getElementById('addEventBtn').addEventListener('click', () => {
+                currentEventId = null;
+                document.getElementById('eventForm').reset();
+                document.getElementById('modalTitle').textContent = 'Add New Event';
+                document.getElementById('eventModal').classList.add('active');
+            });
+
+            document.getElementById('closeModal').addEventListener('click', closeEventModal);
+            document.getElementById('cancelBtn').addEventListener('click', closeEventModal);
+
+            document.getElementById('closeViewModal').addEventListener('click', closeViewModal);
+            document.getElementById('closeViewBtn').addEventListener('click', closeViewModal);
+
+            document.getElementById('eventForm').addEventListener('submit', saveEvent);
+
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('importBtn').addEventListener('click', () => {
+                document.getElementById('importFile').click();
+            });
+            document.getElementById('importFile').addEventListener('change', importData);
+            document.getElementById('importICalBtn').addEventListener('click', openImportHelp);
+            document.getElementById('importICalFile').addEventListener('change', importICalData);
+
+            // Import Help listeners
+            document.getElementById('closeImportHelpModal').addEventListener('click', closeImportHelp);
+            document.getElementById('closeImportHelpBtn').addEventListener('click', closeImportHelp);
+            document.getElementById('startImportBtn').addEventListener('click', () => {
+                closeImportHelp();
+                document.getElementById('importICalFile').click();
+            });
+
+            document.getElementById('editEventBtn').addEventListener('click', editCurrentEvent);
+            document.getElementById('deleteEventBtn').addEventListener('click', deleteCurrentEvent);
+
+            // Ward Info listeners
+            document.getElementById('wardInfoBtn').addEventListener('click', openWardInfo);
+            document.getElementById('closeWardInfoModal').addEventListener('click', closeWardInfoModal);
+            document.getElementById('closeWardInfoBtn').addEventListener('click', closeWardInfoModal);
+            document.getElementById('editWardInfoBtn').addEventListener('click', openEditWardInfo);
+            document.getElementById('closeEditWardInfoModal').addEventListener('click', closeEditWardInfoModal);
+            document.getElementById('cancelWardInfoBtn').addEventListener('click', closeEditWardInfoModal);
+            document.getElementById('wardInfoForm').addEventListener('submit', saveWardInfo);
+            document.getElementById('downloadQRBtn').addEventListener('click', downloadQRCode);
+
+            // Templates listeners
+            document.getElementById('templatesBtn').addEventListener('click', openTemplatesModal);
+            document.getElementById('closeTemplatesModal').addEventListener('click', closeTemplatesModal);
+            document.getElementById('closeTemplatesBtn').addEventListener('click', closeTemplatesModal);
+            document.getElementById('useTemplate').addEventListener('change', loadTemplate);
+            document.getElementById('closeSaveTemplateModal').addEventListener('click', closeSaveTemplateModal);
+            document.getElementById('cancelSaveTemplate').addEventListener('click', closeSaveTemplateModal);
+            document.getElementById('confirmSaveTemplate').addEventListener('click', saveTemplate);
+
+            // Recurring Events listeners
+            document.getElementById('isRecurring').addEventListener('change', toggleRecurringSection);
+            document.getElementById('recurringFrequency').addEventListener('change', updateRecurringFrequency);
+            document.getElementById('monthlyPattern').addEventListener('change', updateMonthlyPattern);
+            document.getElementById('recurringEndType').addEventListener('change', updateEndType);
+            document.getElementById('recurringInterval').addEventListener('input', updatePreview);
+            document.getElementById('recurringEndDate').addEventListener('change', updatePreview);
+            document.getElementById('recurringEndCount').addEventListener('input', updatePreview);
+            document.getElementById('monthlyPosition').addEventListener('change', updatePreview);
+            document.getElementById('monthlyWeekday').addEventListener('change', updatePreview);
+            document.getElementById('eventStartDate').addEventListener('change', updatePreview);
+
+            // Weekday selector buttons
+            document.querySelectorAll('.weekday-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleWeekday(e.target);
+                });
+            });
+
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            // Assignments listeners
+            document.getElementById('addAssignmentBtn').addEventListener('click', addAssignment);
+            document.getElementById('addTaskBtn').addEventListener('click', addTask);
+
+            // Filtering & Views listeners
+            document.getElementById('filterToggleBtn').addEventListener('click', toggleFilterBar);
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
+            
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', () => switchView(btn.dataset.view));
+            });
+
+            // Photo upload listeners
+            document.getElementById('photoUploadArea').addEventListener('click', () => {
+                document.getElementById('photoInput').click();
+            });
+            document.getElementById('photoInput').addEventListener('change', handlePhotoUpload);
+            
+            // Drag and drop for photos
+            const uploadArea = document.getElementById('photoUploadArea');
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                processPhotoFiles(files);
+            });
+
+            // Lightbox listeners
+            document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+            document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
+            document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
+            document.getElementById('photoLightbox').addEventListener('click', (e) => {
+                if (e.target.id === 'photoLightbox') closeLightbox();
+            });
+
+            // Language toggle listener
+            document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Generate recurring event instances for this month
+            const allEvents = generateRecurringInstances(year, month);
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            // Add day headers
+            const dayHeaders = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'day-header';
+                header.textContent = day;
+                calendar.appendChild(header);
+            });
+
+            // Add previous month's days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const cell = createDayCell(day, true, new Date(year, month - 1, day), false, allEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add current month's days
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const isToday = date.toDateString() === today.toDateString();
+                const cell = createDayCell(day, false, date, isToday, allEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add next month's days
+            const remainingCells = 42 - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const cell = createDayCell(day, true, new Date(year, month + 1, day), false, allEvents);
+                calendar.appendChild(cell);
+            }
+        }
+
+        function createDayCell(day, isOtherMonth, date, isToday = false, allEvents) {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell';
+            if (isOtherMonth) cell.classList.add('other-month');
+            if (isToday) cell.classList.add('today');
+
+            const dayNumber = document.createElement('div');
+            dayNumber.className = 'day-number';
+            dayNumber.textContent = day;
+            cell.appendChild(dayNumber);
+
+            // Add events for this day
+            const dateStr = formatDate(date);
+            const dayEvents = allEvents.filter(e => {
+                // Check if event falls on this day (either single day or within date range)
+                if (e.endDate) {
+                    return dateStr >= e.date && dateStr <= e.endDate;
+                }
+                return e.date === dateStr;
+            });
+            
+            dayEvents.forEach(event => {
+                const eventEl = document.createElement('div');
+                eventEl.className = `event ${event.category}`;
+                
+                // Add recurring class if this is a recurring event
+                if (event.isRecurringInstance) {
+                    eventEl.classList.add('recurring');
+                }
+                
+                // Build display text
+                let displayText = '';
+                
+                // Add time range if available
+                if (event.time) {
+                    if (event.endTime) {
+                        displayText = `${event.time}-${event.endTime} `;
+                    } else {
+                        displayText = `${event.time} `;
+                    }
+                }
+                
+                // Add title
+                displayText += event.title;
+                
+                // Add recurring badge if this is a recurring instance
+                if (event.isRecurringInstance) {
+                    displayText += ' 🔄';
+                }
+                
+                // Add multi-day indicator if this is a multi-day event
+                if (event.endDate && event.date !== event.endDate) {
+                    const startDate = new Date(event.date + 'T00:00:00');
+                    const endDate = new Date(event.endDate + 'T00:00:00');
+                    const currentDate = new Date(dateStr + 'T00:00:00');
+                    
+                    if (dateStr === event.date) {
+                        displayText += ' →';
+                    } else if (dateStr === event.endDate) {
+                        displayText = '→ ' + displayText;
+                    } else {
+                        displayText = '→ ' + displayText + ' →';
+                    }
+                }
+                
+                eventEl.textContent = displayText;
+                eventEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    viewEvent(event.id);
+                });
+                cell.appendChild(eventEl);
+            });
+
+            return cell;
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function saveEvent(e) {
+            e.preventDefault();
+
+            const startDate = document.getElementById('eventStartDate').value;
+            const endDate = document.getElementById('eventEndDate').value;
+            const startTime = document.getElementById('eventStartTime').value;
+            const endTime = document.getElementById('eventEndTime').value;
+            const saveAsTemplateChecked = document.getElementById('saveAsTemplate').checked;
+            const isRecurring = document.getElementById('isRecurring').checked;
+
+            const event = {
+                id: currentEventId || Date.now().toString(),
+                title: document.getElementById('eventTitle').value,
+                category: document.getElementById('eventCategory').value,
+                date: startDate,
+                endDate: endDate || '',
+                time: startTime,
+                endTime: endTime || '',
+                location: document.getElementById('eventLocation').value,
+                description: document.getElementById('eventDescription').value,
+                assignments: currentAssignments,
+                tasks: currentTasks,
+                photos: currentPhotos
+            };
+
+            // Handle recurring events
+            if (isRecurring) {
+                const recurringRule = {
+                    frequency: document.getElementById('recurringFrequency').value,
+                    interval: parseInt(document.getElementById('recurringInterval').value) || 1,
+                    endType: document.getElementById('recurringEndType').value,
+                    endDate: document.getElementById('recurringEndDate').value || null,
+                    occurrences: parseInt(document.getElementById('recurringEndCount').value) || 52
+                };
+
+                // Add frequency-specific options
+                if (recurringRule.frequency === 'weekly') {
+                    recurringRule.weekdays = Array.from(selectedWeekdays);
+                    if (recurringRule.weekdays.length === 0) {
+                        alert('Please select at least one day of the week for weekly recurring events.');
+                        return;
+                    }
+                } else if (recurringRule.frequency === 'monthly') {
+                    recurringRule.monthlyPattern = document.getElementById('monthlyPattern').value;
+                    if (recurringRule.monthlyPattern === 'weekday') {
+                        recurringRule.position = parseInt(document.getElementById('monthlyPosition').value);
+                        recurringRule.weekday = parseInt(document.getElementById('monthlyWeekday').value);
+                    }
+                }
+
+                event.recurringRule = recurringRule;
+                event.isRecurringMaster = true;
+            }
+
+            if (currentEventId) {
+                const index = events.findIndex(e => e.id === currentEventId);
+                events[index] = event;
+            } else {
+                events.push(event);
+            }
+
+            localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+
+            // Handle template saving
+            if (saveAsTemplateChecked) {
+                pendingTemplateData = {
+                    title: event.title,
+                    category: event.category,
+                    time: event.time,
+                    endTime: event.endTime,
+                    location: event.location,
+                    description: event.description
+                };
+                closeEventModal();
+                openSaveTemplateModal();
+            } else {
+                closeEventModal();
+                renderCalendar();
+            }
+        }
+
+        function viewEvent(id) {
+            const event = events.find(e => e.id === id);
+            if (!event) return;
+
+            currentEventId = id;
+
+            const categoryNames = {
+                'temple': 'Temple & Family History',
+                'service': 'Service Projects',
+                'activity': 'Ward Activity',
+                'young-men': 'Young Men Activity',
+                'young-women': 'Young Women Activity',
+                'combined-youth': 'Combined Youth Activity',
+                'primary': 'Primary Activity',
+                'relief-society': 'Relief Society',
+                'elders-quorum': 'Elders Quorum',
+                'emergency': 'Emergency Preparedness',
+                'baptism': 'Baptism',
+                'sunday': 'Sunday Services',
+                'stake': 'Stake Event',
+                'admin': 'Administrative'
+            };
+
+            // Format date display
+            let dateDisplay = new Date(event.date + 'T00:00:00').toLocaleDateString('en-US', { 
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+            });
+            
+            if (event.endDate && event.endDate !== event.date) {
+                const endDateFormatted = new Date(event.endDate + 'T00:00:00').toLocaleDateString('en-US', { 
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+                });
+                dateDisplay += ` through ${endDateFormatted}`;
+            }
+
+            // Format time display
+            let timeDisplay = '';
+            if (event.time) {
+                if (event.endTime) {
+                    timeDisplay = `${event.time} - ${event.endTime}`;
+                } else {
+                    timeDisplay = event.time;
+                }
+            }
+
+            // Format assignments display
+            let assignmentsHTML = '';
+            if (event.assignments && event.assignments.length > 0) {
+                assignmentsHTML = '<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">👥 Assignments:</h4>';
+                event.assignments.forEach(assign => {
+                    assignmentsHTML += `
+                        <div style="background: white; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid #667eea;">
+                            <strong style="color: #2d3748;">${assign.name}</strong>
+                            <span style="background: #e6fffa; color: #234e52; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; margin-left: 8px;">${assign.role}</span>
+                            ${assign.phone ? `<p style="margin: 3px 0; font-size: 0.9em; color: #718096;">📞 ${assign.phone}</p>` : ''}
+                            ${assign.email ? `<p style="margin: 3px 0; font-size: 0.9em; color: #718096;">✉️ ${assign.email}</p>` : ''}
+                        </div>
+                    `;
+                });
+                assignmentsHTML += '</div>';
+            }
+
+            // Format tasks display
+            let tasksHTML = '';
+            if (event.tasks && event.tasks.length > 0) {
+                tasksHTML = '<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">✅ Tasks:</h4>';
+                event.tasks.forEach(task => {
+                    const checkIcon = task.completed ? '✅' : '⬜';
+                    const textStyle = task.completed ? 'text-decoration: line-through; color: #9ca3af;' : 'color: #2d3748;';
+                    tasksHTML += `
+                        <div style="padding: 8px; margin-bottom: 5px;">
+                            <span style="margin-right: 8px;">${checkIcon}</span>
+                            <span style="${textStyle}">${task.description}</span>
+                            ${task.assignedTo ? `<span style="color: #667eea; font-size: 0.85em; margin-left: 8px;">→ ${task.assignedTo}</span>` : ''}
+                        </div>
+                    `;
+                });
+                tasksHTML += '</div>';
+            }
+
+            // Format photos display
+            let photosHTML = '';
+            if (event.photos && event.photos.length > 0) {
+                photosHTML = `<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">📸 Photos (${event.photos.length}):</h4>`;
+                photosHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;">';
+                event.photos.forEach((photo, index) => {
+                    photosHTML += `
+                        <div style="aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
+                             onclick="viewEventPhoto('${event.id}', ${index})">
+                            <img src="${photo.dataUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="Event photo">
+                        </div>
+                    `;
+                });
+                photosHTML += '</div></div>';
+            }
+
+            const content = `
+                <h3>${event.title}</h3>
+                <p><strong>Category:</strong> ${categoryNames[event.category]}</p>
+                <p><strong>Date:</strong> ${dateDisplay}</p>
+                ${timeDisplay ? `<p><strong>Time:</strong> ${timeDisplay}</p>` : ''}
+                ${event.location ? `<p><strong>Location:</strong> ${event.location}</p>` : ''}
+                ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
+                ${assignmentsHTML}
+                ${tasksHTML}
+                ${photosHTML}
+            `;
+
+            document.getElementById('eventDetailsContent').innerHTML = content;
+            document.getElementById('viewEventModal').classList.add('active');
+        }
+
+        function viewEventPhoto(eventId, photoIndex) {
+            const event = events.find(e => e.id === eventId);
+            if (!event || !event.photos) return;
+            
+            currentPhotos = event.photos;
+            currentLightboxIndex = photoIndex;
+            openLightbox();
+        }
+
+        function editCurrentEvent() {
+            const event = events.find(e => e.id === currentEventId);
+            if (!event) return;
+
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventCategory').value = event.category;
+            document.getElementById('eventStartDate').value = event.date;
+            document.getElementById('eventEndDate').value = event.endDate || '';
+            document.getElementById('eventStartTime').value = event.time || '';
+            document.getElementById('eventEndTime').value = event.endTime || '';
+            document.getElementById('eventLocation').value = event.location || '';
+            document.getElementById('eventDescription').value = event.description || '';
+
+            // Load assignments and tasks
+            currentAssignments = event.assignments || [];
+            currentTasks = event.tasks || [];
+            currentPhotos = event.photos || [];
+            renderAssignments();
+            renderTasks();
+            renderPhotoGallery();
+
+            document.getElementById('modalTitle').textContent = 'Edit Event';
+            closeViewModal();
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function deleteCurrentEvent() {
+            if (confirm('Are you sure you want to delete this event?')) {
+                events = events.filter(e => e.id !== currentEventId);
+                localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                closeViewModal();
+                renderCalendar();
+            }
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        function closeViewModal() {
+            document.getElementById('viewEventModal').classList.remove('active');
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(events, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ward-calendar-${formatDate(new Date())}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedEvents = JSON.parse(event.target.result);
+                    if (confirm('This will replace all current events. Continue?')) {
+                        events = importedEvents;
+                        localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                        renderCalendar();
+                        alert('Calendar data imported successfully!');
+                    }
+                } catch (error) {
+                    alert('Error importing data. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        function importICalData(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const icalText = event.target.result;
+                    const parsedEvents = parseICalendar(icalText);
+                    
+                    if (parsedEvents.length === 0) {
+                        alert('No events found in the iCal file.');
+                        return;
+                    }
+
+                    const mergeChoice = confirm(
+                        `Found ${parsedEvents.length} events in the iCal file.\n\n` +
+                        `Click OK to ADD these events to your calendar.\n` +
+                        `Click Cancel to REPLACE all current events with these.`
+                    );
+
+                    if (mergeChoice) {
+                        // Add to existing events
+                        events = [...events, ...parsedEvents];
+                    } else {
+                        // Replace all events
+                        events = parsedEvents;
+                    }
+
+                    localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                    renderCalendar();
+                    alert(`Successfully imported ${parsedEvents.length} events!`);
+                    
+                } catch (error) {
+                    console.error('iCal import error:', error);
+                    alert('Error importing iCal file. Please ensure it\'s a valid .ics file.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        function parseICalendar(icalText) {
+            const events = [];
+            const lines = icalText.split(/\r?\n/);
+            let currentEvent = null;
+            let lastKey = null;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                
+                // Handle line continuations (lines starting with space or tab)
+                while (i + 1 < lines.length && (lines[i + 1].startsWith(' ') || lines[i + 1].startsWith('\t'))) {
+                    i++;
+                    line += lines[i].trim();
+                }
+
+                if (line === 'BEGIN:VEVENT') {
+                    currentEvent = {
+                        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                        title: '',
+                        category: 'admin',
+                        date: '',
+                        endDate: '',
+                        time: '',
+                        endTime: '',
+                        location: '',
+                        description: ''
+                    };
+                } else if (line === 'END:VEVENT' && currentEvent) {
+                    if (currentEvent.title && currentEvent.date) {
+                        events.push(currentEvent);
+                    }
+                    currentEvent = null;
+                } else if (currentEvent) {
+                    const colonIndex = line.indexOf(':');
+                    if (colonIndex === -1) continue;
+
+                    const key = line.substring(0, colonIndex);
+                    const value = line.substring(colonIndex + 1);
+
+                    // Handle SUMMARY (title)
+                    if (key.startsWith('SUMMARY')) {
+                        currentEvent.title = unescapeICalText(value);
+                        currentEvent.category = guessCategory(currentEvent.title);
+                    }
+                    // Handle DTSTART (date/time)
+                    else if (key.startsWith('DTSTART')) {
+                        const dateTime = parseICalDateTime(value);
+                        if (dateTime) {
+                            currentEvent.date = dateTime.date;
+                            currentEvent.time = dateTime.time;
+                        }
+                    }
+                    // Handle DTEND (end date/time)
+                    else if (key.startsWith('DTEND')) {
+                        const dateTime = parseICalDateTime(value);
+                        if (dateTime) {
+                            currentEvent.endDate = dateTime.date;
+                            currentEvent.endTime = dateTime.time;
+                            
+                            // If end date is same as start date, clear it
+                            if (currentEvent.endDate === currentEvent.date) {
+                                currentEvent.endDate = '';
+                            }
+                        }
+                    }
+                    // Handle LOCATION
+                    else if (key.startsWith('LOCATION')) {
+                        currentEvent.location = unescapeICalText(value);
+                    }
+                    // Handle DESCRIPTION
+                    else if (key.startsWith('DESCRIPTION')) {
+                        currentEvent.description = unescapeICalText(value);
+                    }
+                }
+            }
+
+            return events;
+        }
+
+        function parseICalDateTime(dateTimeStr) {
+            // Remove VALUE=DATE: prefix if present
+            dateTimeStr = dateTimeStr.replace(/^[^:]*:/, '');
+            
+            // Handle different formats
+            // Format: YYYYMMDD or YYYYMMDDTHHMMSS or YYYYMMDDTHHMMSSZ
+            const match = dateTimeStr.match(/^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})(Z)?)?/);
+            
+            if (!match) return null;
+
+            const year = match[1];
+            const month = match[2];
+            const day = match[3];
+            const hour = match[5];
+            const minute = match[6];
+
+            const date = `${year}-${month}-${day}`;
+            const time = hour && minute ? `${hour}:${minute}` : '';
+
+            return { date, time };
+        }
+
+        function unescapeICalText(text) {
+            return text
+                .replace(/\\n/g, '\n')
+                .replace(/\\,/g, ',')
+                .replace(/\\;/g, ';')
+                .replace(/\\\\/g, '\\');
+        }
+
+        function guessCategory(title) {
+            const titleLower = title.toLowerCase();
+            
+            // Check for keywords to auto-categorize
+            if (titleLower.includes('temple') || titleLower.includes('family history')) {
+                return 'temple';
+            } else if (titleLower.includes('service') || titleLower.includes('cleanup') || titleLower.includes('clean up')) {
+                return 'service';
+            } else if (titleLower.includes('young men') || titleLower.includes('aaronic priesthood')) {
+                return 'young-men';
+            } else if (titleLower.includes('young women') || titleLower.includes('yw ')) {
+                return 'young-women';
+            } else if (titleLower.includes('youth') || titleLower.includes('combined youth')) {
+                return 'combined-youth';
+            } else if (titleLower.includes('primary')) {
+                return 'primary';
+            } else if (titleLower.includes('relief society') || titleLower.includes('rs ')) {
+                return 'relief-society';
+            } else if (titleLower.includes('elders quorum') || titleLower.includes('eq ')) {
+                return 'elders-quorum';
+            } else if (titleLower.includes('emergency') || titleLower.includes('preparedness')) {
+                return 'emergency';
+            } else if (titleLower.includes('baptism')) {
+                return 'baptism';
+            } else if (titleLower.includes('stake') || titleLower.includes('conference')) {
+                return 'stake';
+            } else if (titleLower.includes('fast sunday') || titleLower.includes('sacrament')) {
+                return 'sunday';
+            } else if (titleLower.includes('ward council') || titleLower.includes('council meeting')) {
+                return 'admin';
+            } else if (titleLower.includes('activity') || titleLower.includes('social') || titleLower.includes('potluck')) {
+                return 'activity';
+            }
+            
+            // Default to activity for general events
+            return 'activity';
+        }
+
+
+        // Ward Info Functions
+        function openWardInfo() {
+            updateWardInfoDisplay();
+            generateQRCode();
+            document.getElementById('wardInfoModal').classList.add('active');
+        }
+
+        function closeWardInfoModal() {
+            document.getElementById('wardInfoModal').classList.remove('active');
+        }
+
+        function openImportHelp() {
+            document.getElementById('importHelpModal').classList.add('active');
+        }
+
+        function closeImportHelp() {
+            document.getElementById('importHelpModal').classList.remove('active');
+        }
+
+        function openEditWardInfo() {
+            document.getElementById('wardName').value = wardInfo.wardName;
+            document.getElementById('sacramentTime').value = wardInfo.sacramentTime;
+            document.getElementById('sundaySchoolTime').value = wardInfo.sundaySchoolTime;
+            document.getElementById('priesthoodTime').value = wardInfo.priesthoodTime;
+            document.getElementById('wardAddress').value = wardInfo.wardAddress;
+            document.getElementById('bishopName').value = wardInfo.bishopName;
+            document.getElementById('clerkName').value = wardInfo.clerkName;
+            document.getElementById('wardPhone').value = wardInfo.wardPhone;
+            
+            closeWardInfoModal();
+            document.getElementById('editWardInfoModal').classList.add('active');
+        }
+
+        function closeEditWardInfoModal() {
+            document.getElementById('editWardInfoModal').classList.remove('active');
+        }
+
+        function saveWardInfo(e) {
+            e.preventDefault();
+            
+            wardInfo = {
+                wardName: document.getElementById('wardName').value,
+                sacramentTime: document.getElementById('sacramentTime').value,
+                sundaySchoolTime: document.getElementById('sundaySchoolTime').value,
+                priesthoodTime: document.getElementById('priesthoodTime').value,
+                wardAddress: document.getElementById('wardAddress').value,
+                bishopName: document.getElementById('bishopName').value,
+                clerkName: document.getElementById('clerkName').value,
+                wardPhone: document.getElementById('wardPhone').value
+            };
+
+            localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
+            updateHeaderWardName();
+            closeEditWardInfoModal();
+            alert('Ward information saved successfully!');
+        }
+
+        function updateWardInfoDisplay() {
+            const infoContent = `
+                <h3>🏛️ ${wardInfo.wardName}</h3>
+                
+                <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">Sunday Service Times</h4>
+                    <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
+                        Sacrament Meeting: ${wardInfo.sacramentTime}
+                    </div>
+                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                        Sunday School: ${wardInfo.sundaySchoolTime}
+                    </div>
+                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                        Priesthood/Relief Society: ${wardInfo.priesthoodTime}
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">📍 Location</h4>
+                    <p style="margin: 5px 0;">${wardInfo.wardAddress}</p>
+                    <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}', '_blank')" style="margin-top: 10px;">
+                        📍 Open in Maps
+                    </button>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
+                    <h4 style="margin-bottom: 15px; color: #2d3748;">📱 Share Ward Info</h4>
+                    <p style="margin-bottom: 15px; color: #4a5568;">Scan QR Code to share service times and location</p>
+                    <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
+                    <button class="btn btn-secondary" id="downloadQRBtn" onclick="downloadQRCode()" style="margin-top: 10px;">
+                        💾 Download QR Code
+                    </button>
+                </div>
+
+                ${wardInfo.bishopName || wardInfo.clerkName || wardInfo.wardPhone ? `
+                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: #2d3748;">📞 Contact Information</h4>
+                    ${wardInfo.bishopName ? `<p style="margin: 5px 0;"><strong>Bishop:</strong> ${wardInfo.bishopName}</p>` : ''}
+                    ${wardInfo.clerkName ? `<p style="margin: 5px 0;"><strong>Ward Clerk:</strong> ${wardInfo.clerkName}</p>` : ''}
+                    ${wardInfo.wardPhone ? `<p style="margin: 5px 0;"><strong>Phone:</strong> ${wardInfo.wardPhone}</p>` : ''}
+                </div>
+                ` : ''}
+
+                <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <p style="margin: 0; font-style: italic; color: #4a5568;">
+                        "And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me." - Ether 12:27
+                    </p>
+                </div>
+            `;
+
+            // Update the ward info display (when not in edit mode)
+            const modalContent = document.querySelector('#wardInfoModal .event-details');
+            if (modalContent) {
+                modalContent.innerHTML = infoContent;
+            }
+        }
+
+        function generateQRCode() {
+            const qrcodeContainer = document.getElementById('qrcode');
+            if (!qrcodeContainer) return;
+
+            // Clear previous QR code
+            qrcodeContainer.innerHTML = '';
+
+            const qrText = `${wardInfo.wardName}\n\nService Times:\nSacrament: ${wardInfo.sacramentTime}\nSunday School: ${wardInfo.sundaySchoolTime}\nPriesthood/RS: ${wardInfo.priesthoodTime}\n\nLocation:\n${wardInfo.wardAddress}\n\nMaps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+
+            qrCodeInstance = new QRCode(qrcodeContainer, {
+                text: qrText,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadQRCode() {
+            const qrcodeContainer = document.getElementById('qrcode');
+            const canvas = qrcodeContainer.querySelector('canvas');
+            
+            if (canvas) {
+                const url = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${wardInfo.wardName.replace(/\s+/g, '-')}-QR-Code.png`;
+                a.click();
+            } else {
+                alert('QR Code not generated yet. Please open Ward Info first.');
+            }
+        }
+
+        // Template Functions
+        function openTemplatesModal() {
+            renderTemplatesList();
+            document.getElementById('templatesModal').classList.add('active');
+        }
+
+        function closeTemplatesModal() {
+            document.getElementById('templatesModal').classList.remove('active');
+        }
+
+        function renderTemplatesList() {
+            const container = document.getElementById('templatesList');
+            const emptyState = document.getElementById('emptyTemplatesState');
+
+            if (templates.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+            container.innerHTML = '';
+
+            const categoryNames = {
+                'temple': 'Temple & Family History',
+                'service': 'Service Projects',
+                'activity': 'Ward Activity',
+                'young-men': 'Young Men Activity',
+                'young-women': 'Young Women Activity',
+                'combined-youth': 'Combined Youth Activity',
+                'primary': 'Primary Activity',
+                'relief-society': 'Relief Society',
+                'elders-quorum': 'Elders Quorum',
+                'emergency': 'Emergency Preparedness',
+                'baptism': 'Baptism',
+                'sunday': 'Sunday Services',
+                'stake': 'Stake Event',
+                'admin': 'Administrative'
+            };
+
+            templates.forEach(template => {
+                const item = document.createElement('div');
+                item.className = 'template-item';
+                
+                const categoryBadge = document.createElement('span');
+                categoryBadge.className = `category-badge event ${template.category}`;
+                categoryBadge.textContent = categoryNames[template.category];
+
+                let timeInfo = '';
+                if (template.time) {
+                    if (template.endTime) {
+                        timeInfo = `<p>⏰ ${template.time} - ${template.endTime}</p>`;
+                    } else {
+                        timeInfo = `<p>⏰ ${template.time}</p>`;
+                    }
+                }
+
+                item.innerHTML = `
+                    <h4>${template.name}</h4>
+                    ${timeInfo}
+                    ${template.location ? `<p>📍 ${template.location}</p>` : ''}
+                    ${categoryBadge.outerHTML}
+                    <div class="template-actions">
+                        <button class="btn-use-template" onclick="useTemplateFromList('${template.id}')">
+                            ✅ Use Template
+                        </button>
+                        <button class="btn-edit-template" onclick="editTemplate('${template.id}')">
+                            ✏️ Edit
+                        </button>
+                        <button class="btn-delete-template" onclick="deleteTemplate('${template.id}')">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(item);
+            });
+        }
+
+        function useTemplateFromList(templateId) {
+            closeTemplatesModal();
+            document.getElementById('useTemplate').value = templateId;
+            loadTemplate({ target: { value: templateId } });
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function loadTemplate(e) {
+            const templateId = e.target.value;
+            if (!templateId) return;
+
+            const template = templates.find(t => t.id === templateId);
+            if (!template) return;
+
+            document.getElementById('eventTitle').value = template.title;
+            document.getElementById('eventCategory').value = template.category;
+            document.getElementById('eventStartTime').value = template.time || '';
+            document.getElementById('eventEndTime').value = template.endTime || '';
+            document.getElementById('eventLocation').value = template.location || '';
+            document.getElementById('eventDescription').value = template.description || '';
+
+            // Don't auto-check save as template when using a template
+            document.getElementById('saveAsTemplate').checked = false;
+        }
+
+        function editTemplate(templateId) {
+            const template = templates.find(t => t.id === templateId);
+            if (!template) return;
+
+            closeTemplatesModal();
+
+            // Open event form with template data
+            currentEventId = null; // This is a new event, not editing
+            document.getElementById('modalTitle').textContent = 'Edit Template';
+            document.getElementById('eventTitle').value = template.title;
+            document.getElementById('eventCategory').value = template.category;
+            document.getElementById('eventStartDate').value = formatDate(new Date());
+            document.getElementById('eventStartTime').value = template.time || '';
+            document.getElementById('eventEndTime').value = template.endTime || '';
+            document.getElementById('eventLocation').value = template.location || '';
+            document.getElementById('eventDescription').value = template.description || '';
+            document.getElementById('saveAsTemplate').checked = true;
+
+            // Store template ID for updating
+            pendingTemplateData = { editingTemplateId: templateId };
+
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function deleteTemplate(templateId) {
+            if (!confirm('Are you sure you want to delete this template? This cannot be undone.')) {
+                return;
+            }
+
+            templates = templates.filter(t => t.id !== templateId);
+            localStorage.setItem('wardCalendarTemplates', JSON.stringify(templates));
+            renderTemplatesList();
+            populateTemplateDropdown();
+        }
+
+        function openSaveTemplateModal() {
+            document.getElementById('templateName').value = '';
+            document.getElementById('saveTemplateModal').classList.add('active');
+        }
+
+        function closeSaveTemplateModal() {
+            document.getElementById('saveTemplateModal').classList.remove('active');
+            pendingTemplateData = null;
+            renderCalendar();
+        }
+
+        function saveTemplate() {
+            const templateName = document.getElementById('templateName').value.trim();
+            
+            if (!templateName) {
+                alert('Please enter a template name');
+                return;
+            }
+
+            if (!pendingTemplateData) {
+                alert('No template data to save');
+                closeSaveTemplateModal();
+                return;
+            }
+
+            // Check if we're editing an existing template
+            if (pendingTemplateData.editingTemplateId) {
+                const templateIndex = templates.findIndex(t => t.id === pendingTemplateData.editingTemplateId);
+                if (templateIndex !== -1) {
+                    templates[templateIndex] = {
+                        id: pendingTemplateData.editingTemplateId,
+                        name: templateName,
+                        title: document.getElementById('eventTitle').value,
+                        category: document.getElementById('eventCategory').value,
+                        time: document.getElementById('eventStartTime').value,
+                        endTime: document.getElementById('eventEndTime').value,
+                        location: document.getElementById('eventLocation').value,
+                        description: document.getElementById('eventDescription').value,
+                        createdDate: new Date().toISOString()
+                    };
+                }
+            } else {
+                // Create new template
+                const template = {
+                    id: 'template_' + Date.now(),
+                    name: templateName,
+                    title: pendingTemplateData.title,
+                    category: pendingTemplateData.category,
+                    time: pendingTemplateData.time,
+                    endTime: pendingTemplateData.endTime,
+                    location: pendingTemplateData.location,
+                    description: pendingTemplateData.description,
+                    createdDate: new Date().toISOString()
+                };
+
+                templates.push(template);
+            }
+
+            localStorage.setItem('wardCalendarTemplates', JSON.stringify(templates));
+            populateTemplateDropdown();
+            closeSaveTemplateModal();
+            alert('Template saved successfully!');
+        }
+
+        // Recurring Events Functions
+        function toggleRecurringSection() {
+            const isRecurring = document.getElementById('isRecurring').checked;
+            const section = document.getElementById('recurringSection');
+            
+            if (isRecurring) {
+                section.style.display = 'block';
+                section.classList.add('active');
+                updateRecurringFrequency();
+                // Set default start day for weekly
+                const startDate = new Date(document.getElementById('eventStartDate').value || new Date());
+                selectedWeekdays.add(startDate.getDay());
+                updateWeekdayButtons();
+                updatePreview();
+            } else {
+                section.style.display = 'none';
+                section.classList.remove('active');
+                selectedWeekdays.clear();
+            }
+        }
+
+        function updateRecurringFrequency() {
+            const frequency = document.getElementById('recurringFrequency').value;
+            const weeklyOptions = document.getElementById('weeklyOptions');
+            const monthlyOptions = document.getElementById('monthlyOptions');
+            const intervalLabel = document.getElementById('intervalLabel');
+
+            weeklyOptions.style.display = frequency === 'weekly' ? 'block' : 'none';
+            monthlyOptions.style.display = frequency === 'monthly' ? 'block' : 'none';
+
+            intervalLabel.textContent = frequency + '(s)';
+
+            updatePreview();
+        }
+
+        function updateMonthlyPattern() {
+            const pattern = document.getElementById('monthlyPattern').value;
+            const weekdayOptions = document.getElementById('monthlyWeekdayOptions');
+            weekdayOptions.style.display = pattern === 'weekday' ? 'block' : 'none';
+
+            // Set defaults based on start date
+            if (pattern === 'weekday') {
+                const startDate = new Date(document.getElementById('eventStartDate').value || new Date());
+                document.getElementById('monthlyWeekday').value = startDate.getDay();
+                
+                // Calculate position (1st, 2nd, 3rd, 4th, or last)
+                const dayOfMonth = startDate.getDate();
+                const position = Math.ceil(dayOfMonth / 7);
+                document.getElementById('monthlyPosition').value = position;
+            }
+
+            updatePreview();
+        }
+
+        function updateEndType() {
+            const endType = document.getElementById('recurringEndType').value;
+            document.getElementById('recurringEndDateGroup').style.display = endType === 'date' ? 'block' : 'none';
+            document.getElementById('recurringEndCountGroup').style.display = endType === 'count' ? 'block' : 'none';
+
+            updatePreview();
+        }
+
+        function toggleWeekday(btn) {
+            const day = parseInt(btn.dataset.day);
+            
+            if (selectedWeekdays.has(day)) {
+                selectedWeekdays.delete(day);
+                btn.classList.remove('selected');
+            } else {
+                selectedWeekdays.add(day);
+                btn.classList.add('selected');
+            }
+
+            updatePreview();
+        }
+
+        function updateWeekdayButtons() {
+            document.querySelectorAll('.weekday-btn').forEach(btn => {
+                const day = parseInt(btn.dataset.day);
+                if (selectedWeekdays.has(day)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        function updatePreview() {
+            const startDateStr = document.getElementById('eventStartDate').value;
+            if (!startDateStr) return;
+
+            const previewList = document.getElementById('previewList');
+            previewList.innerHTML = '';
+
+            const occurrences = generatePreviewOccurrences(startDateStr, 10);
+            
+            occurrences.forEach((date, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+                previewList.appendChild(li);
+            });
+        }
+
+        function generatePreviewOccurrences(startDateStr, max) {
+            const frequency = document.getElementById('recurringFrequency').value;
+            const interval = parseInt(document.getElementById('recurringInterval').value) || 1;
+            const endType = document.getElementById('recurringEndType').value;
+            const endDateStr = document.getElementById('recurringEndDate').value;
+            const maxCount = parseInt(document.getElementById('recurringEndCount').value) || 52;
+
+            const startDate = new Date(startDateStr + 'T00:00:00');
+            const occurrences = [];
+            let currentDate = new Date(startDate);
+            let count = 0;
+            const limit = endType === 'count' ? Math.min(maxCount, max) : max;
+
+            while (count < limit) {
+                if (endType === 'date' && endDateStr) {
+                    const endDate = new Date(endDateStr + 'T00:00:00');
+                    if (currentDate > endDate) break;
+                }
+
+                if (frequency === 'weekly') {
+                    const weekdays = Array.from(selectedWeekdays).sort((a, b) => a - b);
+                    if (weekdays.length === 0) break;
+
+                    for (const targetDay of weekdays) {
+                        const daysUntilTarget = (targetDay - currentDate.getDay() + 7) % 7;
+                        const occurrenceDate = new Date(currentDate);
+                        occurrenceDate.setDate(occurrenceDate.getDate() + daysUntilTarget);
+
+                        if (occurrenceDate >= startDate && occurrences.length < limit) {
+                            if (endType === 'date' && endDateStr) {
+                                const endDate = new Date(endDateStr + 'T00:00:00');
+                                if (occurrenceDate > endDate) break;
+                            }
+                            occurrences.push(new Date(occurrenceDate));
+                        }
+                    }
+                    currentDate.setDate(currentDate.getDate() + (7 * interval));
+                } else if (frequency === 'monthly') {
+                    const pattern = document.getElementById('monthlyPattern').value;
+                    
+                    if (pattern === 'date') {
+                        const dayOfMonth = startDate.getDate();
+                        occurrences.push(new Date(currentDate));
+                        currentDate.setMonth(currentDate.getMonth() + interval);
+                        const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+                        currentDate.setDate(Math.min(dayOfMonth, lastDay));
+                    } else {
+                        const position = parseInt(document.getElementById('monthlyPosition').value);
+                        const weekday = parseInt(document.getElementById('monthlyWeekday').value);
+                        const occurrence = getNthWeekdayOfMonth(currentDate.getFullYear(), currentDate.getMonth(), weekday, position);
+                        if (occurrence) {
+                            occurrences.push(occurrence);
+                        }
+                        currentDate.setMonth(currentDate.getMonth() + interval);
+                    }
+                } else if (frequency === 'yearly') {
+                    occurrences.push(new Date(currentDate));
+                    currentDate.setFullYear(currentDate.getFullYear() + interval);
+                }
+
+                count++;
+                if (count > 520) break; // Safety limit
+            }
+
+            return occurrences.slice(0, max);
+        }
+
+        function getNthWeekdayOfMonth(year, month, weekday, position) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+
+            if (position === -1) {
+                // Last occurrence
+                for (let day = lastDay.getDate(); day >= 1; day--) {
+                    const date = new Date(year, month, day);
+                    if (date.getDay() === weekday) {
+                        return date;
+                    }
+                }
+            } else {
+                // Nth occurrence
+                let count = 0;
+                for (let day = 1; day <= lastDay.getDate(); day++) {
+                    const date = new Date(year, month, day);
+                    if (date.getDay() === weekday) {
+                        count++;
+                        if (count === position) {
+                            return date;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        function generateRecurringInstances(year, month) {
+            // Combine regular events and generated recurring instances
+            const allEvents = [...events.filter(e => !e.isRecurringMaster)];
+
+            // Generate instances for recurring events
+            const recurringEvents = events.filter(e => e.isRecurringMaster && e.recurringRule);
+
+            recurringEvents.forEach(masterEvent => {
+                const rule = masterEvent.recurringRule;
+                const startDate = new Date(masterEvent.date + 'T00:00:00');
+                const monthStart = new Date(year, month, 1);
+                const monthEnd = new Date(year, month + 1, 0);
+
+                const instances = generateRecurringInstancesForEvent(masterEvent, monthStart, monthEnd);
+                allEvents.push(...instances);
+            });
+
+            return allEvents;
+        }
+
+        function generateRecurringInstancesForEvent(masterEvent, rangeStart, rangeEnd) {
+            const instances = [];
+            const rule = masterEvent.recurringRule;
+            const startDate = new Date(masterEvent.date + 'T00:00:00');
+
+            let currentDate = new Date(startDate);
+            let count = 0;
+            const maxIterations = 520;
+
+            // Advance to range start
+            while (currentDate < rangeStart && count < maxIterations) {
+                currentDate = getNextOccurrence(currentDate, rule);
+                count++;
+            }
+
+            // Generate instances within range
+            count = 0;
+            while (currentDate <= rangeEnd && count < maxIterations) {
+                // Check end conditions
+                if (rule.endType === 'date' && rule.endDate) {
+                    const endDate = new Date(rule.endDate + 'T00:00:00');
+                    if (currentDate > endDate) break;
+                }
+
+                // Create instance
+                const instance = {
+                    ...masterEvent,
+                    id: `${masterEvent.id}_${formatDate(currentDate)}`,
+                    date: formatDate(currentDate),
+                    isRecurringInstance: true,
+                    recurringMasterId: masterEvent.id
+                };
+
+                instances.push(instance);
+
+                currentDate = getNextOccurrence(currentDate, rule);
+                count++;
+
+                if (rule.endType === 'count' && instances.length >= rule.occurrences) {
+                    break;
+                }
+            }
+
+            return instances;
+        }
+
+        function getNextOccurrence(currentDate, rule) {
+            const nextDate = new Date(currentDate);
+
+            if (rule.frequency === 'weekly') {
+                nextDate.setDate(nextDate.getDate() + (7 * rule.interval));
+            } else if (rule.frequency === 'monthly') {
+                if (rule.monthlyPattern === 'date') {
+                    const targetDay = currentDate.getDate();
+                    nextDate.setMonth(nextDate.getMonth() + rule.interval);
+                    const lastDay = new Date(nextDate.getFullYear(), nextDate.getMonth() + 1, 0).getDate();
+                    nextDate.setDate(Math.min(targetDay, lastDay));
+                } else {
+                    nextDate.setMonth(nextDate.getMonth() + rule.interval);
+                    const occurrence = getNthWeekdayOfMonth(nextDate.getFullYear(), nextDate.getMonth(), rule.weekday, rule.position);
+                    if (occurrence) {
+                        return occurrence;
+                    }
+                }
+            } else if (rule.frequency === 'yearly') {
+                nextDate.setFullYear(nextDate.getFullYear() + rule.interval);
+            }
+
+            return nextDate;
+        }
+
+        // Assignments & Tasks Functions
+        function switchTab(tabId) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function addAssignment() {
+            const name = document.getElementById('assignmentName').value.trim();
+            const role = document.getElementById('assignmentRole').value.trim();
+            const phone = document.getElementById('assignmentPhone').value.trim();
+            const email = document.getElementById('assignmentEmail').value.trim();
+
+            if (!name || !role) {
+                alert('Please enter both name and role');
+                return;
+            }
+
+            const assignment = {
+                id: Date.now().toString(),
+                name,
+                role,
+                phone,
+                email
+            };
+
+            currentAssignments.push(assignment);
+            
+            // Clear form
+            document.getElementById('assignmentName').value = '';
+            document.getElementById('assignmentRole').value = '';
+            document.getElementById('assignmentPhone').value = '';
+            document.getElementById('assignmentEmail').value = '';
+
+            renderAssignments();
+            updateTaskAssigneeDropdown();
+        }
+
+        function removeAssignment(id) {
+            currentAssignments = currentAssignments.filter(a => a.id !== id);
+            renderAssignments();
+            updateTaskAssigneeDropdown();
+        }
+
+        function renderAssignments() {
+            const container = document.getElementById('assignmentsList');
+            
+            if (currentAssignments.length === 0) {
+                container.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">No assignments yet. Add people using the form below.</p>';
+                return;
+            }
+
+            container.innerHTML = currentAssignments.map(assign => `
+                <div class="assignment-item">
+                    <h4>${assign.name}</h4>
+                    <span class="assignment-role">${assign.role}</span>
+                    ${assign.phone ? `<p>📞 ${assign.phone}</p>` : ''}
+                    ${assign.email ? `<p>✉️ ${assign.email}</p>` : ''}
+                    <button class="remove-assignment-btn" onclick="removeAssignment('${assign.id}')">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function addTask() {
+            const description = document.getElementById('taskDescription').value.trim();
+            const assignedTo = document.getElementById('taskAssignedTo').value;
+
+            if (!description) {
+                alert('Please enter a task description');
+                return;
+            }
+
+            const task = {
+                id: Date.now().toString(),
+                description,
+                assignedTo,
+                completed: false
+            };
+
+            currentTasks.push(task);
+            
+            // Clear form
+            document.getElementById('taskDescription').value = '';
+            document.getElementById('taskAssignedTo').value = '';
+
+            renderTasks();
+        }
+
+        function removeTask(id) {
+            currentTasks = currentTasks.filter(t => t.id !== id);
+            renderTasks();
+        }
+
+        function toggleTaskComplete(id) {
+            const task = currentTasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                renderTasks();
+            }
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksList');
+            
+            if (currentTasks.length === 0) {
+                container.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">No tasks yet. Add tasks using the form below.</p>';
+                return;
+            }
+
+            container.innerHTML = currentTasks.map(task => `
+                <div class="task-item ${task.completed ? 'completed' : ''}">
+                    <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
+                           onchange="toggleTaskComplete('${task.id}')">
+                    <span class="task-text">${task.description}</span>
+                    ${task.assignedTo ? `<span class="task-assigned">${task.assignedTo}</span>` : ''}
+                    <button class="remove-task-btn" onclick="removeTask('${task.id}')" title="Remove task">×</button>
+                </div>
+            `).join('');
+        }
+
+        function updateTaskAssigneeDropdown() {
+            const select = document.getElementById('taskAssignedTo');
+            const currentValue = select.value;
+            
+            select.innerHTML = '<option value="">-- Select or type below --</option>';
+            
+            currentAssignments.forEach(assign => {
+                const option = document.createElement('option');
+                option.value = assign.name;
+                option.textContent = assign.name;
+                select.appendChild(option);
+            });
+
+            if (currentValue) {
+                select.value = currentValue;
+            }
+        }
+
+        // Reset assignments when opening new event
+        function resetAssignmentsForm() {
+            currentAssignments = [];
+            currentTasks = [];
+            currentPhotos = [];
+            renderAssignments();
+            renderTasks();
+            updateTaskAssigneeDropdown();
+            renderPhotoGallery();
+        }
+
+        // Update the add event button to reset assignments
+        const originalAddEventBtn = document.getElementById('addEventBtn');
+        originalAddEventBtn.addEventListener('click', resetAssignmentsForm);
+
+        // Filtering & Views Functions
+        function toggleFilterBar() {
+            const filterBar = document.getElementById('filterBar');
+            const isVisible = filterBar.style.display !== 'none';
+            filterBar.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function toggleCategoryFilter(category) {
+            if (activeFilters.categories.has(category)) {
+                activeFilters.categories.delete(category);
+            } else {
+                activeFilters.categories.add(category);
+            }
+            
+            updateFilterUI();
+            applyFilters();
+        }
+
+        function handleSearch(e) {
+            activeFilters.search = e.target.value.toLowerCase().trim();
+            applyFilters();
+        }
+
+        function clearAllFilters() {
+            activeFilters.categories.clear();
+            activeFilters.search = '';
+            document.getElementById('searchInput').value = '';
+            updateFilterUI();
+            applyFilters();
+        }
+
+        function updateFilterUI() {
+            // Update filter chips
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                const category = chip.dataset.category;
+                if (activeFilters.categories.has(category)) {
+                    chip.classList.add('active');
+                } else {
+                    chip.classList.remove('active');
+                }
+            });
+
+            // Update active filters bar
+            const activeFiltersBar = document.getElementById('activeFiltersBar');
+            const clearBtn = document.getElementById('clearFiltersBtn');
+            const hasActiveFilters = activeFilters.categories.size > 0 || activeFilters.search;
+
+            if (hasActiveFilters) {
+                activeFiltersBar.classList.add('visible');
+                clearBtn.style.display = 'inline-block';
+                
+                let filtersHTML = '<strong style="color: #2d3748;">Active Filters:</strong>';
+                
+                activeFilters.categories.forEach(cat => {
+                    const catName = document.querySelector(`[data-category="${cat}"]`).textContent.trim();
+                    filtersHTML += `
+                        <span class="active-filter-tag">
+                            ${catName}
+                            <span class="remove" onclick="toggleCategoryFilter('${cat}')">×</span>
+                        </span>
+                    `;
+                });
+
+                if (activeFilters.search) {
+                    filtersHTML += `
+                        <span class="active-filter-tag">
+                            Search: "${activeFilters.search}"
+                            <span class="remove" onclick="clearSearch()">×</span>
+                        </span>
+                    `;
+                }
+
+                activeFiltersBar.innerHTML = filtersHTML;
+            } else {
+                activeFiltersBar.classList.remove('visible');
+                clearBtn.style.display = 'none';
+            }
+        }
+
+        function clearSearch() {
+            activeFilters.search = '';
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
+        function applyFilters() {
+            updateFilterUI();
+            
+            if (currentView === 'month') {
+                renderCalendar();
+            } else if (currentView === 'week') {
+                renderWeekView();
+            } else if (currentView === 'agenda') {
+                renderAgendaView();
+            } else if (currentView === 'list') {
+                renderListView();
+            }
+        }
+
+        function filterEvents(allEvents) {
+            let filtered = allEvents;
+
+            // Apply category filter
+            if (activeFilters.categories.size > 0) {
+                filtered = filtered.filter(e => activeFilters.categories.has(e.category));
+            }
+
+            // Apply search filter
+            if (activeFilters.search) {
+                filtered = filtered.filter(e => {
+                    const searchText = activeFilters.search;
+                    return (
+                        e.title.toLowerCase().includes(searchText) ||
+                        (e.location && e.location.toLowerCase().includes(searchText)) ||
+                        (e.description && e.description.toLowerCase().includes(searchText))
+                    );
+                });
+            }
+
+            return filtered;
+        }
+
+        function switchView(view) {
+            currentView = view;
+
+            // Update view buttons
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+
+            // Hide all views
+            document.querySelectorAll('.month-view, .week-view, .agenda-view, .list-view').forEach(v => {
+                v.classList.remove('active');
+            });
+
+            // Show selected view and render
+            if (view === 'month') {
+                document.getElementById('monthView').classList.add('active');
+                renderCalendar();
+            } else if (view === 'week') {
+                document.getElementById('weekView').classList.add('active');
+                renderWeekView();
+            } else if (view === 'agenda') {
+                document.getElementById('agendaView').classList.add('active');
+                renderAgendaView();
+            } else if (view === 'list') {
+                document.getElementById('listView').classList.add('active');
+                renderListView();
+            }
+        }
+
+        function renderWeekView() {
+            const container = document.getElementById('weekViewContent');
+            const allEvents = generateRecurringInstances(currentDate.getFullYear(), currentDate.getMonth());
+            const filtered = filterEvents(allEvents);
+
+            // Get week start (Sunday)
+            const weekStart = new Date(currentDate);
+            weekStart.setDate(currentDate.getDate() - currentDate.getDay());
+
+            let html = '<div class="week-header">';
+            html += '<div class="week-time-label">Time</div>';
+            
+            for (let i = 0; i < 7; i++) {
+                const day = new Date(weekStart);
+                day.setDate(weekStart.getDate() + i);
+                html += `<div class="week-day-header">${day.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div>`;
+            }
+            html += '</div>';
+
+            // Time slots
+            html += '<div class="week-grid">';
+            for (let hour = 6; hour < 22; hour++) {
+                html += `<div class="week-time-slot">${hour}:00</div>`;
+                
+                for (let day = 0; day < 7; day++) {
+                    const currentDay = new Date(weekStart);
+                    currentDay.setDate(weekStart.getDate() + day);
+                    const dateStr = formatDate(currentDay);
+                    
+                    const dayEvents = filtered.filter(e => e.date === dateStr && e.time);
+                    const timeEvents = dayEvents.filter(e => {
+                        const eventHour = parseInt(e.time.split(':')[0]);
+                        return eventHour === hour;
+                    });
+
+                    html += '<div class="week-day-slot">';
+                    timeEvents.forEach(event => {
+                        html += `<div class="week-event event ${event.category}" onclick="viewEvent('${event.id}')">${event.title}</div>`;
+                    });
+                    html += '</div>';
+                }
+            }
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function renderAgendaView() {
+            const container = document.getElementById('agendaViewContent');
+            const allEvents = generateRecurringInstances(currentDate.getFullYear(), currentDate.getMonth());
+            const filtered = filterEvents(allEvents);
+
+            // Group by date
+            const eventsByDate = {};
+            filtered.forEach(event => {
+                if (!eventsByDate[event.date]) {
+                    eventsByDate[event.date] = [];
+                }
+                eventsByDate[event.date].push(event);
+            });
+
+            // Sort dates
+            const sortedDates = Object.keys(eventsByDate).sort();
+
+            let html = '';
+            sortedDates.forEach(date => {
+                const dateObj = new Date(date + 'T00:00:00');
+                const dateFormatted = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+                });
+
+                html += `<div class="agenda-date-group">`;
+                html += `<div class="agenda-date-header">${dateFormatted}</div>`;
+
+                eventsByDate[date].forEach(event => {
+                    let timeStr = '';
+                    if (event.time) {
+                        timeStr = event.endTime ? `${event.time} - ${event.endTime}` : event.time;
+                    }
+
+                    html += `
+                        <div class="agenda-event-card" onclick="viewEvent('${event.id}')" style="border-left-color: ${getCategoryColor(event.category)}">
+                            <div class="agenda-event-title">${event.title}</div>
+                            <div class="agenda-event-details">
+                                ${timeStr ? `⏰ ${timeStr} • ` : ''}
+                                ${event.location ? `📍 ${event.location}` : ''}
+                                ${event.isRecurringInstance ? ' • 🔄 Recurring' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html || '<p style="text-align: center; color: #718096; padding: 40px;">No events to display</p>';
+        }
+
+        function renderListView() {
+            const container = document.getElementById('listViewContent');
+            const allEvents = generateRecurringInstances(currentDate.getFullYear(), currentDate.getMonth());
+            const filtered = filterEvents(allEvents);
+
+            // Sort by date
+            const sortedEvents = filtered.sort((a, b) => a.date.localeCompare(b.date));
+
+            const categoryNames = {
+                'temple': 'Temple & Family History',
+                'service': 'Service Projects',
+                'activity': 'Ward Activity',
+                'young-men': 'Young Men',
+                'young-women': 'Young Women',
+                'combined-youth': 'Combined Youth',
+                'primary': 'Primary',
+                'relief-society': 'Relief Society',
+                'elders-quorum': 'Elders Quorum',
+                'emergency': 'Emergency Prep',
+                'baptism': 'Baptism',
+                'sunday': 'Sunday Services',
+                'stake': 'Stake Event',
+                'admin': 'Administrative'
+            };
+
+            let html = sortedEvents.map(event => {
+                const dateObj = new Date(event.date + 'T00:00:00');
+                const dateFormatted = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+                });
+
+                let timeStr = '';
+                if (event.time) {
+                    timeStr = event.endTime ? `${event.time} - ${event.endTime}` : event.time;
+                }
+
+                return `
+                    <div class="list-event-card" onclick="viewEvent('${event.id}')" style="border-left-color: ${getCategoryColor(event.category)}">
+                        <div class="list-event-header">
+                            <div class="list-event-title">${event.title}</div>
+                            <div class="list-event-category event ${event.category}">${categoryNames[event.category]}</div>
+                        </div>
+                        <div class="list-event-meta">
+                            <div>📅 ${dateFormatted}</div>
+                            ${timeStr ? `<div>⏰ ${timeStr}</div>` : ''}
+                            ${event.location ? `<div>📍 ${event.location}</div>` : ''}
+                            ${event.isRecurringInstance ? '<div>🔄 Recurring Event</div>' : ''}
+                            ${event.assignments && event.assignments.length > 0 ? `<div>👥 ${event.assignments.length} Assignment(s)</div>` : ''}
+                            ${event.tasks && event.tasks.length > 0 ? `<div>✅ ${event.tasks.length} Task(s)</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html || '<p style="text-align: center; color: #718096; padding: 40px;">No events to display</p>';
+        }
+
+        function getCategoryColor(category) {
+            const colors = {
+                'temple': '#9f7aea',
+                'service': '#48bb78',
+                'activity': '#f6ad55',
+                'young-men': '#4299e1',
+                'young-women': '#ec4899',
+                'combined-youth': '#8b5cf6',
+                'primary': '#f59e0b',
+                'relief-society': '#ed64a6',
+                'elders-quorum': '#059669',
+                'emergency': '#f56565',
+                'baptism': '#06b6d4',
+                'sunday': '#805ad5',
+                'stake': '#d97706',
+                'admin': '#718096'
+            };
+            return colors[category] || '#718096';
+        }
+
+        // Override renderCalendar to apply filters
+        const originalRenderCalendar = renderCalendar;
+        renderCalendar = function() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Generate recurring event instances for this month
+            const allEvents = generateRecurringInstances(year, month);
+            const filteredEvents = filterEvents(allEvents);
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            // Add day headers
+            const dayHeaders = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'day-header';
+                header.textContent = day;
+                calendar.appendChild(header);
+            });
+
+            // Add previous month's days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const cell = createDayCell(day, true, new Date(year, month - 1, day), false, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add current month's days
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const isToday = date.toDateString() === today.toDateString();
+                const cell = createDayCell(day, false, date, isToday, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add next month's days
+            const remainingCells = 42 - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const cell = createDayCell(day, true, new Date(year, month + 1, day), false, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            populateCategoryFilters();
+        };
+
+        // Photo Management Functions
+        function handlePhotoUpload(e) {
+            const files = e.target.files;
+            processPhotoFiles(files);
+            e.target.value = ''; // Reset input
+        }
+
+        function processPhotoFiles(files) {
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+
+            Array.from(files).forEach(file => {
+                if (!allowedTypes.includes(file.type)) {
+                    alert(`${file.name} is not a supported image format. Please use JPG, PNG, or GIF.`);
+                    return;
+                }
+
+                if (file.size > maxSize) {
+                    alert(`${file.name} is too large. Maximum size is 5MB.`);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const photo = {
+                        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                        dataUrl: e.target.result,
+                        filename: file.name,
+                        uploadDate: new Date().toISOString(),
+                        caption: ''
+                    };
+
+                    currentPhotos.push(photo);
+                    renderPhotoGallery();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderPhotoGallery() {
+            const photoGrid = document.getElementById('photoGrid');
+            const emptyGallery = document.getElementById('emptyGallery');
+            const photoCount = document.getElementById('photoCount');
+
+            photoCount.textContent = `${currentPhotos.length} photo${currentPhotos.length !== 1 ? 's' : ''}`;
+
+            if (currentPhotos.length === 0) {
+                photoGrid.style.display = 'none';
+                emptyGallery.style.display = 'block';
+                return;
+            }
+
+            photoGrid.style.display = 'grid';
+            emptyGallery.style.display = 'none';
+
+            photoGrid.innerHTML = currentPhotos.map((photo, index) => `
+                <div class="photo-item" onclick="openLightbox(${index})">
+                    <img src="${photo.dataUrl}" alt="${photo.filename}">
+                    <button class="remove-photo" onclick="removePhoto(event, '${photo.id}')">×</button>
+                    ${photo.caption ? `<div class="photo-caption">${photo.caption}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function removePhoto(event, photoId) {
+            event.stopPropagation();
+            if (confirm('Remove this photo?')) {
+                currentPhotos = currentPhotos.filter(p => p.id !== photoId);
+                renderPhotoGallery();
+            }
+        }
+
+        function openLightbox(index = 0) {
+            if (currentPhotos.length === 0) return;
+            
+            currentLightboxIndex = index;
+            updateLightboxContent();
+            document.getElementById('photoLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('photoLightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = currentPhotos.length - 1;
+            } else if (currentLightboxIndex >= currentPhotos.length) {
+                currentLightboxIndex = 0;
+            }
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            if (currentPhotos.length === 0) return;
+
+            const photo = currentPhotos[currentLightboxIndex];
+            document.getElementById('lightboxImage').src = photo.dataUrl;
+            document.getElementById('lightboxCaption').textContent = photo.caption || photo.filename;
+            document.getElementById('lightboxCounter').textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
+
+            // Show/hide navigation buttons
+            const prevBtn = document.getElementById('lightboxPrev');
+            const nextBtn = document.getElementById('lightboxNext');
+            prevBtn.style.display = currentPhotos.length > 1 ? 'block' : 'none';
+            nextBtn.style.display = currentPhotos.length > 1 ? 'block' : 'none';
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('photoLightbox');
+            if (!lightbox.classList.contains('active')) return;
+
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+
+        // Language Functions
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'to' : 'en';
+            localStorage.setItem('calendarLanguage', currentLanguage);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            // Update language toggle button
+            const flag = document.getElementById('languageFlag');
+            const text = document.getElementById('languageText');
+            if (currentLanguage === 'en') {
+                flag.textContent = '🇹🇴';
+                text.textContent = 'Lea Tonga';
+            } else {
+                flag.textContent = '🇺🇸';
+                text.textContent = 'English';
+            }
+
+            // Update all static text elements
+            updateStaticText();
+            
+            // Re-render calendar with translated month names
+            renderCalendar();
+            
+            // Update category filters
+            populateCategoryFilters();
+        }
+
+        function updateStaticText() {
+            // Update header if it exists
+            const headerElement = document.getElementById('headerWardName');
+            if (headerElement) {
+                headerElement.textContent = `🏛️ ${wardInfo.wardName} ${t('wardCalendar')}`;
+            }
+
+            // Update button texts
+            const buttonMappings = {
+                'addEventBtn': 'addEvent',
+                'templatesBtn': 'templates',
+                'filterToggleBtn': 'filtersViews',
+                'wardInfoBtn': 'wardInfo',
+                'exportBtn': 'exportData',
+                'importBtn': 'importJSON',
+                'importICalBtn': 'importICal'
+            };
+
+            Object.entries(buttonMappings).forEach(([id, key]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = t(key);
+            });
+
+            // Update modal titles and labels - these will be updated when modals open
+            // Update filter panel if visible
+            updateFilterPanelText();
+        }
+
+        function updateFilterPanelText() {
+            const filterBar = document.getElementById('filterBar');
+            if (filterBar && filterBar.style.display !== 'none') {
+                // Update search placeholder
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.placeholder = t('searchPlaceholder');
+                }
+
+                // Update clear filters button
+                const clearBtn = document.getElementById('clearFiltersBtn');
+                if (clearBtn) {
+                    clearBtn.textContent = t('clearAllFilters');
+                }
+
+                // Update view buttons
+                const viewButtons = [
+                    { selector: '[data-view="month"]', key: 'monthView' },
+                    { selector: '[data-view="week"]', key: 'weekView' },
+                    { selector: '[data-view="agenda"]', key: 'agendaView' },
+                    { selector: '[data-view="list"]', key: 'listView' }
+                ];
+
+                viewButtons.forEach(({ selector, key }) => {
+                    const btn = document.querySelector(selector);
+                    if (btn) btn.textContent = t(key);
+                });
+            }
+        }
+
+        function getTranslatedMonthName(monthIndex) {
+            const monthKeys = ['january', 'february', 'march', 'april', 'may', 'june',
+                             'july', 'august', 'september', 'october', 'november', 'december'];
+            return t(monthKeys[monthIndex]);
+        }
+
+        function getTranslatedDayName(dayIndex) {
+            const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            return t(dayKeys[dayIndex]);
+        }
+
+        function getTranslatedCategoryName(categoryId) {
+            const categoryMap = {
+                'temple': 'temple',
+                'service': 'service',
+                'activity': 'activity',
+                'young-men': 'youngMen',
+                'young-women': 'youngWomen',
+                'combined-youth': 'combinedYouth',
+                'primary': 'primary',
+                'relief-society': 'reliefSociety',
+                'elders-quorum': 'eldersQuorum',
+                'emergency': 'emergency',
+                'baptism': 'baptism',
+                'sunday': 'sunday',
+                'stake': 'stake',
+                'admin': 'admin'
+            };
+            return t(categoryMap[categoryId] || categoryId);
+        }
+
+        // Override renderCalendar to use translated names
+        const originalRenderCalendarFunc = renderCalendar;
+        renderCalendar = function() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Generate recurring event instances for this month
+            const allEvents = generateRecurringInstances(year, month);
+            const filteredEvents = filterEvents(allEvents);
+            
+            // Update month display with translated name
+            document.getElementById('currentMonth').textContent = `${getTranslatedMonthName(month)} ${year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            // Add day headers with translated names
+            for (let i = 0; i < 7; i++) {
+                const header = document.createElement('div');
+                header.className = 'day-header';
+                header.textContent = getTranslatedDayName(i);
+                calendar.appendChild(header);
+            }
+
+            // Add previous month's days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const cell = createDayCell(day, true, new Date(year, month - 1, day), false, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add current month's days
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const isToday = date.toDateString() === today.toDateString();
+                const cell = createDayCell(day, false, date, isToday, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            // Add next month's days
+            const remainingCells = 42 - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const cell = createDayCell(day, true, new Date(year, month + 1, day), false, filteredEvents);
+                calendar.appendChild(cell);
+            }
+
+            populateCategoryFilters();
+        };
+
+        // Update populateCategoryFilters to use translations
+        populateCategoryFilters = function() {
+            const container = document.getElementById('categoryFilters');
+            const categories = [
+                { id: 'temple', color: '#9f7aea' },
+                { id: 'service', color: '#48bb78' },
+                { id: 'activity', color: '#f6ad55' },
+                { id: 'young-men', color: '#4299e1' },
+                { id: 'young-women', color: '#ec4899' },
+                { id: 'combined-youth', color: '#8b5cf6' },
+                { id: 'primary', color: '#f59e0b' },
+                { id: 'relief-society', color: '#ed64a6' },
+                { id: 'elders-quorum', color: '#059669' },
+                { id: 'emergency', color: '#f56565' },
+                { id: 'baptism', color: '#06b6d4' },
+                { id: 'sunday', color: '#805ad5' },
+                { id: 'stake', color: '#d97706' },
+                { id: 'admin', color: '#718096' }
+            ];
+
+            container.innerHTML = categories.map(cat => {
+                const count = getEventCountByCategory(cat.id);
+                const name = getTranslatedCategoryName(cat.id);
+                return `
+                    <div class="filter-chip ${activeFilters.categories.has(cat.id) ? 'active' : ''}" 
+                         data-category="${cat.id}" onclick="toggleCategoryFilter('${cat.id}')">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background: ${cat.color};"></span>
+                        <span>${name}</span>
+                        <span class="count">${count}</span>
+                    </div>
+                `;
+            }).join('');
+        };
+    </script>
+</body>
+</html>
