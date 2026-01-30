@@ -1519,59 +1519,59 @@
             <div class="legend">
                 <div class="legend-item">
                     <div class="legend-color" style="background: #9f7aea;"></div>
-                    <span>Temple & Family History</span>
+                    <span data-translate-category="temple">Temple & Family History</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #48bb78;"></div>
-                    <span>Service Projects</span>
+                    <span data-translate-category="service">Service Projects</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #f6ad55;"></div>
-                    <span>Ward Activity</span>
+                    <span data-translate-category="activity">Ward Activity</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #4299e1;"></div>
-                    <span>Young Men</span>
+                    <span data-translate-category="youngMen">Young Men</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #ec4899;"></div>
-                    <span>Young Women</span>
+                    <span data-translate-category="youngWomen">Young Women</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #8b5cf6;"></div>
-                    <span>Combined Youth</span>
+                    <span data-translate-category="combinedYouth">Combined Youth</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #f59e0b;"></div>
-                    <span>Primary</span>
+                    <span data-translate-category="primary">Primary</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #ed64a6;"></div>
-                    <span>Relief Society</span>
+                    <span data-translate-category="reliefSociety">Relief Society</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #059669;"></div>
-                    <span>Elders Quorum</span>
+                    <span data-translate-category="eldersQuorum">Elders Quorum</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #f56565;"></div>
-                    <span>Emergency Prep</span>
+                    <span data-translate-category="emergency">Emergency Prep</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #06b6d4;"></div>
-                    <span>Baptism</span>
+                    <span data-translate-category="baptism">Baptism</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #805ad5;"></div>
-                    <span>Sunday Services</span>
+                    <span data-translate-category="sunday">Sunday</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #d97706;"></div>
-                    <span>Stake Event</span>
+                    <span data-translate-category="stake">Stake Event</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: #718096;"></div>
-                    <span>Administrative</span>
+                    <span data-translate-category="admin">Administrative</span>
                 </div>
             </div>
 
@@ -4083,6 +4083,11 @@
             const filterBar = document.getElementById('filterBar');
             const isVisible = filterBar.style.display !== 'none';
             filterBar.style.display = isVisible ? 'none' : 'block';
+            
+            // Repopulate categories when opening to ensure correct language
+            if (!isVisible) {
+                populateCategoryFilters();
+            }
         }
 
         function toggleCategoryFilter(category) {
@@ -4665,6 +4670,13 @@
                     option.textContent = t(key);
                 });
             }
+
+            // Update legend category names
+            const legendCategories = document.querySelectorAll('[data-translate-category]');
+            legendCategories.forEach(span => {
+                const key = span.getAttribute('data-translate-category');
+                span.textContent = t(key);
+            });
 
             // Update modal titles and labels - these will be updated when modals open
             // Update filter panel if visible
