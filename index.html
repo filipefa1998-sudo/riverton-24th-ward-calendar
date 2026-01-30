@@ -1457,14 +1457,14 @@
     <div class="container">
         <div class="header">
             <h1 id="headerWardName">🏛️ Riverton 24th Tongan Ward Calendar</h1>
-            <p>Strengthening Faith, Family, and Community</p>
+            <p id="headerTagline">Strengthening Faith, Family, and Community</p>
         </div>
 
         <div class="controls">
             <div class="month-nav">
-                <button id="prevMonth">← Previous</button>
+                <button id="prevMonth"><span id="prevText">← Previous</span></button>
                 <h2 id="currentMonth">Loading...</h2>
-                <button id="nextMonth">Next →</button>
+                <button id="nextMonth"><span id="nextText">Next →</span></button>
             </div>
             <div class="action-buttons">
                 <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
@@ -1629,20 +1629,20 @@
                     <label for="eventCategory">Category *</label>
                     <select id="eventCategory" required>
                         <option value="">Select a category...</option>
-                        <option value="temple">Temple & Family History</option>
-                        <option value="service">Service Projects</option>
-                        <option value="activity">Ward Activity</option>
-                        <option value="young-men">Young Men Activity</option>
-                        <option value="young-women">Young Women Activity</option>
-                        <option value="combined-youth">Combined Youth Activity</option>
-                        <option value="primary">Primary Activity</option>
-                        <option value="relief-society">Relief Society</option>
-                        <option value="elders-quorum">Elders Quorum</option>
-                        <option value="emergency">Emergency Preparedness</option>
-                        <option value="baptism">Baptism</option>
-                        <option value="sunday">Sunday Services</option>
-                        <option value="stake">Stake Event</option>
-                        <option value="admin">Administrative</option>
+                        <option value="temple" data-translate="temple">Temple & Family History</option>
+                        <option value="service" data-translate="service">Service Projects</option>
+                        <option value="activity" data-translate="activity">Ward Activity</option>
+                        <option value="young-men" data-translate="youngMen">Young Men Activity</option>
+                        <option value="young-women" data-translate="youngWomen">Young Women Activity</option>
+                        <option value="combined-youth" data-translate="combinedYouth">Combined Youth Activity</option>
+                        <option value="primary" data-translate="primary">Primary Activity</option>
+                        <option value="relief-society" data-translate="reliefSociety">Relief Society</option>
+                        <option value="elders-quorum" data-translate="eldersQuorum">Elders Quorum</option>
+                        <option value="emergency" data-translate="emergency">Emergency Preparedness</option>
+                        <option value="baptism" data-translate="baptism">Baptism</option>
+                        <option value="sunday" data-translate="sunday">Sunday</option>
+                        <option value="stake" data-translate="stake">Stake Event</option>
+                        <option value="admin" data-translate="admin">Administrative</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -2179,6 +2179,8 @@
             en: {
                 // Header
                 wardCalendar: 'Ward Calendar',
+                ward: 'Ward',
+                strengtheningFaith: 'Strengthening Faith, Family, and Community',
                 
                 // Navigation
                 previous: 'Previous',
@@ -2235,7 +2237,7 @@
                 eldersQuorum: 'Elders Quorum',
                 emergency: 'Emergency Preparedness',
                 baptism: 'Baptism',
-                sunday: 'Sunday Services',
+                sunday: 'Sunday',
                 stake: 'Stake Event',
                 admin: 'Administrative',
                 
@@ -2335,6 +2337,8 @@
             to: {
                 // Header
                 wardCalendar: 'Kalenda ʻo e Siasi',
+                ward: 'Siasi',
+                strengtheningFaith: 'Fakamālohi ʻa e Tui, Famili, mo e Komiunitī',
                 
                 // Navigation  
                 previous: 'Muʻa',
@@ -2391,7 +2395,7 @@
                 eldersQuorum: 'Kuólomu ʻo e Kau Mātuʻa',
                 emergency: 'Teuteu ki he Faingataʻa',
                 baptism: 'Papitaiso',
-                sunday: 'Ngaahi Lotu Sāpate',
+                sunday: 'Sāpate',
                 stake: 'Fai Siteeki',
                 admin: 'Pule',
                 
@@ -2509,37 +2513,6 @@
             if (header) {
                 header.textContent = `🏛️ ${wardInfo.wardName} Calendar`;
             }
-        }
-
-        function populateCategoryFilters() {
-            const container = document.getElementById('categoryFilters');
-            const categories = [
-                { id: 'temple', name: 'Temple & Family History', color: '#9f7aea' },
-                { id: 'service', name: 'Service Projects', color: '#48bb78' },
-                { id: 'activity', name: 'Ward Activity', color: '#f6ad55' },
-                { id: 'young-men', name: 'Young Men', color: '#4299e1' },
-                { id: 'young-women', name: 'Young Women', color: '#ec4899' },
-                { id: 'combined-youth', name: 'Combined Youth', color: '#8b5cf6' },
-                { id: 'primary', name: 'Primary', color: '#f59e0b' },
-                { id: 'relief-society', name: 'Relief Society', color: '#ed64a6' },
-                { id: 'elders-quorum', name: 'Elders Quorum', color: '#059669' },
-                { id: 'emergency', name: 'Emergency Prep', color: '#f56565' },
-                { id: 'baptism', name: 'Baptism', color: '#06b6d4' },
-                { id: 'sunday', name: 'Sunday Services', color: '#805ad5' },
-                { id: 'stake', name: 'Stake Event', color: '#d97706' },
-                { id: 'admin', name: 'Administrative', color: '#718096' }
-            ];
-
-            container.innerHTML = categories.map(cat => {
-                const count = getEventCountByCategory(cat.id);
-                return `
-                    <div class="filter-chip" data-category="${cat.id}" onclick="toggleCategoryFilter('${cat.id}')">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background: ${cat.color};"></span>
-                        <span>${cat.name}</span>
-                        <span class="count">${count}</span>
-                    </div>
-                `;
-            }).join('');
         }
 
         function getEventCountByCategory(category) {
@@ -2933,7 +2906,7 @@
                 'elders-quorum': 'Elders Quorum',
                 'emergency': 'Emergency Preparedness',
                 'baptism': 'Baptism',
-                'sunday': 'Sunday Services',
+                'sunday': 'Sunday',
                 'stake': 'Stake Event',
                 'admin': 'Administrative'
             };
@@ -3486,7 +3459,7 @@
                 'elders-quorum': 'Elders Quorum',
                 'emergency': 'Emergency Preparedness',
                 'baptism': 'Baptism',
-                'sunday': 'Sunday Services',
+                'sunday': 'Sunday',
                 'stake': 'Stake Event',
                 'admin': 'Administrative'
             };
@@ -4375,7 +4348,7 @@
                 'elders-quorum': 'Elders Quorum',
                 'emergency': 'Emergency Prep',
                 'baptism': 'Baptism',
-                'sunday': 'Sunday Services',
+                'sunday': 'Sunday',
                 'stake': 'Stake Event',
                 'admin': 'Administrative'
             };
@@ -4648,8 +4621,24 @@
             // Update header if it exists
             const headerElement = document.getElementById('headerWardName');
             if (headerElement) {
-                headerElement.textContent = `🏛️ ${wardInfo.wardName} ${t('wardCalendar')}`;
+                if (currentLanguage === 'to') {
+                    headerElement.textContent = `🏛️ Livatoni Hono 24 Tonga Uooti ${t('wardCalendar')}`;
+                } else {
+                    headerElement.textContent = `🏛️ Riverton 24th Tongan Ward ${t('wardCalendar')}`;
+                }
             }
+
+            // Update tagline
+            const taglineElement = document.getElementById('headerTagline');
+            if (taglineElement) {
+                taglineElement.textContent = t('strengtheningFaith');
+            }
+
+            // Update Previous/Next buttons
+            const prevText = document.getElementById('prevText');
+            const nextText = document.getElementById('nextText');
+            if (prevText) prevText.textContent = `← ${t('previous')}`;
+            if (nextText) nextText.textContent = `${t('next')} →`;
 
             // Update button texts
             const buttonMappings = {
@@ -4666,6 +4655,16 @@
                 const el = document.getElementById(id);
                 if (el) el.textContent = t(key);
             });
+
+            // Update category dropdown options
+            const categorySelect = document.getElementById('eventCategory');
+            if (categorySelect) {
+                const options = categorySelect.querySelectorAll('option[data-translate]');
+                options.forEach(option => {
+                    const key = option.getAttribute('data-translate');
+                    option.textContent = t(key);
+                });
+            }
 
             // Update modal titles and labels - these will be updated when modals open
             // Update filter panel if visible
