@@ -1915,25 +1915,25 @@
                 <button class="close-btn" id="closeWardInfoModal">&times;</button>
             </div>
             <div class="event-details">
-                <h3>🏛️ Riverton 24th Tongan Ward</h3>
+                <h3 id="wardNameHeader">🏛️ Riverton 24th Tongan Ward</h3>
                 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
                     <h4 style="margin-bottom: 15px; color: #2d3748;" id="sundayServiceTimesLabel">Sunday Service Times</h4>
                     <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
-                        <span id="sacramentLabel">Sacrament Meeting:</span> 9:00 AM - 10:00 AM
+                        <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTime">9:00 AM - 10:00 AM</span>
                     </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        <span id="sundaySchoolLabel">Sunday School:</span> 10:10 AM - 11:00 AM
+                        <span id="sundaySchoolLabel">Sunday School:</span> <span id="sundaySchoolTimeDisplay">10:10 AM - 11:00 AM</span>
                     </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        <span id="priesthoodRSLabel">Priesthood/Relief Society:</span> 11:10 AM - 12:00 PM
+                        <span id="priesthoodRSLabel">Priesthood/Relief Society:</span> <span id="priesthoodTimeDisplay">11:10 AM - 12:00 PM</span>
                     </div>
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
                     <h4 style="margin-bottom: 10px; color: #2d3748;" id="locationLabel">📍 Location</h4>
-                    <p style="margin: 5px 0;">12288 South 1840 West</p>
-                    <p style="margin: 5px 0;">Riverton, Utah 84065</p>
+                    <p style="margin: 5px 0;" id="addressLine1">12288 South 1840 West</p>
+                    <p style="margin: 5px 0;" id="addressLine2">Riverton, Utah 84065</p>
                     <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=12288+South+1840+West+Riverton+Utah+84065', '_blank')" style="margin-top: 10px;">
                         <span id="openMapsBtn">📍 Open in Maps</span>
                     </button>
@@ -1956,8 +1956,8 @@
                 </div>
 
                 <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
-                    <p style="margin: 0; font-style: italic; color: #4a5568;">
-                        "That we may be one, and when we pray unto thee in our hearts, we may be heard in the heavens." - D&C 42:3
+                    <p style="margin: 0; font-style: italic; color: #4a5568;" id="scriptureQuote">
+                        "And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me." - Ether 12:27
                     </p>
                 </div>
             </div>
@@ -2492,15 +2492,15 @@
                 // Ward Info
                 wardInformation: 'Fakamatala Siasi',
                 editWardInformation: 'Fakalelei Fakamatala Siasi',
-                sundayServiceTimes: 'Ngaahi Taimi Lotu Sāpate',
-                sacramentMeeting: 'Lotu Sakalaméti',
-                sundaySchool: 'Sukulu Sāpate',
-                priesthoodRS: 'Tauhi/Kautaha Tokoni',
-                location: 'Feituʻu',
-                openInMaps: 'ʻĀvani ʻi he Mepu',
-                shareWardInfo: 'Vahevahe Fakamatala Siasi',
-                scanQR: 'Sīkani QR ke vahevahe taimi lotu mo e feituʻu',
-                downloadQR: 'Toʻo Hifo QR',
+                sundayServiceTimes: 'Taimi Lotu Faka-Sāpate',
+                sacramentMeeting: 'Houalotu Sakalameniti',
+                sundaySchool: 'Lautohi Faka-Sāpate',
+                priesthoodRS: 'Lakanga Fakataulaʻeikí/Kautaha Fineʻofá',
+                location: 'Feitu\'u',
+                openInMaps: 'Fakaava \'i he Mape',
+                shareWardInfo: 'Vahevahe \'a e Info \'a e Uooti',
+                scanQR: 'Sikani QR Code ke vahevahe \'a e taimi \'o e sevesi mo e feitu\'u',
+                downloadQR: 'Download mai \'a e QR Code',
                 contactInfo: 'Fakamatala Fetuʻutaki',
                 bishop: 'Pīsope',
                 wardClerk: 'Kalaʻake Siasi',
@@ -4651,6 +4651,12 @@
             
             // Update category filters
             populateCategoryFilters();
+            
+            // Update Ward Info if modal is open
+            const wardInfoModal = document.getElementById('wardInfoModal');
+            if (wardInfoModal && wardInfoModal.classList.contains('active')) {
+                updateWardInfoTranslations();
+            }
         }
 
         function updateStaticText() {
@@ -4715,6 +4721,54 @@
         }
 
         function updateWardInfoTranslations() {
+            // Update ward name header
+            const wardNameHeader = document.getElementById('wardNameHeader');
+            if (wardNameHeader) {
+                if (currentLanguage === 'to') {
+                    wardNameHeader.textContent = '🏛️ Uooti Tonga hono 24 ʻo Riverton';
+                } else {
+                    wardNameHeader.textContent = '🏛️ Riverton 24th Tongan Ward';
+                }
+            }
+
+            // Update address
+            const addressLine1 = document.getElementById('addressLine1');
+            const addressLine2 = document.getElementById('addressLine2');
+            if (addressLine1 && addressLine2) {
+                if (currentLanguage === 'to') {
+                    addressLine1.textContent = '12288 Tonga 1840 Hihifo';
+                    addressLine2.textContent = 'Livatoni, ʻIutā 84065';
+                } else {
+                    addressLine1.textContent = '12288 South 1840 West';
+                    addressLine2.textContent = 'Riverton, Utah 84065';
+                }
+            }
+
+            // Update times
+            const sacramentTime = document.getElementById('sacramentTime');
+            const sundaySchoolTime = document.getElementById('sundaySchoolTimeDisplay');
+            const priesthoodTime = document.getElementById('priesthoodTimeDisplay');
+            
+            if (sacramentTime) sacramentTime.textContent = '9:00 AM - 10:00 AM';
+            if (sundaySchoolTime) {
+                if (currentLanguage === 'to') {
+                    sundaySchoolTime.textContent = '10:10 pongipongi - 11:00 pongipongi';
+                } else {
+                    sundaySchoolTime.textContent = '10:10 AM - 11:00 AM';
+                }
+            }
+            if (priesthoodTime) priesthoodTime.textContent = '11:10 AM - 12:00 PM';
+
+            // Update scripture
+            const scriptureQuote = document.getElementById('scriptureQuote');
+            if (scriptureQuote) {
+                if (currentLanguage === 'to') {
+                    scriptureQuote.textContent = '"Pea kapau \'e ha\'u \'a e kakai kiate au te u fakahaa\'i kiate kinautolu honau vaivai. \'Oku ou foaki ki he kakai \'a e vaivai ke nau fakavaivai; pea \'oku fe\'unga \'eku kelesi ki he kakai kotoa pe \'oku fakavaivai\'i kinautolu \'i hoku \'ao." - ʻEta 12:27';
+                } else {
+                    scriptureQuote.textContent = '"And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me." - Ether 12:27';
+                }
+            }
+
             // Update Ward Info modal text
             const wardInfoMappings = {
                 'wardInfoTitle': 'wardInformation',
