@@ -3307,7 +3307,8 @@
 
         // Ward Info Functions
         function openWardInfo() {
-            updateWardInfoDisplay();
+            // Don't regenerate HTML - it wipes out our translation IDs
+            // updateWardInfoDisplay();
             updateWardInfoTranslations();
             generateQRCode();
             document.getElementById('wardInfoModal').classList.add('active');
