@@ -1911,48 +1911,48 @@
     <div class="modal" id="wardInfoModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Ward Information</h2>
+                <h2 id="wardInfoTitle">Ward Information</h2>
                 <button class="close-btn" id="closeWardInfoModal">&times;</button>
             </div>
             <div class="event-details">
                 <h3>🏛️ Riverton 24th Tongan Ward</h3>
                 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;">Sunday Service Times</h4>
+                    <h4 style="margin-bottom: 15px; color: #2d3748;" id="sundayServiceTimesLabel">Sunday Service Times</h4>
                     <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
-                        Sacrament Meeting: 9:00 AM - 10:00 AM
+                        <span id="sacramentLabel">Sacrament Meeting:</span> 9:00 AM - 10:00 AM
                     </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        Sunday School: 10:10 AM - 11:00 AM
+                        <span id="sundaySchoolLabel">Sunday School:</span> 10:10 AM - 11:00 AM
                     </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        Priesthood/Relief Society: 11:10 AM - 12:00 PM
+                        <span id="priesthoodRSLabel">Priesthood/Relief Society:</span> 11:10 AM - 12:00 PM
                     </div>
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;">📍 Location</h4>
+                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="locationLabel">📍 Location</h4>
                     <p style="margin: 5px 0;">12288 South 1840 West</p>
                     <p style="margin: 5px 0;">Riverton, Utah 84065</p>
                     <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=12288+South+1840+West+Riverton+Utah+84065', '_blank')" style="margin-top: 10px;">
-                        📍 Open in Maps
+                        <span id="openMapsBtn">📍 Open in Maps</span>
                     </button>
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;">📱 Share Ward Info</h4>
-                    <p style="margin-bottom: 15px; color: #4a5568;">Scan QR Code to share service times and location</p>
+                    <h4 style="margin-bottom: 15px; color: #2d3748;" id="shareWardInfoLabel">📱 Share Ward Info</h4>
+                    <p style="margin-bottom: 15px; color: #4a5568;" id="scanQRLabel">Scan QR Code to share service times and location</p>
                     <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
                     <button class="btn btn-secondary" id="downloadQRBtn" style="margin-top: 10px;">
-                        💾 Download QR Code
+                        <span id="downloadQRLabel">💾 Download QR Code</span>
                     </button>
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;">📞 Contact Information</h4>
-                    <p style="margin: 5px 0;"><strong>Bishop:</strong> [Bishop Name]</p>
-                    <p style="margin: 5px 0;"><strong>Ward Clerk:</strong> [Clerk Name]</p>
-                    <p style="margin: 5px 0;"><strong>Phone:</strong> [Ward Phone]</p>
+                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="contactInfoLabel">📞 Contact Information</h4>
+                    <p style="margin: 5px 0;"><strong id="bishopLabel">Bishop:</strong> [Bishop Name]</p>
+                    <p style="margin: 5px 0;"><strong id="clerkLabel">Ward Clerk:</strong> [Clerk Name]</p>
+                    <p style="margin: 5px 0;"><strong id="phoneLabel">Phone:</strong> [Ward Phone]</p>
                 </div>
 
                 <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
@@ -1962,8 +1962,8 @@
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="btn btn-primary" id="editWardInfoBtn">✏️ Edit Ward Info</button>
-                <button class="btn btn-secondary" id="closeWardInfoBtn">Close</button>
+                <button class="btn btn-primary" id="editWardInfoBtn"><span id="editWardInfoBtnText">✏️ Edit Ward Info</span></button>
+                <button class="btn btn-secondary" id="closeWardInfoBtn"><span id="closeWardInfoBtnText">Close</span></button>
             </div>
         </div>
     </div>
@@ -1972,7 +1972,7 @@
     <div class="modal" id="editWardInfoModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Edit Ward Information</h2>
+                <h2 id="editWardInfoTitle">Edit Ward Information</h2>
                 <button class="close-btn" id="closeEditWardInfoModal">&times;</button>
             </div>
             <form id="wardInfoForm">
@@ -2318,6 +2318,21 @@
                 
                 // Ward Info
                 wardInformation: 'Ward Information',
+                editWardInformation: 'Edit Ward Information',
+                sundayServiceTimes: 'Sunday Service Times',
+                sacramentMeeting: 'Sacrament Meeting',
+                sundaySchool: 'Sunday School',
+                priesthoodRS: 'Priesthood/Relief Society',
+                location: 'Location',
+                openInMaps: 'Open in Maps',
+                shareWardInfo: 'Share Ward Info',
+                scanQR: 'Scan QR Code to share service times and location',
+                downloadQR: 'Download QR Code',
+                contactInfo: 'Contact Information',
+                bishop: 'Bishop',
+                wardClerk: 'Ward Clerk',
+                phone: 'Phone',
+                editWardInfo: 'Edit Ward Info',
                 wardName: 'Ward Name',
                 sacramentTime: 'Sacrament Meeting Time',
                 sundaySchoolTime: 'Sunday School Time',
@@ -2476,6 +2491,21 @@
                 
                 // Ward Info
                 wardInformation: 'Fakamatala Siasi',
+                editWardInformation: 'Fakalelei Fakamatala Siasi',
+                sundayServiceTimes: 'Ngaahi Taimi Lotu Sāpate',
+                sacramentMeeting: 'Lotu Sakalaméti',
+                sundaySchool: 'Sukulu Sāpate',
+                priesthoodRS: 'Tauhi/Kautaha Tokoni',
+                location: 'Feituʻu',
+                openInMaps: 'ʻĀvani ʻi he Mepu',
+                shareWardInfo: 'Vahevahe Fakamatala Siasi',
+                scanQR: 'Sīkani QR ke vahevahe taimi lotu mo e feituʻu',
+                downloadQR: 'Toʻo Hifo QR',
+                contactInfo: 'Fakamatala Fetuʻutaki',
+                bishop: 'Pīsope',
+                wardClerk: 'Kalaʻake Siasi',
+                phone: 'Telefoni',
+                editWardInfo: 'Fakalelei Fakamatala Siasi',
                 wardName: 'Hingoa Siasi',
                 sacramentTime: 'Taimi Lotu Sakalaméti',
                 sundaySchoolTime: 'Taimi Sukulu Sāpate',
@@ -3278,6 +3308,7 @@
         // Ward Info Functions
         function openWardInfo() {
             updateWardInfoDisplay();
+            updateWardInfoTranslations();
             generateQRCode();
             document.getElementById('wardInfoModal').classList.add('active');
         }
@@ -4681,6 +4712,54 @@
             // Update modal titles and labels - these will be updated when modals open
             // Update filter panel if visible
             updateFilterPanelText();
+        }
+
+        function updateWardInfoTranslations() {
+            // Update Ward Info modal text
+            const wardInfoMappings = {
+                'wardInfoTitle': 'wardInformation',
+                'editWardInfoTitle': 'editWardInformation',
+                'sundayServiceTimesLabel': 'sundayServiceTimes',
+                'sacramentLabel': 'sacramentMeeting',
+                'sundaySchoolLabel': 'sundaySchool',
+                'priesthoodRSLabel': 'priesthoodRS',
+                'locationLabel': 'location',
+                'openMapsBtn': 'openInMaps',
+                'shareWardInfoLabel': 'shareWardInfo',
+                'scanQRLabel': 'scanQR',
+                'downloadQRLabel': 'downloadQR',
+                'contactInfoLabel': 'contactInfo',
+                'bishopLabel': 'bishop',
+                'clerkLabel': 'wardClerk',
+                'phoneLabel': 'phone',
+                'editWardInfoBtnText': 'editWardInfo',
+                'closeWardInfoBtnText': 'close'
+            };
+
+            Object.entries(wardInfoMappings).forEach(([id, key]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const translated = t(key);
+                    // For buttons with icons, preserve them
+                    if (id === 'editWardInfoBtnText') {
+                        el.textContent = `✏️ ${translated}`;
+                    } else if (id === 'openMapsBtn') {
+                        el.textContent = `📍 ${translated}`;
+                    } else if (id === 'downloadQRLabel') {
+                        el.textContent = `💾 ${translated}`;
+                    } else if (id === 'shareWardInfoLabel') {
+                        el.textContent = `📱 ${translated}`;
+                    } else if (id === 'contactInfoLabel') {
+                        el.textContent = `📞 ${translated}`;
+                    } else if (id === 'locationLabel') {
+                        el.textContent = `📍 ${translated}`;
+                    } else if (id.includes('Label') && !id.includes('Btn')) {
+                        el.textContent = translated + ':';
+                    } else {
+                        el.textContent = translated;
+                    }
+                }
+            });
         }
 
         function updateFilterPanelText() {
