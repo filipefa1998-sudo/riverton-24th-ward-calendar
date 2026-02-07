@@ -2004,9 +2004,9 @@
 
                 <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
                     <h4 style="margin-bottom: 10px; color: #2d3748;" id="contactInfoLabel">📞 Contact Information</h4>
-                    <p style="margin: 5px 0;"><strong id="bishopLabel">Bishop:</strong> [Bishop Name]</p>
-                    <p style="margin: 5px 0;"><strong id="clerkLabel">Ward Clerk:</strong> [Clerk Name]</p>
-                    <p style="margin: 5px 0;"><strong id="phoneLabel">Phone:</strong> [Ward Phone]</p>
+                    <p style="margin: 5px 0;"><strong id="bishopLabel">Bishop:</strong> <span id="bishopNameDisplay">[Bishop Name]</span></p>
+                    <p style="margin: 5px 0;"><strong id="clerkLabel">Ward Clerk:</strong> <span id="clerkNameDisplay">[Clerk Name]</span></p>
+                    <p style="margin: 5px 0;"><strong id="phoneLabel">Phone:</strong> <span id="wardPhoneDisplay">[Ward Phone]</span></p>
                 </div>
 
                 <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
@@ -3457,41 +3457,44 @@
         }
 
         function saveWardInfo(e) {
-    e.preventDefault();
+            e.preventDefault();
     
-    wardInfo = {
-        wardName: document.getElementById('wardName').value,
-        sacramentTime: document.getElementById('sacramentTime').value,
-        sundaySchoolTime: document.getElementById('sundaySchoolTime').value,
-        priesthoodTime: document.getElementById('priesthoodTime').value,
-        wardAddress: document.getElementById('wardAddress').value,
-        bishopName: document.getElementById('bishopName').value,
-        clerkName: document.getElementById('clerkName').value,
-        wardPhone: document.getElementById('wardPhone').value
-    };
+            wardInfo = {
+            wardName: document.getElementById('wardName').value,
+            sacramentTime: document.getElementById('sacramentTime').value,
+            sundaySchoolTime: document.getElementById('sundaySchoolTime').value,
+            priesthoodTime: document.getElementById('priesthoodTime').value,
+            wardAddress: document.getElementById('wardAddress').value,
+            bishopName: document.getElementById('bishopName').value,
+            clerkName: document.getElementById('clerkName').value,
+            wardPhone: document.getElementById('wardPhone').value
+        };
 
-    localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
+            localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
     
-    // Log to verify saving
-    console.log('Saved to localStorage:', wardInfo);
+            console.log('Saved to localStorage:', wardInfo);
     
-    updateHeaderWardName();
+            updateHeaderWardName();
     
-    // Update the DISPLAY elements (not the input fields!)
-    document.getElementById('sacramentTimeDisplay').textContent = wardInfo.sacramentTime;
-    document.getElementById('sundaySchoolTimeDisplay').textContent = wardInfo.sundaySchoolTime;
-    document.getElementById('priesthoodTimeDisplay').textContent = wardInfo.priesthoodTime;
+            // Update ALL the DISPLAY elements
+            document.getElementById('sacramentTimeDisplay').textContent = wardInfo.sacramentTime;
+            document.getElementById('sundaySchoolTimeDisplay').textContent = wardInfo.sundaySchoolTime;
+            document.getElementById('priesthoodTimeDisplay').textContent = wardInfo.priesthoodTime;
     
-    closeEditWardInfoModal();
+            // Update contact info displays
+            document.getElementById('bishopNameDisplay').textContent = wardInfo.bishopName || '[Bishop Name]';
+            document.getElementById('clerkNameDisplay').textContent = wardInfo.clerkName || '[Clerk Name]';
+            document.getElementById('wardPhoneDisplay').textContent = wardInfo.wardPhone || '[Ward Phone]';
     
-    // Reopen ward info modal after a brief delay
-    setTimeout(() => {
-        openWardInfo();
-    }, 100);
+            closeEditWardInfoModal();
     
-    alert('Ward information saved successfully!');
-}
+            setTimeout(() => {
+            openWardInfo();
+            }, 100);
     
+            alert('Ward information saved successfully!');
+            }
+   
       
 
         function updateWardInfoDisplay() {
