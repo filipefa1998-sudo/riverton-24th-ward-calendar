@@ -1654,13 +1654,67 @@
                     <input type="date" id="eventEndDate">
                 </div>
                 <div class="form-group">
-                    <label for="eventStartTime">Start Time</label>
-                    <input type="time" id="eventStartTime">
-                </div>
+    <label for="eventStartTime">Start Time</label>
+    <div style="display: flex; gap: 8px;">
+        <select id="eventStartHour" style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="">Hour</option>
+            <option value="12">12</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+        </select>
+        <select id="eventStartMinute" style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="">Min</option>
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select>
+        <select id="eventStartAMPM" style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+    </div>
+</div>
                 <div class="form-group">
-                    <label for="eventEndTime">End Time</label>
-                    <input type="time" id="eventEndTime">
-                </div>
+    <label for="eventEndTime">End Time</label>
+    <div style="display: flex; gap: 8px;">
+        <select id="eventEndHour" style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="">Hour</option>
+            <option value="12">12</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+        </select>
+        <select id="eventEndMinute" style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="">Min</option>
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select>
+        <select id="eventEndAMPM" style="padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1em;">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+    </div>
+</div>
                 <div class="form-group">
                     <label for="eventLocation">Location</label>
                     <input type="text" id="eventLocation" placeholder="e.g., Church Building, Temple, Community Center">
@@ -2173,6 +2227,25 @@
             wardPhone: ''
         };
         let qrCodeInstance = null;
+
+        // Time conversion helpers
+        function to24Hour(hour, minute, ampm) {
+        if (!hour || !minute) return '';
+        let h = parseInt(hour);
+        if (ampm === 'PM' && h !== 12) h += 12;
+        if (ampm === 'AM' && h === 12) h = 0;
+        return `${String(h).padStart(2, '0')}:${minute}`;
+        }
+
+        function from24Hour(time24) {
+        if (!time24) return { hour: '', minute: '', ampm: 'AM' };
+        const [hours, minutes] = time24.split(':').map(Number);
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const hour = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+        return { hour: String(hour), minute: String(minutes).padStart(2, '0'), ampm };
+        }
+
+        // Translation Dictionary
 
         // Translation Dictionary
         const translations = {
@@ -2873,8 +2946,15 @@
 
             const startDate = document.getElementById('eventStartDate').value;
             const endDate = document.getElementById('eventEndDate').value;
-            const startTime = document.getElementById('eventStartTime').value;
-            const endTime = document.getElementById('eventEndTime').value;
+            const startHour = document.getElementById('eventStartHour').value;
+            const startMinute = document.getElementById('eventStartMinute').value;
+            const startAMPM = document.getElementById('eventStartAMPM').value;
+            const endHour = document.getElementById('eventEndHour').value;
+            const endMinute = document.getElementById('eventEndMinute').value;
+            const endAMPM = document.getElementById('eventEndAMPM').value;
+
+            const startTime = to24Hour(startHour, startMinute, startAMPM);
+            const endTime = to24Hour(endHour, endMinute, endAMPM);
             const saveAsTemplateChecked = document.getElementById('saveAsTemplate').checked;
             const isRecurring = document.getElementById('isRecurring').checked;
 
