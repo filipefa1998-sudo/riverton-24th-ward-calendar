@@ -3457,23 +3457,35 @@
         }
 
         function saveWardInfo(e) {
-            e.preventDefault();
-            
-            wardInfo = {
-                wardName: document.getElementById('wardName').value,
-                sacramentTime: document.getElementById('sacramentTime').value,
-                sundaySchoolTime: document.getElementById('sundaySchoolTime').value,
-                priesthoodTime: document.getElementById('priesthoodTime').value,
-                wardAddress: document.getElementById('wardAddress').value,
-                bishopName: document.getElementById('bishopName').value,
-                clerkName: document.getElementById('clerkName').value,
-                wardPhone: document.getElementById('wardPhone').value
-            };
+        e.preventDefault();
+    
+        wardInfo = {
+        wardName: document.getElementById('wardName').value,
+        sacramentTime: document.getElementById('sacramentTime').value,
+        sundaySchoolTime: document.getElementById('sundaySchoolTime').value,
+        priesthoodTime: document.getElementById('priesthoodTime').value,
+        wardAddress: document.getElementById('wardAddress').value,
+        bishopName: document.getElementById('bishopName').value,
+        clerkName: document.getElementById('clerkName').value,
+        wardPhone: document.getElementById('wardPhone').value
+        };
 
-            localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
-            updateHeaderWardName();
-            closeEditWardInfoModal();
-            alert('Ward information saved successfully!');
+        localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
+        updateHeaderWardName();
+    
+        // Update the display with new ward info
+        document.getElementById('sacramentTime').textContent = wardInfo.sacramentTime;
+        document.getElementById('sundaySchoolTimeDisplay').textContent = wardInfo.sundaySchoolTime;
+        document.getElementById('priesthoodTimeDisplay').textContent = wardInfo.priesthoodTime;
+    
+        closeEditWardInfoModal();
+    
+        // Reopen ward info modal to show the updated information
+        setTimeout(() => {
+        openWardInfo();
+        }, 100);
+    
+        alert('Ward information saved successfully!');
         }
 
         function updateWardInfoDisplay() {
