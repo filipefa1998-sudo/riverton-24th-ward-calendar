@@ -1974,20 +1974,20 @@
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
                     <h4 style="margin-bottom: 15px; color: #2d3748;" id="sundayServiceTimesLabel">Sunday Service Times</h4>
                     <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
-                        <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTimeDisplay"></span>
-                    </div>
+                    <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTimeDisplay">9:00 AM - 10:00 AM</span>
+                </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        <span id="sundaySchoolLabel">Sunday School:</span> <span id="sundaySchoolTimeDisplay"></span>
-                    </div>
+                    <span id="sundaySchoolLabel">Sunday School:</span> <span id="sundaySchoolTimeDisplay">10:10 AM - 11:00 AM</span>
+                </div>
                     <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
-                        <span id="priesthoodRSLabel">Priesthood/Relief Society:</span> <span id="priesthoodTimeDisplay"></span>
-                    </div>
+                    <span id="priesthoodRSLabel">Priesthood/Relief Society:</span> <span id="priesthoodTimeDisplay">11:10 AM - 12:00 PM</span>
+                </div>
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
                     <h4 style="margin-bottom: 10px; color: #2d3748;" id="locationLabel">📍 Location</h4>
-                    <p style="margin: 5px 0;" id="addressLine1">12288 South 1840 West</p>
-                    <p style="margin: 5px 0;" id="addressLine2">Riverton, Utah 84065</p>
+                    <p style="margin: 5px 0;" id="addressLine1Display">12288 South 1840 West</p>
+                    <p style="margin: 5px 0;" id="addressLine2Display">Riverton, Utah 84065</p>
                     <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=12288+South+1840+West+Riverton+Utah+84065', '_blank')" style="margin-top: 10px;">
                         <span id="openMapsBtn">📍 Open in Maps</span>
                     </button>
@@ -3486,15 +3486,26 @@
             document.getElementById('clerkNameDisplay').textContent = wardInfo.clerkName || '[Clerk Name]';
             document.getElementById('wardPhoneDisplay').textContent = wardInfo.wardPhone || '[Ward Phone]';
     
+            // Update address displays
+            const addressParts = wardInfo.wardAddress.split(',');
+            if (addressParts.length >= 2) {
+            document.getElementById('addressLine1Display').textContent = addressParts[0].trim();
+            document.getElementById('addressLine2Display').textContent = addressParts.slice(1).join(',').trim();
+         } else {
+            document.getElementById('addressLine1Display').textContent = wardInfo.wardAddress;
+            document.getElementById('addressLine2Display').textContent = '';
+        }
+    
             closeEditWardInfoModal();
     
             setTimeout(() => {
             openWardInfo();
-            }, 100);
+        }, 100);
     
             alert('Ward information saved successfully!');
-            }
-   
+        }
+            
+
       
 
         function updateWardInfoDisplay() {
