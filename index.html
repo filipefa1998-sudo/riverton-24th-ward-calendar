@@ -3418,12 +3418,52 @@
 
         // Ward Info Functions
         function openWardInfo() {
-            // Don't regenerate HTML - it wipes out our translation IDs
-            // updateWardInfoDisplay();
-            updateWardInfoTranslations();
-            generateQRCode();
-            document.getElementById('wardInfoModal').classList.add('active');
+    // Load saved ward info from localStorage FIRST
+    const savedWardInfo = localStorage.getItem('wardInfo');
+    if (savedWardInfo) {
+        wardInfo = JSON.parse(savedWardInfo);
+        console.log('Loading ward info:', wardInfo);
+    }
+    
+    // Update ward name header
+    const wardNameHeader = document.getElementById('wardNameHeader');
+    if (wardNameHeader) {
+        if (currentLanguage === 'to') {
+            wardNameHeader.textContent = '🏛️ Uooti Tonga hono 24 ʻo Riverton';
+        } else {
+            wardNameHeader.textContent = `🏛️ ${wardInfo.wardName}`;
         }
+    }
+    
+    // Update all time displays with saved values
+    document.getElementById('sacramentTimeDisplay').textContent = wardInfo.sacramentTime;
+    document.getElementById('sundaySchoolTimeDisplay').textContent = wardInfo.sundaySchoolTime;
+    document.getElementById('priesthoodTimeDisplay').textContent = wardInfo.priesthoodTime;
+    
+    // Update contact info displays
+    document.getElementById('bishopNameDisplay').textContent = wardInfo.bishopName || '[Bishop Name]';
+    document.getElementById('clerkNameDisplay').textContent = wardInfo.clerkName || '[Clerk Name]';
+    document.getElementById('wardPhoneDisplay').textContent = wardInfo.wardPhone || '[Ward Phone]';
+    
+    // Update address displays
+    const addressParts = wardInfo.wardAddress.split(',');
+    if (addressParts.length >= 2) {
+        document.getElementById('addressLine1Display').textContent = addressParts[0].trim();
+        document.getElementById('addressLine2Display').textContent = addressParts.slice(1).join(',').trim();
+    } else {
+        document.getElementById('addressLine1Display').textContent = wardInfo.wardAddress;
+        document.getElementById('addressLine2Display').textContent = '';
+    }
+    
+    // Apply translations if needed
+    updateWardInfoTranslations();
+    
+    // Generate QR code
+    generateQRCode();
+    
+    // Show the modal
+    document.getElementById('wardInfoModal').classList.add('active');
+}
 
         function closeWardInfoModal() {
             document.getElementById('wardInfoModal').classList.remove('active');
