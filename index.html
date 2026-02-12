@@ -3451,8 +3451,9 @@
             const qrcodeContainer = document.getElementById('qrcode');
             if (!qrcodeContainer) return;
 
-            // Clear previous QR code
+            // Completely clear previous QR code
             qrcodeContainer.innerHTML = '';
+            qrCodeInstance = null;
 
             // Create compact ward info for QR code
             // Format: Ward Name, Service Time, Address, Contact
@@ -3465,6 +3466,8 @@ ${wardInfo.wardAddress}
 ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName : ''}${wardInfo.clerkName ? '\nClerk: ' + wardInfo.clerkName : ''}${wardInfo.wardPhone ? '\nPhone: ' + wardInfo.wardPhone : ''}
 
 Maps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+
+            console.log('Generating QR code with text:', qrText);
 
             qrCodeInstance = new QRCode(qrcodeContainer, {
                 text: qrText,
