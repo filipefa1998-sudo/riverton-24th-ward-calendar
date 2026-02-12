@@ -1920,7 +1920,7 @@
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
                     <h4 style="margin-bottom: 15px; color: #2d3748;" id="sundayServiceTimesLabel">Sunday Service Times</h4>
                     <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
-                        <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTime">9:00 AM - 10:00 AM</span>
+                        <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTimeDisplay">9:00 AM - 10:00 AM</span>
                     </div>
                 </div>
 
@@ -3325,7 +3325,11 @@
             // Don't regenerate HTML - it wipes out our translation IDs
             // updateWardInfoDisplay();
             updateWardInfoTranslations();
-            generateQRCode();
+            try {
+                generateQRCode();
+            } catch (error) {
+                console.error('QR Code generation failed:', error);
+            }
             document.getElementById('wardInfoModal').classList.add('active');
         }
 
@@ -3448,7 +3452,9 @@
             // Clear previous QR code
             qrcodeContainer.innerHTML = '';
 
-            const qrText = `${wardInfo.wardName}\n\nService Times:\nSacrament: ${wardInfo.sacramentTime}\nSunday School: ${wardInfo.sundaySchoolTime}\nPriesthood/RS: ${wardInfo.priesthoodTime}\n\nLocation:\n${wardInfo.wardAddress}\n\nMaps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+            // Keep QR code simple - just the Google Maps link
+            // This prevents "code length overflow" errors
+            const qrText = `https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
 
             qrCodeInstance = new QRCode(qrcodeContainer, {
                 text: qrText,
@@ -5037,9 +5043,9 @@
             }
 
             // Update times from saved wardInfo
-            const sacramentTime = document.getElementById('sacramentTime');
+            const sacramentTimeDisplay = document.getElementById('sacramentTimeDisplay');
             
-            if (sacramentTime) sacramentTime.textContent = wardInfo.sacramentTime || '9:00 AM - 10:00 AM';
+            if (sacramentTimeDisplay) sacramentTimeDisplay.textContent = wardInfo.sacramentTime || '9:00 AM - 10:00 AM';
 
             // Update scripture
             const scriptureQuote = document.getElementById('scriptureQuote');
