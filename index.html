@@ -1655,11 +1655,11 @@
                 </div>
                 <div class="form-group">
                     <label for="eventStartTime">Start Time</label>
-                    <input type="time" id="eventStartTime">
+                    <input type="text" id="eventStartTime" placeholder="e.g., 7:00 PM">
                 </div>
                 <div class="form-group">
                     <label for="eventEndTime">End Time</label>
-                    <input type="time" id="eventEndTime">
+                    <input type="text" id="eventEndTime" placeholder="e.g., 8:30 PM">
                 </div>
                 <div class="form-group">
                     <label for="eventLocation">Location</label>
@@ -3374,7 +3374,9 @@
                 wardPhone: document.getElementById('wardPhone').value
             };
 
+            console.log('Saving wardInfo:', wardInfo);
             localStorage.setItem('wardInfo', JSON.stringify(wardInfo));
+            console.log('Saved to localStorage:', localStorage.getItem('wardInfo'));
             updateHeaderWardName();
             closeEditWardInfoModal();
             
@@ -5035,6 +5037,7 @@
             if (addressLine1 && addressLine2) {
                 // Split the saved address into two lines
                 const fullAddress = wardInfo.wardAddress || '12288 South 1840 West, Riverton, Utah 84065';
+                console.log('Updating address display with:', fullAddress);
                 const parts = fullAddress.split(',');
                 
                 if (currentLanguage === 'to') {
@@ -5052,6 +5055,8 @@
                     addressLine1.textContent = parts[0]?.trim() || fullAddress;
                     addressLine2.textContent = parts.slice(1).join(',').trim() || '';
                 }
+                console.log('Set addressLine1:', addressLine1.textContent);
+                console.log('Set addressLine2:', addressLine2.textContent);
             }
 
             // Update times from saved wardInfo
