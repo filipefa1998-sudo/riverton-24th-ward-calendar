@@ -1928,7 +1928,7 @@
                     <h4 style="margin-bottom: 10px; color: #2d3748;" id="locationLabel">📍 Location</h4>
                     <p style="margin: 5px 0;" id="addressLine1">12288 South 1840 West</p>
                     <p style="margin: 5px 0;" id="addressLine2">Riverton, Utah 84065</p>
-                    <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=12288+South+1840+West+Riverton+Utah+84065', '_blank')" style="margin-top: 10px;">
+                    <button class="btn btn-primary" id="openInMapsBtn" style="margin-top: 10px;">
                         <span id="openMapsBtn">📍 Open in Maps</span>
                     </button>
                 </div>
@@ -5133,6 +5133,20 @@
                     }
                 }
             });
+
+            // Update Open in Maps button to use saved address
+            const openInMapsButton = document.getElementById('openInMapsBtn');
+            if (openInMapsButton) {
+                // Remove any existing click listeners by cloning
+                const newButton = openInMapsButton.cloneNode(true);
+                openInMapsButton.parentNode.replaceChild(newButton, openInMapsButton);
+                
+                // Add new click listener with current address
+                newButton.addEventListener('click', function() {
+                    const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+                    window.open(mapsUrl, '_blank');
+                });
+            }
         }
 
         function updateFilterPanelText() {
