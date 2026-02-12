@@ -5029,16 +5029,28 @@
                 }
             }
 
-            // Update address
+            // Update address from saved wardInfo
             const addressLine1 = document.getElementById('addressLine1');
             const addressLine2 = document.getElementById('addressLine2');
             if (addressLine1 && addressLine2) {
+                // Split the saved address into two lines
+                const fullAddress = wardInfo.wardAddress || '12288 South 1840 West, Riverton, Utah 84065';
+                const parts = fullAddress.split(',');
+                
                 if (currentLanguage === 'to') {
-                    addressLine1.textContent = '12288 Tonga 1840 Hihifo';
-                    addressLine2.textContent = 'Livatoni, ʻIutā 84065';
+                    // Try to translate street names if it's the default address
+                    if (fullAddress.includes('12288 South 1840 West')) {
+                        addressLine1.textContent = '12288 Tonga 1840 Hihifo';
+                        addressLine2.textContent = 'Livatoni, ʻIutā 84065';
+                    } else {
+                        // Use saved custom address as-is
+                        addressLine1.textContent = parts[0]?.trim() || fullAddress;
+                        addressLine2.textContent = parts.slice(1).join(',').trim() || '';
+                    }
                 } else {
-                    addressLine1.textContent = '12288 South 1840 West';
-                    addressLine2.textContent = 'Riverton, Utah 84065';
+                    // Split address: first part on line 1, rest on line 2
+                    addressLine1.textContent = parts[0]?.trim() || fullAddress;
+                    addressLine2.textContent = parts.slice(1).join(',').trim() || '';
                 }
             }
 
