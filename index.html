@@ -3454,9 +3454,17 @@
             // Clear previous QR code
             qrcodeContainer.innerHTML = '';
 
-            // Keep QR code simple - just the Google Maps link
-            // This prevents "code length overflow" errors
-            const qrText = `https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+            // Create compact ward info for QR code
+            // Format: Ward Name, Service Time, Address, Contact
+            const qrText = `${wardInfo.wardName}
+
+Service: ${wardInfo.sacramentTime}
+
+${wardInfo.wardAddress}
+
+${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName : ''}${wardInfo.clerkName ? '\nClerk: ' + wardInfo.clerkName : ''}${wardInfo.wardPhone ? '\nPhone: ' + wardInfo.wardPhone : ''}
+
+Maps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
 
             qrCodeInstance = new QRCode(qrcodeContainer, {
                 text: qrText,
@@ -3464,7 +3472,7 @@
                 height: 200,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
+                correctLevel: QRCode.CorrectLevel.L  // Lower error correction = more data capacity
             });
         }
 
