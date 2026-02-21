@@ -2129,6 +2129,34 @@
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-BKTaCSvPIkuOQOFDn8muEd1BBAomev0",
+            authDomain: "riverton24thcalendar.firebaseapp.com",
+            projectId: "riverton24thcalendar",
+            storageBucket: "riverton24thcalendar.firebasestorage.app",
+            messagingSenderId: "356944124665",
+            appId: "1:356944124665:web:b9ff396cbd0ecb9377a028"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.db = db;
+        window.firestore = { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy };
+        window.firebaseInitialized = true;
+
+        console.log('✅ Firebase initialized successfully!');
+    </script>
+
     <script>
         // State management
         let currentDate = new Date();
@@ -2157,6 +2185,146 @@
             wardPhone: ''
         };
         let qrCodeInstance = null;
+
+        // Firebase sync flag
+        let firebaseSyncEnabled = false;
+        let isLoadingFromFirebase = false;
+
+        // Wait for Firebase to initialize, then load data
+        function initializeFirebaseSync() {
+            if (window.firebaseInitialized && window.db) {
+                console.log('🔄 Starting Firebase sync...');
+                firebaseSyncEnabled = true;
+                loadEventsFromFirebase();
+                setupRealtimeSync();
+            } else {
+                console.log('⏳ Waiting for Firebase...');
+                setTimeout(initializeFirebaseSync, 100);
+            }
+        }
+
+        // Load events from Firebase
+        async function loadEventsFromFirebase() {
+            if (!firebaseSyncEnabled || isLoadingFromFirebase) return;
+            
+            try {
+                isLoadingFromFirebase = true;
+                console.log('📥 Loading events from Firebase...');
+                
+                const { collection, getDocs, query, orderBy } = window.firestore;
+                const eventsRef = collection(window.db, 'events');
+                const q = query(eventsRef, orderBy('startDate'));
+                const snapshot = await getDocs(q);
+                
+                const firebaseEvents = [];
+                snapshot.forEach((doc) => {
+                    firebaseEvents.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (firebaseEvents.length > 0) {
+                    events = firebaseEvents;
+                    localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                    console.log(`✅ Loaded ${events.length} events from Firebase`);
+                    renderCalendar();
+                } else if (events.length > 0) {
+                    // Migrate local events to Firebase
+                    console.log('📤 Migrating local events to Firebase...');
+                    await migrateLocalEventsToFirebase();
+                }
+                
+                isLoadingFromFirebase = false;
+            } catch (error) {
+                console.error('❌ Error loading from Firebase:', error);
+                console.log('📱 Using local storage instead');
+                isLoadingFromFirebase = false;
+                firebaseSyncEnabled = false;
+            }
+        }
+
+        // Migrate existing local events to Firebase
+        async function migrateLocalEventsToFirebase() {
+            const { collection, addDoc } = window.firestore;
+            const eventsRef = collection(window.db, 'events');
+            
+            for (const event of events) {
+                try {
+                    const eventData = { ...event };
+                    delete eventData.id; // Remove local ID
+                    const docRef = await addDoc(eventsRef, eventData);
+                    event.id = docRef.id; // Update with Firebase ID
+                } catch (error) {
+                    console.error('Error migrating event:', error);
+                }
+            }
+            
+            localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+            console.log('✅ Migration complete!');
+        }
+
+        // Setup real-time sync
+        function setupRealtimeSync() {
+            const { collection, onSnapshot } = window.firestore;
+            const eventsRef = collection(window.db, 'events');
+            
+            onSnapshot(eventsRef, (snapshot) => {
+                if (isLoadingFromFirebase) return; // Skip if we're doing initial load
+                
+                console.log('🔄 Real-time update received');
+                const firebaseEvents = [];
+                snapshot.forEach((doc) => {
+                    firebaseEvents.push({ id: doc.id, ...doc.data() });
+                });
+                
+                events = firebaseEvents;
+                localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                renderCalendar();
+            });
+        }
+
+        // Save event to Firebase
+        async function saveEventToFirebase(event) {
+            if (!firebaseSyncEnabled) return;
+            
+            try {
+                const { collection, addDoc, updateDoc, doc } = window.firestore;
+                const eventsRef = collection(window.db, 'events');
+                
+                if (event.id && event.id.length > 10) {
+                    // Update existing Firebase event
+                    const eventRef = doc(window.db, 'events', event.id);
+                    const eventData = { ...event };
+                    delete eventData.id;
+                    await updateDoc(eventRef, eventData);
+                    console.log('✅ Event updated in Firebase');
+                } else {
+                    // Add new event
+                    const eventData = { ...event };
+                    delete eventData.id;
+                    const docRef = await addDoc(eventsRef, eventData);
+                    event.id = docRef.id;
+                    console.log('✅ Event saved to Firebase');
+                }
+            } catch (error) {
+                console.error('❌ Error saving to Firebase:', error);
+            }
+        }
+
+        // Delete event from Firebase
+        async function deleteEventFromFirebase(eventId) {
+            if (!firebaseSyncEnabled) return;
+            
+            try {
+                const { deleteDoc, doc } = window.firestore;
+                const eventRef = doc(window.db, 'events', eventId);
+                await deleteDoc(eventRef);
+                console.log('✅ Event deleted from Firebase');
+            } catch (error) {
+                console.error('❌ Error deleting from Firebase:', error);
+            }
+        }
+
+        // Initialize Firebase sync after page loads
+        setTimeout(initializeFirebaseSync, 500);
 
         // Translation Dictionary
         const translations = {
@@ -2915,6 +3083,9 @@
 
             localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
 
+            // Sync with Firebase
+            saveEventToFirebase(event);
+
             // Handle template saving
             if (saveAsTemplateChecked) {
                 pendingTemplateData = {
@@ -3082,8 +3253,13 @@
 
         function deleteCurrentEvent() {
             if (confirm('Are you sure you want to delete this event?')) {
+                const eventToDelete = currentEventId;
                 events = events.filter(e => e.id !== currentEventId);
                 localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                
+                // Sync with Firebase
+                deleteEventFromFirebase(eventToDelete);
+                
                 closeViewModal();
                 renderCalendar();
             }
@@ -3455,17 +3631,16 @@
             qrcodeContainer.innerHTML = '';
             qrCodeInstance = null;
 
-            // Create compact ward info for QR code
-            // Format: Ward Name, Service Time, Address, Contact
+            // Create ward info text for QR code (NO URL so it won't auto-open)
+            // This ensures the scanner shows ALL the text instead of just opening a link
             const qrText = `${wardInfo.wardName}
 
-Service: ${wardInfo.sacramentTime}
+Sacrament Meeting: ${wardInfo.sacramentTime}
 
+Address:
 ${wardInfo.wardAddress}
 
-${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName : ''}${wardInfo.clerkName ? '\nClerk: ' + wardInfo.clerkName : ''}${wardInfo.wardPhone ? '\nPhone: ' + wardInfo.wardPhone : ''}
-
-Maps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
+${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.clerkName ? 'Clerk: ' + wardInfo.clerkName + '\n' : ''}${wardInfo.wardPhone ? 'Phone: ' + wardInfo.wardPhone : ''}`;
 
             console.log('Generating QR code with text:', qrText);
 
@@ -3475,7 +3650,7 @@ Maps: https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}`;
                 height: 200,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.L  // Lower error correction = more data capacity
+                correctLevel: QRCode.CorrectLevel.L
             });
         }
 
