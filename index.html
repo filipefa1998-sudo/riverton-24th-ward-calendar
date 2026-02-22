@@ -28,16 +28,38 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 40px 30px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 15s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.8em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .header p {
@@ -63,27 +85,33 @@
         }
 
         .month-nav button {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1em;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .month-nav button:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .month-nav button:active {
+            transform: translateY(-1px);
         }
 
         .month-nav h2 {
             color: #2d3748;
-            font-size: 1.5em;
+            font-size: 1.6em;
             min-width: 200px;
             text-align: center;
+            font-weight: 700;
         }
 
         .action-buttons {
@@ -216,21 +244,24 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Event Category Colors */
-        .event.temple { background: #9f7aea; color: white; }
-        .event.service { background: #48bb78; color: white; }
-        .event.activity { background: #f6ad55; color: white; }
-        .event.young-men { background: #4299e1; color: white; }
-        .event.young-women { background: #ec4899; color: white; }
-        .event.combined-youth { background: #8b5cf6; color: white; }
-        .event.primary { background: #f59e0b; color: white; }
-        .event.relief-society { background: #ed64a6; color: white; }
-        .event.elders-quorum { background: #059669; color: white; }
-        .event.emergency { background: #f56565; color: white; }
-        .event.baptism { background: #06b6d4; color: white; }
-        .event.sunday { background: #805ad5; color: white; }
-        .event.stake { background: #d97706; color: white; }
-        .event.admin { background: #718096; color: white; }
+        /* Event Category Colors - Distinct & Vibrant */
+        .event.temple { background: #7c3aed; color: white; }  /* Deep Purple */
+        .event.service { background: #10b981; color: white; }  /* Emerald Green */
+        .event.activity { background: #f59e0b; color: white; }  /* Amber */
+        .event.young-men { background: #3b82f6; color: white; }  /* Blue */
+        .event.young-women { background: #ec4899; color: white; }  /* Pink */
+        .event.combined-youth { background: #8b5cf6; color: white; }  /* Violet */
+        .event.primary { background: #fb923c; color: white; }  /* Orange */
+        .event.relief-society { background: #f43f5e; color: white; }  /* Rose */
+        .event.elders-quorum { background: #059669; color: white; }  /* Teal */
+        .event.self-reliance { background: #dc2626; color: white; }  /* Red */
+        .event.baptism { background: #0ea5e9; color: white; }  /* Sky Blue */
+        .event.sunday { background: #6366f1; color: white; }  /* Indigo */
+        .event.stake { background: #d97706; color: white; }  /* Amber-Orange */
+        .event.admin { background: #64748b; color: white; }  /* Slate */
+        .event.ysa { background: #a855f7; color: white; }  /* Purple */
+        .event.missionary { background: #14b8a6; color: white; }  /* Cyan */
+        .event.churchwide { background: #84cc16; color: white; }  /* Lime */
 
         .modal {
             display: none;
@@ -1635,13 +1666,16 @@
                         <option value="young-men" data-translate="youngMen">Young Men Activity</option>
                         <option value="young-women" data-translate="youngWomen">Young Women Activity</option>
                         <option value="combined-youth" data-translate="combinedYouth">Combined Youth Activity</option>
+                        <option value="ysa" data-translate="ysa">YSA (Young Single Adult)</option>
                         <option value="primary" data-translate="primary">Primary Activity</option>
                         <option value="relief-society" data-translate="reliefSociety">Relief Society</option>
                         <option value="elders-quorum" data-translate="eldersQuorum">Elders Quorum</option>
-                        <option value="emergency" data-translate="emergency">Emergency Preparedness</option>
+                        <option value="missionary" data-translate="missionary">Missionary Work</option>
+                        <option value="self-reliance" data-translate="selfReliance">Self-Reliance</option>
                         <option value="baptism" data-translate="baptism">Baptism</option>
                         <option value="sunday" data-translate="sunday">Sunday</option>
                         <option value="stake" data-translate="stake">Stake Event</option>
+                        <option value="churchwide" data-translate="churchwide">Churchwide Event</option>
                         <option value="admin" data-translate="admin">Administrative</option>
                     </select>
                 </div>
@@ -2384,13 +2418,16 @@
                 youngMen: 'Young Men Activity',
                 youngWomen: 'Young Women Activity',
                 combinedYouth: 'Combined Youth Activity',
+                ysa: 'YSA (Young Single Adult)',
                 primary: 'Primary Activity',
                 reliefSociety: 'Relief Society',
                 eldersQuorum: 'Elders Quorum',
-                emergency: 'Emergency Preparedness',
+                missionary: 'Missionary Work',
+                selfReliance: 'Self-Reliance',
                 baptism: 'Baptism',
                 sunday: 'Sunday',
                 stake: 'Stake Event',
+                churchwide: 'Churchwide Event',
                 admin: 'Administrative',
                 
                 // Form Labels
@@ -2572,13 +2609,16 @@
                 youngMen: 'Tamaiki Taʻahine',
                 youngWomen: 'Tamaiki Fefine',
                 combinedYouth: 'Kautaha Talavou',
+                ysa: 'YSA (Talavou Taʻetau)',
                 primary: 'Palaimalí',
                 reliefSociety: 'Kautaha Tokoni',
                 eldersQuorum: 'Kuólomu ʻo e Kau Mātuʻa',
-                emergency: 'Teuteu ki he Faingataʻa',
+                missionary: 'Ngāue Misiona',
+                selfReliance: 'Fakaʻaongaʻi Tokotaha',
                 baptism: 'Papitaiso',
                 sunday: 'Sāpate',
                 stake: 'Fai Siteeki',
+                churchwide: 'Fai Siasi Kotoa',
                 admin: 'Pule',
                 
                 // Form Labels
@@ -4639,22 +4679,25 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
 
         function getCategoryColor(category) {
             const colors = {
-                'temple': '#9f7aea',
-                'service': '#48bb78',
-                'activity': '#f6ad55',
-                'young-men': '#4299e1',
+                'temple': '#7c3aed',
+                'service': '#10b981',
+                'activity': '#f59e0b',
+                'young-men': '#3b82f6',
                 'young-women': '#ec4899',
                 'combined-youth': '#8b5cf6',
-                'primary': '#f59e0b',
-                'relief-society': '#ed64a6',
+                'ysa': '#a855f7',
+                'primary': '#fb923c',
+                'relief-society': '#f43f5e',
                 'elders-quorum': '#059669',
-                'emergency': '#f56565',
-                'baptism': '#06b6d4',
-                'sunday': '#805ad5',
+                'missionary': '#14b8a6',
+                'self-reliance': '#dc2626',
+                'baptism': '#0ea5e9',
+                'sunday': '#6366f1',
                 'stake': '#d97706',
-                'admin': '#718096'
+                'churchwide': '#84cc16',
+                'admin': '#64748b'
             };
-            return colors[category] || '#718096';
+            return colors[category] || '#64748b';
         }
 
         // Override renderCalendar to apply filters
@@ -5455,20 +5498,23 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
         populateCategoryFilters = function() {
             const container = document.getElementById('categoryFilters');
             const categories = [
-                { id: 'temple', color: '#9f7aea' },
-                { id: 'service', color: '#48bb78' },
-                { id: 'activity', color: '#f6ad55' },
-                { id: 'young-men', color: '#4299e1' },
+                { id: 'temple', color: '#7c3aed' },
+                { id: 'service', color: '#10b981' },
+                { id: 'activity', color: '#f59e0b' },
+                { id: 'young-men', color: '#3b82f6' },
                 { id: 'young-women', color: '#ec4899' },
                 { id: 'combined-youth', color: '#8b5cf6' },
-                { id: 'primary', color: '#f59e0b' },
-                { id: 'relief-society', color: '#ed64a6' },
+                { id: 'ysa', color: '#a855f7' },
+                { id: 'primary', color: '#fb923c' },
+                { id: 'relief-society', color: '#f43f5e' },
                 { id: 'elders-quorum', color: '#059669' },
-                { id: 'emergency', color: '#f56565' },
-                { id: 'baptism', color: '#06b6d4' },
-                { id: 'sunday', color: '#805ad5' },
+                { id: 'missionary', color: '#14b8a6' },
+                { id: 'self-reliance', color: '#dc2626' },
+                { id: 'baptism', color: '#0ea5e9' },
+                { id: 'sunday', color: '#6366f1' },
                 { id: 'stake', color: '#d97706' },
-                { id: 'admin', color: '#718096' }
+                { id: 'churchwide', color: '#84cc16' },
+                { id: 'admin', color: '#64748b' }
             ];
 
             container.innerHTML = categories.map(cat => {
