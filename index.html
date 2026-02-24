@@ -2186,7 +2186,7 @@
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         // Your Firebase configuration
         const firebaseConfig = {
@@ -2201,15 +2201,6 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        // Enable offline persistence (helps with Safari)
-        enableIndexedDbPersistence(db).catch((err) => {
-            if (err.code == 'failed-precondition') {
-                console.warn('⚠️ Multiple tabs open, persistence only enabled in one tab');
-            } else if (err.code == 'unimplemented') {
-                console.warn('⚠️ Browser doesn\'t support persistence');
-            }
-        });
 
         // Make Firebase available globally
         window.db = db;
@@ -2285,7 +2276,7 @@
                 
                 if (firebaseEvents.length > 0) {
                     events = firebaseEvents;
-                    localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                    // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                     console.log(`✅ Loaded ${events.length} events from Firebase`);
                     renderCalendar();
                 } else if (events.length > 0) {
@@ -2319,7 +2310,7 @@
                 }
             }
             
-            localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+            // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
             console.log('✅ Migration complete!');
         }
 
@@ -2338,7 +2329,7 @@
                 });
                 
                 events = firebaseEvents;
-                localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                 renderCalendar();
             });
         }
@@ -3180,7 +3171,8 @@
                 events.push(event);
             }
 
-            localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+            // Don't save to localStorage - Firebase is primary storage now
+            // // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
 
             // Sync with Firebase
             saveEventToFirebase(event);
@@ -3354,7 +3346,7 @@
             if (confirm('Are you sure you want to delete this event?')) {
                 const eventToDelete = currentEventId;
                 events = events.filter(e => e.id !== currentEventId);
-                localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                 
                 // Sync with Firebase
                 deleteEventFromFirebase(eventToDelete);
@@ -3393,7 +3385,7 @@
                     const importedEvents = JSON.parse(event.target.result);
                     if (confirm('This will replace all current events. Continue?')) {
                         events = importedEvents;
-                        localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                        // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                         renderCalendar();
                         alert('Calendar data imported successfully!');
                     }
@@ -3434,7 +3426,7 @@
                         events = parsedEvents;
                     }
 
-                    localStorage.setItem('wardCalendarEvents', JSON.stringify(events));
+                    // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                     renderCalendar();
                     alert(`Successfully imported ${parsedEvents.length} events!`);
                     
