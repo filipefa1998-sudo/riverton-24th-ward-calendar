@@ -2374,7 +2374,10 @@
                 const { collection, addDoc, updateDoc, doc } = window.firestore;
                 const eventsRef = collection(window.db, 'events');
                 
-                if (event.id && event.id.length > 10) {
+                // Firebase IDs are 20+ chars with letters. Local IDs are 13 chars, all numbers
+                const isFirebaseId = event.id && event.id.length >= 20 && /[a-zA-Z]/.test(event.id);
+                
+                if (isFirebaseId) {
                     // Update existing Firebase event
                     showMobileDebug(`🔄 Updating existing event: ${event.id}`);
                     const eventRef = doc(window.db, 'events', event.id);
@@ -2387,9 +2390,9 @@
                     // Add new event
                     showMobileDebug(`➕ Adding new event: ${event.title}`);
                     const eventData = { ...event };
-                    delete eventData.id;
+                    delete eventData.id; // Remove local ID
                     const docRef = await addDoc(eventsRef, eventData);
-                    event.id = docRef.id;
+                    event.id = docRef.id; // Replace with Firebase ID
                     showMobileDebug(`✅ Event saved to Firebase with ID: ${docRef.id}`);
                     console.log('✅ Event saved to Firebase');
                 }
