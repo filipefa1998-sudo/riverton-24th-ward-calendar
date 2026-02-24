@@ -2264,31 +2264,34 @@
                 isLoadingFromFirebase = true;
                 console.log('📥 Loading events from Firebase...');
                 
-                const { collection, getDocs, query, orderBy } = window.firestore;
+                const { collection, getDocs } = window.firestore;
                 const eventsRef = collection(window.db, 'events');
-                const q = query(eventsRef, orderBy('startDate'));
-                const snapshot = await getDocs(q);
+                const snapshot = await getDocs(eventsRef);
                 
                 const firebaseEvents = [];
                 snapshot.forEach((doc) => {
                     firebaseEvents.push({ id: doc.id, ...doc.data() });
                 });
                 
+                console.log(`📊 Found ${firebaseEvents.length} events in Firebase`);
+                
                 if (firebaseEvents.length > 0) {
                     events = firebaseEvents;
-                    // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                     console.log(`✅ Loaded ${events.length} events from Firebase`);
                     renderCalendar();
                 } else if (events.length > 0) {
                     // Migrate local events to Firebase
                     console.log('📤 Migrating local events to Firebase...');
                     await migrateLocalEventsToFirebase();
+                } else {
+                    console.log('📭 No events found in Firebase or locally');
+                    renderCalendar();
                 }
                 
                 isLoadingFromFirebase = false;
             } catch (error) {
                 console.error('❌ Error loading from Firebase:', error);
-                console.log('📱 Using local storage instead');
+                console.log('📱 Fallback failed');
                 isLoadingFromFirebase = false;
                 firebaseSyncEnabled = false;
             }
