@@ -2323,16 +2323,19 @@
             const eventsRef = collection(window.db, 'events');
             
             onSnapshot(eventsRef, (snapshot) => {
-                if (isLoadingFromFirebase) return; // Skip if we're doing initial load
+                if (isLoadingFromFirebase) {
+                    console.log('⏭️ Skipping real-time update during initial load');
+                    return; // Skip if we're doing initial load
+                }
                 
-                console.log('🔄 Real-time update received');
+                console.log('🔄 Real-time update received from Firebase');
                 const firebaseEvents = [];
                 snapshot.forEach((doc) => {
                     firebaseEvents.push({ id: doc.id, ...doc.data() });
                 });
                 
+                console.log(`📊 Real-time sync: ${firebaseEvents.length} events total in Firebase`);
                 events = firebaseEvents;
-                // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
                 renderCalendar();
             });
         }
@@ -3169,13 +3172,29 @@
 
             if (currentEventId) {
                 const index = events.findIndex(e => e.id === currentEventId);
-                events[index] = event;
+                if (index !== -1) {
+                    events[index] = event;
+                    console.log('📝 Updated existing event in local array');
+                } else {
+                    console.warn('⚠️ Event ID not found, adding as new');
+                    events.push(event);
+                }
             } else {
-                events.push(event);
+                // Check if event already exists (prevent duplicates)
+                const exists = events.find(e => 
+                    e.title === event.title && 
+                    e.date === event.date && 
+                    e.time === event.time
+                );
+                if (exists) {
+                    console.log('⚠️ Event already exists locally, skipping duplicate');
+                } else {
+                    events.push(event);
+                    console.log('➕ Added new event to local array');
+                }
             }
 
             // Don't save to localStorage - Firebase is primary storage now
-            // // localStorage.setItem('wardCalendarEvents', JSON.stringify(events)); // Disabled - using Firebase only
 
             // Sync with Firebase
             saveEventToFirebase(event);
