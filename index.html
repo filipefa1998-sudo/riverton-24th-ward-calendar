@@ -1479,6 +1479,13 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Debug Display -->
+    <div id="mobileDebug" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #ff6b6b; color: white; padding: 10px; z-index: 10000; font-size: 12px; max-height: 150px; overflow-y: auto;">
+        <strong>Debug Info:</strong>
+        <div id="debugMessages"></div>
+        <button onclick="document.getElementById('mobileDebug').style.display='none'" style="margin-top: 5px; background: white; color: #ff6b6b; border: none; padding: 5px 10px; border-radius: 5px;">Close</button>
+    </div>
+
     <!-- Language Toggle -->
     <div class="language-toggle" id="languageToggle">
         <span class="language-flag" id="languageFlag">🇹🇴</span>
@@ -2337,29 +2344,57 @@
         }
 
         // Save event to Firebase
+        // Helper function to show mobile debug messages
+        function showMobileDebug(message, isError = false) {
+            const debugDiv = document.getElementById('mobileDebug');
+            const messagesDiv = document.getElementById('debugMessages');
+            if (debugDiv && messagesDiv) {
+                debugDiv.style.display = 'block';
+                const time = new Date().toLocaleTimeString();
+                messagesDiv.innerHTML += `<div>${time}: ${message}</div>`;
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+            if (isError) {
+                console.error(message);
+            } else {
+                console.log(message);
+            }
+        }
+
         async function saveEventToFirebase(event) {
-            if (!firebaseSyncEnabled) return;
+            showMobileDebug('🔄 Attempting to save event to Firebase...');
+            
+            if (!firebaseSyncEnabled) {
+                showMobileDebug('⚠️ Firebase sync is disabled', true);
+                return;
+            }
             
             try {
+                showMobileDebug('📝 Firebase sync enabled, proceeding...');
                 const { collection, addDoc, updateDoc, doc } = window.firestore;
                 const eventsRef = collection(window.db, 'events');
                 
                 if (event.id && event.id.length > 10) {
                     // Update existing Firebase event
+                    showMobileDebug(`🔄 Updating existing event: ${event.id}`);
                     const eventRef = doc(window.db, 'events', event.id);
                     const eventData = { ...event };
                     delete eventData.id;
                     await updateDoc(eventRef, eventData);
+                    showMobileDebug('✅ Event updated in Firebase');
                     console.log('✅ Event updated in Firebase');
                 } else {
                     // Add new event
+                    showMobileDebug(`➕ Adding new event: ${event.title}`);
                     const eventData = { ...event };
                     delete eventData.id;
                     const docRef = await addDoc(eventsRef, eventData);
                     event.id = docRef.id;
+                    showMobileDebug(`✅ Event saved to Firebase with ID: ${docRef.id}`);
                     console.log('✅ Event saved to Firebase');
                 }
             } catch (error) {
+                showMobileDebug(`❌ Error: ${error.message}`, true);
                 console.error('❌ Error saving to Firebase:', error);
             }
         }
