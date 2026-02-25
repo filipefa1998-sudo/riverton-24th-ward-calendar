@@ -2366,13 +2366,22 @@
                 return;
             }
             
+            // NEVER save recurring instances - only save master events
+            if (event.isRecurringInstance) {
+                console.log('⏭️ Skipping recurring instance - only master events saved to Firebase');
+                return;
+            }
+            
             try {
                 showMobileDebug('📝 Firebase sync enabled, proceeding...');
                 const { collection, addDoc, updateDoc, doc } = window.firestore;
                 const eventsRef = collection(window.db, 'events');
                 
-                // Firebase IDs are 20+ chars with letters. Local IDs are 13 chars, all numbers
-                const isFirebaseId = event.id && event.id.length >= 20 && /[a-zA-Z]/.test(event.id);
+                // Firebase IDs are 20+ chars with letters, NOT containing underscores
+                const isFirebaseId = event.id && 
+                                    event.id.length >= 20 && 
+                                    /[a-zA-Z]/.test(event.id) && 
+                                    !event.id.includes('_'); // Exclude recurring instance IDs
                 
                 if (isFirebaseId) {
                     // Update existing Firebase event
