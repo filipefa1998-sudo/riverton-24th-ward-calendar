@@ -3227,10 +3227,29 @@
         }
 
         function viewEvent(id) {
-            const event = events.find(e => e.id === id);
-            if (!event) return;
+            let event = events.find(e => e.id === id);
+            
+            // If not found, check if it's a recurring instance
+            if (!event) {
+                // Recurring instance IDs are formatted as: masterId_date
+                if (id.includes('_')) {
+                    const masterId = id.split('_')[0];
+                    const masterEvent = events.find(e => e.id === masterId);
+                    if (masterEvent && masterEvent.isRecurringMaster) {
+                        // Found the master event
+                        event = masterEvent;
+                        // Note: We're viewing the master, not the specific instance
+                        console.log(`📅 Viewing master event for recurring instance`);
+                    }
+                }
+            }
+            
+            if (!event) {
+                console.error('Event not found:', id);
+                return;
+            }
 
-            currentEventId = id;
+            currentEventId = event.id; // Use master event ID
 
             const categoryNames = {
                 'temple': 'Temple & Family History',
@@ -3239,13 +3258,16 @@
                 'young-men': 'Young Men Activity',
                 'young-women': 'Young Women Activity',
                 'combined-youth': 'Combined Youth Activity',
+                'ysa': 'YSA (Young Single Adult)',
                 'primary': 'Primary Activity',
                 'relief-society': 'Relief Society',
                 'elders-quorum': 'Elders Quorum',
-                'emergency': 'Emergency Preparedness',
+                'missionary': 'Missionary Work',
+                'selfReliance': 'Self-Reliance',
                 'baptism': 'Baptism',
                 'sunday': 'Sunday',
                 'stake': 'Stake Event',
+                'churchwide': 'Churchwide Event',
                 'admin': 'Administrative'
             };
 
