@@ -4,1498 +4,811 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riverton 24th Tongan Ward Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- PWA: Pacific Noir -->
+    <meta name="theme-color" content="#0d1730">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="R24 Calendar">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACYUlEQVQ4jX2Sy2tUSRTGf6furduN0cSWaECi7QN1o+MovnGh4AMVXLucTQbcus3CnRuXbgT/DRejuBsCoojBjS/QSEgiPhLSHWPXrVvnuLjdzrgwBUVxDnzf+c5XnwCM7rp4RdCbAgfVrCg8NLyj4YWmh8ILDQ95LjiRlKrq1WqU60+mHvwrNdjug2FmgFF4oVnUoKYXGoVQeEfTCz6HMiohVLGzms46QW+KQJ6Bc30SMzDtE9bloKf9IYD3zm7nwB8ihqlx4eR2jh4YY297hCwTZuaWyZywe/tGMGXuU5fplws8fT5LTIpqOiyjO88ZGCPrPY/unme01WCts9QJ/DX5kE63RxkT+WD34Q0FHxcWmJ1NAIiAiPRfEOqbe0ezkfN5saKMSj4wDktM3nvH9MvPmBlZBkUGPgefQeZAnLB/zybKWNErE1WltQJMQfU/47KMZl4RoqImiC/Iq0AwiGUihIoQEjEp7le3Fcg5fKLN0WuXuHNuHSnfwt+3rjLRVnplPTnERC9UlGXCDVYwqxVggWdTH+jGFV7MVOw9PszXdxGXQS8kyjLWRDFRxgr3M0B9AiPn5MQlbuwwWu0hvr7/zsj4EPt2D+NUSapoUkxr5dLadtrAaI81aQ17nr9eAjNs4M3/EmpmHNrXYnG5x8x8FzAcWA9TviwHxscaa4LBGN/cYLETBr2QY/rYsDMrq5G3M10un9pcE2B1hOlHGxCUD/MrfPsecQ5SsmkZ2XbsiKhMYVasNXnwWyKQZVBVybTSK1nozM0XQ1sf4PgT0zEw9zvwQLaqPkNtYnXpzT8/AIfinJ5qoFPfAAAAAElFTkSuQmCC">
+    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO2debxdVXn3f2ufOyc38yUhCQESIMwgCQQQMQwJQdGXti+l1Fdq+zq2Wq1VK85FtHbSFgt2okJ9q9VXqhVBCsgkGEQDZSYBgkAGcpPcJDe5yR3O2U//2Gt41rCHc+8ZbuSsfHLP2Ws961lrr/Vdz37W2nuvI9C8IGYddfFxpQqdgCheKgjHEmExhJgN0BQAUwDMMOLE/jqBwgdCCAhBEMkRBAAhACEIpNKTpCRepoOUbJzkkwlaVsuZvABpfUaetFyiX9ZEUPJd6xIgQVJeySTySRE8niBI6hfQsrJqRk62g5AVEEJV15SbVAwQZBSoeN2K6rxN+5IA9sax2EvAYEzxLhA9QxT/N0Vt6/p7xCPP/+hHI6FuakQQ+SK1CzMXX7ioJKI1IhbnQ2AlgLkpiDphPDADCYwJ0DZADGjViSpNwSIh0CBooBm4IBArA1qfMJCDAycRFc5gSqgCHxTqjy5TlpMMDntw8YEBZMCs041OPSh5+6kKp7d6SicIUIWGKzE9EBNuGaqUb35s7d2bCyioWag70HOWvrVXlEd/A6ArQXgjgMik1gdmADaoQkhQGWAaeGZxkVgrIUjrMNAo60sGeOhMHqBCAarK0FY1YJ1BSTyzzqprtHWWltm24Lx+bMCgIMy6FJOHt6Jqh+wg+4d4FwgQESBEXKnED1Xi6O/WPnD7twHEBRROKNQN6FlHXbywRPFHQHgnBKb4RNYPZkBZMWYNiRjIzAVQ7oayVMo9EMr6MqCZhVeWEmnuBsWe+6Droyw4g5HrIC0PMwit84Kpt/oOCTDyYGa6LPiVLG9T5m6ESCHWP0RuNDTYIMSETXGZ/qm9fezL9957776AtpqEmgM974g1R8Ql+gSA3yGgA0CAt/rCDMDxn40V9l0IaGCEYJ2ovlvugbHwCp/kOzHglZUk7dIADtDM2msdrKLGelLYPw65GnrAGncpF2YRAtbUkzexDwpBud66C8jyvjXYxMCnGP3lSvnzax+8+3rUwWLXDOijjrq4czfFHxOgqwDRrROaATPALu8MTDhAc8sM4werDzPpYpNE7T8roB13g+TAYJY47G4oVyI5D8HItawzOfWwrjBK3rXgpK08gnKsPJjMxpfXHw4hAha9TjcQOyY5qImM9QdJ3AmIKX52DOKDP7v/zju8DpxAqAnQcxevuSAW9DUAR1sJTYAZ4AC4E0KhYVN2UIMjkMz2OTAaBjY4pD8edDe01VOW1bHaTh1UvdQyiHaDoAaYYFeFgHW2LK6SMWUbmMnWy3RJfKEnsQSt1IPDsdp2bxiqVQ8Sqc8w1ATE5bH4n0dHuv9o3bpb9of6stowMaBXrmzr29R5DQgf83Q1CWZAdTT3n8Euz7KmpACKDZwqLmQFeX5tcR2IZSYFTdjd4FcKUx7p8tjEDrwuIetMxpprGXdJMhtmPdiJD3SCroD5sNudW2UzMhKwiTkeylqTcsQg01UcoRLj+XKldOXDP719bWbHFgjjBlpO+r4F4BwvsYkwA8Yyc6BtH9VcXhnLcoUDxpcWAXiUPBjQYDAKWxZkQLMu/anuBrwBGPadGZxKH7sKQKh2MDBrdykFZg0D/y4LFg7MBljmM0tfPhEhIyeh1paaYpZVgGICgUbLY9GHHnrojq/ldnBGiPJF/DBnyeplJYrXYRLCrLoqGJR1NV/sHMIW9crz1FIg2s5j+aqBcnQOB6JwfZScmaVZeSxXw5hQ4ehIhdkawEIORB9mpUsNJCFHviA+aIWtVxoQPoCTMaivpB1tHXT9irMuuAHj5NJtj0Jh9pKLz48Qfx9Ar5c4KWB2LCKMVWLegm2ZwTpRpzNdkMfaV1bNFtsTwlz/GcblYVcAkvrVFUKq89wNc6VgVlt/59bZnhNwa27B5sIMUx70dx9mr9XJJOqVDVklZaljLqdkYuVPJ8t7Kk8ljm/fPq3j0vHccaxqJByy5OJLI8S3YRLDHAyWQbYts043HzolONoDenxZA6aRY6bSspXSmqZcWGwLn+bbGvgV8GpNTbkaVoY0mJW1BR/UwvwTzn9lMgRbXkwKZ26TkFUhMzhYf+grIRuwUYQ1fXtGbzti5Tu6/BbJDoWBnrPkovMI8b8D6PQSJxHMLhNCJ/tuRkAyXJ6yqE5u4aSn1kv42i3gyc4ieAY7wT8/Yc7LApxF8DMX6igEs1M3MxGVrgL7n+hQcxDh5VNQs8dEzCdxOVUHwfxxgaiE8w8ZeeW/Vp+8eorbElmhENBzlqxeJoD/xCSHGYDf445FZRPygDgFQHKCID4P8otmoNp3jkXgbKQuBoVT6WBOEagkKUiJyxltxr+moIwPszoH80yL8dXcCbOCU1hQE+D41dZJOF/9eUFbCecO9la+vxIr27wTTgm5QM9asvowAXGQuRnkJFNKueR99+HhIkXqFK6X9ihSgbcLtK4GIYPNswj7fN31baPauWJYFjUAszwwLoeBWP2HcPMJNi8w58QHoe0q2VdO98oSCXHhgTOj6zNO3wrZQK9c2VZC9C0Ah3hpkxZmluw0lpdDt3iayWXp5F7WybpMB/UIEYqFdjNCKyDWcZr7w2WTJTD9CGigNtpt0BZcGB0BmNWaurlj6YCsfGY20PgDXcSOk7qBDTb3RPkgc5wmeRiV8K7TV6z8uN8YfsgEum9T5zUAvd5LmOQwm7Y0EKbnKFBeYcuc77F4PnOWXB7wofEYrACZBAls6Epg/GVj5f1lPBi3AyydW2ZLp+Mn84pmPM1nGQ4ApbboC8tXvHFVagYZUoGeu3jNBUjuANphksPs+syhHG5jZevjpiUjBDrHcaERcjOE9yWlXl75xs1QRtfmWw0I98riq1OrGaZ+wpIxT+ORPXacGz6JFjZYQm2m+eaOfGhWADc9KkXRvy5btnJOlmgY6BMu64gFXQe3HQ5ymNP8Z/cyaNzc8fjMab46Iy8goaKywNMxmfUK+6pBg+gCL7l2/WvlQnDf2bgWEnY3H4Tl8xS6cln1Nn4KG1jzonbxjSwtQaDnDA/+CYClKeWlRaRWcjLAnGsBPX1uAxetV3g1o7CbkVOg+2hnUNSMyDQlRpcXbfvX2uqy51z0fRzJLGUB6w0+KnAOgZEtoyOBNctOP/99acV5QM87Ys0RySOgtiJPc26YRDBXowvItYBZLkshmFP93NyK5Uq409D0sUHBrzwT16UnfUrEmpjYTnyqW+V42FUFprOtRNekuR4e0JUSfRJNfp65qvIaCnPBqvCYaixzTUSzBarDSVlK22q7fqjgsqnFp1hdVyY3WgDALET4y5CoBfSsoy5eKIAr0/W3YE7TVSSmqK5UmbDbXZUurwuyANQfrE+JUlpb5OsaT/CyxiAAUZu48pTl55/hplpAlyj+CDXxtamqyqs1zIUbPfYkq7bMVfVvdTBn1y3DzbDEfF3WQ/pKRDBVZL5kc5138ll1tHRHpSi+2pXQQM9Z+tZeEN6Zpig/FIO5u1OglHt/sg4wF+jA/NoUscPxhAySrTSl7my8BFtdH4pQZM6VPTbf5W1rVQZRArZ68VU3WxyAWEUEDLfNdRE3Q5bvxEQRVrtWWqMlyqO/gTq/nd3TGeHQ2R2YN6cjA+omuRm5/V3QzQjcsfPBSqkXu7Gh29RjNcMCptRKjQASdrptgdUXe+1DGWJVaxKxdQYUSwk1yHRz8gZ16+ytmNu11QUYuRQsRRRVPsuj+R4ZV9YV5i6BubPasW1gDGNjhEODUNcXZm8FOHBpTVcXWpJncVTMzXC7JtMYu2S56Y4ZDFrClJGqLLD5iO08ZGRIA0lWPRTMvDd4mcELXwrw6YEQW+n2gCuJaM2yZWcvUccRkDyAhGQTGL/kzFAFzDM70L9rDEPDFfTvGsOoB3XtYE6FxooshHF+vZRMELg0AAuUFxCNHTlKOQftJpDJQexKlBg/7hM7AMp3/ZRsLBOJ/U88K6GtafKKlaqXqQjvNtMvOpN71s7pp1hmy7bEUVmU3q2OouRP9CbUaUcjF2YVbKjrZJnToDUbRuSU628boWKEzE9Ox3jlZC1VOeWT3ZsWsPqKQExAV8TPa7UVO42QBTYfPD6BOlbskQQYQvrRWpy1AflN67gbbvX5zNJrjfDFhZ1vEhtF0dugWQYgYjovPWsoTAxmFRKoYxw6pzPdpx4XzBl+rHP58jWk+3d+uRkwB+rldmbQeutI+3ZE1lXH97PNxJSYq2QgC58Xh5MAxCT0oCWZn2IFt5KVk0UXZhG4KgQuPvZVxtriwD7jAPAqIgIWnHLGG1bJ7xBINk50VaSE2sCsMmRCPR6Ys06B/Ifzg5e0dO3skufDHAaWrKM05ZalF04upx3CVwVh9MgqkqJQf/AaSZ9ZsFNhoMbK4nI9sTLVHGQp58LsnTWxcyFLwD49x6KHrqKhuFhcAgDR7MMvPBY13gW0KMwqBKEel2X2ZYyavF2nyFllYCleQzvt4JLslq47zbeWoccurC0AeGlBPRR0O/jmieSVq3QxnewzgTmW/rLJp1Rq1QRPxnhF3NoSqwtrxRja4dc7LcGWt5qGAHLuq7N99BILHUVtJzYTZhUsqAO9XATmdJEcmUBjq+gA3sEEN2dWkfbkiFUv0IlE6YUFLZnyb3l/uasZLsQwx7HWZ/RQbE8I9X9WfwKMmxGAmdzzdG7UACQnn248P1Dn5DduCVh66qkrj4goqhzrpXqhvjCr0L9rDKOjylLXCOa0QUFubvISyUs1JJg04Qql1yDQS8nSl9HDO54c3fY1IsXquV+49ZTl2JbZ5I6ln2KW6cwEUP8HvGNllfmmjC7M1ggimCsLJShT6FysSbEzivngJ1X/yplRRMJ+TNQLjYFZJSeWuqLdj/HBTKbRCuYlJzr2Jowke9yN9u06Oeke887NHOOSs7yCyfGqaY7VACBdhrHMQvcav9NnF83ho+SGPrG1Aw629dyo0A9Fk7TI3CrzZTwOM6nhSWaganur5YRVR++8veZXI0m1HZ0SxcBRrpirLhfmzghzZ3Zg28DEYFZf+neNYawcY17q6kcBy+wtiSV/vJsredoDS3PapnoNzCc+ji7HwioOQ3LJB19D9kpgsIQg4DIcNgW1ypMo0evMrIYe2Pp/bEGsZTVYYZgByGmMXDmRA9Y8GSPC1tlpN+vKFLOTBkGI6IRIWL9jAkvA/A0mhQ5SQnGY83MUg5nYdxMCVjewTkru+bH6pQNLcOtGnknRPe7Abb4LOJ2GgJjOz6yu5Scnmqy6Kn0O1JZlln/0RE8yy5fpVKlK3geZW1x2nhJmcmFmsk5T2APTfTTVkidprGhJGwR6fUaqg3n/SAXbdhHmzupA/y44Vrp6mPtmtqOjLcKWHSOoxEHhDH1SRtgXW+GICEHoaC9h9dmH45zlC3H0ohmYMb0L+4ZG8ctNg3jw0c24/SfP48Bwxaiy+CQGLCtHy7EMshP1JVdwuaSvkzQBEvoo+SEhmTGpMzBnVg8uPGsxTl46F3PnTEVHR4Tdg8PYsHEnHlz3Ep7Y0C/LMO5GsreG0DpIH5vdSqG+q+YDsUu89mecR57tkU3WdzYiSWrUfrOaAEKXba9jq1HiWG1uECwjozKKaaJv8epBWHtujN8y93RFjh89Ppg72ycIMwB7x0+1J516bYjw1vOX4JPvPh1zZnanKAN27RnGX9+0Dt+783n9nLva31lv3AK+06lKt+sAyO11iT8kT+x9PZjdhuSOoWbPveRLT1cb3nvFaXjLeUehFKU/rvj0Czvwla8/hJe37NZ1gBzAattFex8N1WDQ4Lm/rRLcTkE1OXfiyKFHW2/XzYC+KnBojWWPLbfI2idPMkHqmGB8fcKg6Fu8ugJ923v8MKtgoB7N8Ke5iuIwd7RFWHbiPCycOxXz+nrQN6sHne2lcJVYZ7lbu518zGwcv2RWet2csHHzHjzyVL+0ubJ1HZ1Wse72A/ynLgJBBOrKQ0d7CWedOh/Tp/obV4VCJY7x6NPb0D9g7yEuUg54/FglxtDQKPp37sPzL+3ExpcHLCvpBW2NbWut07TxhA+zstpgchTboMsrmnp+xMiSDbVUL/oWr2bDaWIwq5C74lEFzEIAF561CJdeuATnrViE3p723PJboXZhS/9e3LP2Bdz14HPYtiP0Wz/MFeFMk/KTlNV1fOYUmFVeDrOywtrw83Vux9JLoGsHs5Lx3Q9XRT7MZ5w0F5987wqcdry/cVMrNDaMlSv47m1P4js/fAyjY5UUYoQNnnZjqoM5+aRUmFU+76YNAaJv8SoFux/GCbMKHtQFYS6VBD75njPwrstOMvLptWyFRgSReKVb+wfxpa/dh+d+uR1mJcXuF95V9k0TeD5z8hmAWelKgdmSY5NK0bd4Vfj2wwRhVkFDPeBPFEMw907pwHWfPg/nrVhoTjb1BkkrNDQIASEiHBgZwxe+ejfWPblFJ7m2KvmIwXgsBjP3m2OydXJXQ08IzQAiQSj1zFzyOa/iNYIZAMbKhNGxGHNndmCsHGOsnMiGYG4vRfj6F1fh3OULkoi4jGQ1nlr/J8N/Sp6Ibi+14Q1nLMaLm3bhla17dF8T+6sngACs17oY4Fkwm4dKlCyx/GTp0XkFIOZIl8OpVeggJeTIyGQ+UezpjoI+8xc/dBbe/tbjkpEYjxUouxWaEoSAiNowPFLGB6++FS9t3mVhoFeG3XVkwySQA7N1cynH1VBLgkTkAF0nmNWXns4S5s5ux2iZsNWB+eI3HI5//NMLABDiyihabsbkDgICoq0Tm14dxAc+9wMMHTAGSE/Y2LH5nlh7BaSJKw6zKSP5ojQSwFyOOsMMAKMVwvBojD37yhbM7SWBf7j6Asyc1gmURwFSvnbr/2T+T4gxbVoPIhHhkSe3aKhU8EFGko8A76m/LJhNTn1MPMY8o4Q2K4d/kBKqh1l9OzDiPmhPuPxNx2DxgmmguNJyNQ6mUIkB0Yb/teo4/OddT2PbziHvwuo9AhpyMYDgBFAfEmz4pSknAiBg3gongbZGwpwmfPnFyROsVBlB/pslrTCpQmUEHe3duPySU/C3N/5UR3sv+DpWGYC9zqxl8mHW70wymNXdQ/ZjLM2Bed6cHpx8zKwE5ErLOh9sgSqjEKVOnHvGInz1prWoxOyxV/3HuAvcKk8EZuKyarCQBro5MAPA+SsOSx7SqYzoZZxWOLgCxWOYPrULp54wD794YovV8d6jsPxBI+MMJ+nuBDALZnlnPRE1lr+tmTADwJKFvUnV4wpaKxsHZ6DKGESpHScdMxe/eHyLtMbmkVMLZNXHfK8Q7p4Uhtn4LeopPDMpzK5uweTqYQaAQ2ZPSSpaKbcs9MEaKHms4ZBZU+wVjJBrAQRhttwTKy4dZnJgBlEe0PWFGQAOmdUFSTRaE8KDNMTJMuvcOVPMhpBkJmo6MBeDp7lWWafkwAwHZkIm0PWHGQA6OtTzzHEL6IM1yH7raC/5V1myv9tvmoABzF0MFZ0NMzkwSx86WMOcE/DlxgOzJUXUcjkO1hBwGzwRa3898kA2+dXtctLrzPZmNgZmVTa/4RIAutEwq4ePWhb64A38ATIT2M1B86Hhd0AGYD2bAdjrzDzdtcysLAfoBsOs1l0ILZfjYA7q2m+5FDLJ4pyyQU6DmU80M2Am2+VoAsxQ7UAtl+NgDhIu61kOPgHUsJqk5Iuw0vTKCKnNIquDGUDBGyt1gtkOMdwtvVvhYAneBtTOHUDiSQGQZaryl3U2e0McdwKoPRrm2uTfWKk7zGoCELcs9MEa9EsYBj6dpAlnDyU5QEKQBa37NF5RmIG8GysNscwqreVDH7RB9ZvrQ3Mwmb9hQIZ8xS45jJXzDBhwdVa1vUE6zIQ4A+hGwcwq3AL6YA1mUqh9YR4ciAFlydk8ynmsNJFReWNbDxH0BjekciWZwkA30jLrVmhNCg/WIPRbKMaKsg8HYhXJH/R3QAbUDpIpLoYw+4Aod0Xm84FuKMwmtE2ZB4Dwu5+8G8+/MpheXiF1RYSUjNzRSMjtumRKsm1Y8iC52vBLqP3p5FZeag8w64fdScmR3oJMbSGG0A/Aw2woJgC9J53OS2zbMeHnZQVbezMpe6fLVoc8HxldaS0mXGEWDp8/DX/58Qv4GYH/okBSfb/PSN0xgdos0ilBvbmS4S8nXDOY5UiygW4KzEnFRZTcAn91YAyvbBsOaK8DzLqDDYTEfpw9gToRFIw+DrXe5kvvEMYh5lCT3qfO6PW3/kqgtgeHC6Y1gKQCof+ocuzBo/Oz5lG6uVV19Vrt5YTunm6IqI3JxJal5cFbn9YW2sbOrI7wJUDXxUgGvpbRbge30E2yzMaHztJeH5iBpJpCEEACsRAQpKBWI1/ojRS1FYX1IFkyEMhYWKjvUPoSvtRuouq5GqGesNQgqjyqeiTpVnpIX2q1VSWz6aMaUKqz1aaPgCxf9YmEm2/oAhiGif3NanvP+hJP89udDxyr2wlmIJCWZHpcfxkWzGZNWrjvFDYYZt5oqfrrBzOPjgUYrKZLhforwSdlNSlOwFd7qgFmm1wYOQLMIAlArQpV+a3hYslLqEFyIChrbUBNwCYGNgzYTG0yYKS/qy88IgihFbjR1vv/2H3HdbhLdkraBpuMPlamv1qijAXLpQeC2feDvVPYLJhzZOoNM9T+zBxW43poyycSi6b3UBYSVO77qr2ctT5lSZllZ5DGUof2F0hZaeni6EFGuixt1gVZECbRsfzuWGx5noLMECW1fa8LlqyKaijm0ATsj92YBLf7lSdv2p7csojnoSDIUG3OLbmG2pxf8BWs1xrMpjEAIeKkgSzXI5FSrgdRrK/3GlzmEkBbZuUeCMOgtthALEjC7bgj2gIrq58gqayXsdayS5n7oAcAt9gK+CR3Aoc8cQ27NqAyH7k82ACmtrzbZcwUe7fF7WQQpZRh/C8NM7f8iQ6j27pT2ByYrVM1Mg2EmZdJ2ioG/GSoSV+aS0Hamug0LivjY50H2v0QsbHMJFc2Et2xtKbcWis4lRsSyysGs8YCemsANTCUBdTnJey2MefLfIvUuaFah3BMKreenK1QN8R62HuJGmStkpXmWGWdJ2aTwqZa5gDP49YVkikCM1wAEwKN6yEvz0IgMdIO1JAgKBhToI4JEIhh+dQxTDk8P8j4wWq3f1Zb7YvD+NfaYsslfTN5jE1+e/bnAx5qKN/0JpUkV5ylQTPJBCTE+tJg6/BBBvRdwkTAs8r8bmKbV9fg2WSECcAcPOUmwayPyKx6GFeCgRS7/rQwLgLjxF2NECDE+jdNmEsTy6uC8sf1yofUQr4LAqVfzqSSCaCMJ3LcDzUc7ZURpQPK3w5cFR1PxD8gchO9iSJBWVGlTbAuN6NFT5LJTjJ3CfmGjz7Mqi3amgvzeEL9YNaxsv2Nj2tWKcAsuA21miwKkw8G6mTiGTOrLiBivvphLDmUfw3f2uuJo16dkLgqsMHAVuco2HnJYMNtEgQTcNgs1noU6zp4Wq2iCNw/9kFWpGaArOLY1WB8r2BZGnMFc2L8UV6NrlSZccLM07WlBSBi0p3M3ZIEagMqyIVUuhmC7LyAbalVh4rY+NVgMEsTpiacILaaAQY21CRRDgz4IMOKIzteR7sWO9CPHvHsBkgoCxkXiqcT+8OrZf9GObP6xOIYzKDxvILFNeYLjkd7YV2pMhOGGcyX1dNAANDWMbm0OysY2rIbSGNteR2fGgp6pgBk/GrZoVovs9aAcXOAwGqGIAaz0AbShVvJqKtOdhMJN8LDgPGllTjjxgPQl3O34PVBBkjOEcwkEdI5qe4VrNBZpAsWiylkoBsLs5LREzM4k0RSYCaXV7VspsGSUOs7jzDAa19ckDaLOj9g+e3qkmstx6lJHwdbrWYIM2ECLwfcn5YHavCYCJPGBodpLx9orznJBjDQoikQJ/qNjLN2wvNoXviKh1m/rm5vu3rAnEt0c2BWXxMYE7Ds9WkJqj62oU6MRhy4lsP459qFYK6N1Gd8ZQYey2evZnCLrWg05WqfW8MtrxMBVvVKniono+1CLodewFAhtr+EIVZxsa3N6gpj/NTdweQbGe9IFH0Fy9WeLVgsppC65sKsv2qrqyxobN1JdKEGX0tmkBt3BcxHVlAbv9tapiPSy2lm/Rnm2QzLYkO7LmpAuJM7fUHXvwKq4gFrAmab6XAILPNxyF0/3by1YmcgJ9ayyDw7G6/mJotpM6Kie9vVHeaQJZgcMJs4si20htixrBAAxcb/li6BcScU1I4rIlR+Bjq0IWIrG3L9mQ8yEDOtSR2CS3RahzlHfZicRLG2UAnesl1srLr1mqHrn7u30gyc6tgCGUgmI9Z6tIxy9OXvbVdvmN028S5jOeU1AmYoaPkNER9qWBZTLunFaQ8psUmaUeBYa2IwMzcEymKrW9e8Xe2HlwzcdnsZwPVM02r7LMOcdSULLE1r/SE75ro15KomOXdx3lrRVtkqIm9vu4a4GUGii5XXIJhVYsKevUJhLHMiY1YnRGKZ3TuKRMbtAJgrw5fpCHz+pgaLXAcxf+XviBtFfCWDnGMTtPUGoPcLgO3RmnNyG8Z8j0NpmrtwY7qrIC7EWqPykcmcozpNvpOS0ZmUmPFOYSNg9nEuXF6DYdbfFHDeshub2EFZZufmC2AmefrOHizA7eU4ha4NqlnNUPe3ZbwcTHqZzrGAZg3anqgKKWyzFmoQsr65S9WmL00fpdHhroYYiJMjMwlUPn/ynY0/VkXzY/cp7xQ2BubqQ3Nh1jEMakmw71MjcEcROtFYXOumilLuAiwhJA68opG7IoC6y6hrzi29PhUCS+KeRmY7cHkFtNtU/rKdAjgQp2qhLSyruBqMbMKnVHjLeGqBkYLvFDYa5qI2enLArFMIZhmMYNwPpEPN4XT9aujvjjsCaYiF8a/1komsiPaxlQ6ZV1lt+S35wieZoXMU1ofVDsTXivWn2/rZV+OECccSMwF9pF6x4oxbIAueTf9x3pU3ZzYAABmLSURBVClsgmUuxPPkglmnelZWrk/ziWJitgBrrZq7IEqPewsc+m4kLMhj5SNA/XXroto+9Lyz0D4uI1sGwU7bnD3/5rR2DLuZWF+aaMtht/WEukIOfK7WuBkKZDY11tY9+c7eKWwCzObilV/eZIOZ/bXfXGGrBu4NGNguCMBe7VIy3LcGt7r8NngiYKaHxhdXfjW32up0zKqIilTgKzF3bcMkBlvEW9LgllO1D1nHqd3prkcTJ4ODzK8C/vJem6lYkVBrmAvKTFKYdZxqVWly1bt93g0YcBckyWPdEue+NbfAcmDonYWU9QbToSwzbKutjkEccBWvAJGBWXIXLBf1JN7vhZD19SVNHexHSNxlOxdklc++bW7GOKGtBbNAx5QeLJg3FQvmTsW8mZ3o6WxHd1cJHYIwMjKGwcH92LZtEC++tAsv7R6zt5TkqpW15Y+IumvVuo3sB5ug3REzQBKYI/QuXYq3L+9FpGvsfinj2XsewY+32oNBiVhWmdjkTjiYkskDB3YKyAX7xifXSmDL4zpZGwQZQTDPqugUAtwbKxxkNQQL/GhQuOa1hdmNqyPMpQ4cdsx8nLN8IU4/rg8nHd2Ho+a2o8Pt3KCqCvZs3Y61P9uIW+54Frc9sQ8jrgjBPE4KeGvVxlqzZ6O5tXbfNOk6FB/6xAV4x8LIt5K60BF874XH8OMtZctqJ/XhcJPt0rJ25lMskhUIuxmOnDui+U0Ufmtc2GK2PvkMNelaWq6EtNUeFhxk5b6N61ewam6ZQ8O/DjCLGcfga/96AS6ZWUqHIyuIEqbPn4c1vzYPay5dgf4nn8GXr1uLf3vyACqsoLS1au4+BK01h5kAoIRTf/uNeNuCDJhVqXwCKY85FWbZ0Nak5pcunMEbI2R/Ca1oGPW2yxJSRLEZ3irEOpnVyLnTGAJZKqz+V7Bq72aQn1YvN6OtAzOm+jBTZRjPPvAMvvvAFjy1ZQiDYyXMmDsTy844BpetWoBFXQGcRAmHnHQi/uy6I/HmG/8Lv3/TJuxkq/5hvxqBl16lbx1zGJO87UtOxWf/92x0FBx9id8Oae2MPv272KwxrPmifv/JazldTxdmlpkdk+M+8O983w+h89ouhDOsHJlUkEH6EdqqfgWr9jAXCzWBOUWusvMV/MWn78D1TxywfeNntuDee5/Cdd88Gp//4gX47SPbg1ZSlKbgDb/3Fvx7zy247PpXsNsdm8pak1nSs601czkUjIKA0nRc8f7TcWpoMIXORPY0R8LcKZQ6NODu7Wb2c8YC/oAPwewdSb0eE8KRkH+MWbVrYF2gybSVOSv/xgqz4Gqe4VWsUExNYKbA/7TctYQZoJHtuO5Tt+HvXJhhGnR40wZ8/GP34c5dGcpEO064/CL82XlTgtAnjZ48iaYmO+oGiXUHDABJa3roqjfiw6d2FHeNyHCi4dYWTYFG2jXR/yEHkVqzJqODCMm23fpYOP9NrbUldZqf14kIyaKyagvZHjGxcmUeoQpWKp0y9fMcltWmENCNtcyqYsROKJy7tjADhJdvfQB/9+RYihajoPLqM7jmW9swkqUzmoJL3rMMZ3SEyzKGRHWEAoRYp0goZh6Fq959BGZEifxYJS529rFpSOJlcmDIAE4wtMYu6CRAMYc+5b/Td+bYrYuCkKw68d/PEmwUGWts6mCBDLDvZnA4QDcW5iyZ+sIMoLIT371lK4aCWhwFRHjhjqfx0Gi24tKhx+K3lren1wsKMN6xibVOfpKDQKITK9/5BlwyWzoH5QH8v/94CaN550Ngt7kNPLos2BAqApWF5JZc5wcBsEy0T7BXDXswaXhjBOpBDGLuT/tXAAtkmRcgkLVNmAV0k2Am6xQDuesAM4DKq6/g/hdtRyMMs/zYtRUP/TJHedSFFa+bA4N0WN6sbpHuHJJuSM9JZ+Azb+pFCQAoxks/uBdffboS1OPphbKM0C+kcHiM1Yx1vLaQDnwqMpVldg7Wf9dia90xBAPYwC0sgNUVhENsLLJsUe6+sXJAgb3t0ruiHjDn5a4lzATs34Ef3fwY1peAysvP4ZmKleor4IeVQbywuQJamr2EduiiGejGVoylVYZXlwDIbbxAAuiYi/d98BQsKSUlVHY8i6u/vgl7l52cdWJar/3YqV2W0H9Id76VxvV4kWlFhjrQfiqPV0TWzrK0JsQqu1OG/CNHKN/C11h00rqDr2A1FmZCOF+NYQZA+7fipuu2pqXmFB9j9+4REMKrHUkQEN3t6IkIg6Ff1/B08omUwNLL3oj3HNWW6I/347/+/kHcubuCrgJNoS7zZtWE1UoDTkye3ayzH79Asf7mptw5Hy4iz41YFP9mrLydzVSQTP1ip6cYyEqXt2zXcMsc5Ln2MGen5sGcRFYof3JGo2PhyWMazDKUFpyEq688FD2yEwfXPYTP37UPMYMho1T933pGW6UGzbWxmLY/bJcWHrysH7m4WZhw1JhWdgeb1QPKEsMfZHxnf7vuvCjnxkrDYQ7mn4wwJ6GrK28ZjbBry14MuTpyYEY0Fb/+/rNwzhRpaQ5sxbXXPo6XKgmZhboAsq/lpdl6VImcOBc2BnPK4x3BGL/9ZEzsxvt69BWD3bXxrxRMToNsRiOviQI+Y/fRRsFcbWgGzASITizoa09buJdiY3jkiX5YC4F5MENg9rnn4BOv7050UxnPfOce3LAxDtcxq3jwlQ6lPtYwmwdLlbA8NZbDt6DpJxPyd12YLats3XKkdIB5AY5bYbDk9TW5UnYfbQzM1fPdJJgBoDQHJy3OxBnx4Iv43kOjaVdv+DADYuoifOz3j8XcZFkD5U1P4FPf2IZhnqtAd/D1bGNmzRsr2qVXEcJe5tORwXqzfPbpBKJsn4OkWg/UNDXcpWCZrSHiHrMQ2H200TBTdbpyi64DzADaj16Es2ZmOBxUxjP/sQ537k0759CaQDtOf8dKXDFfPplc2Yv/f+1aPHQg4wRSyzc7jyZW17yTbT0myq7yVlsI97v9BF4wCLfvyDrLkLX3WsH1iVWpMTmMhPT5Bfh72zXaMhfiubkwA21YvuZoHFlKlx3Z+Ciu+mZ/cgOkEMxA59LluOY3ZqJdwrT9/p/gS2sDP2lXsE9I80gaYmJ/rEkieyFACXrPcOQUTm7fsePgT6iyH1b1AOa4MMXpLlA4wd7bruFuBsFqhWCmZsMMRIcsxfvXyJsdAdnKzhfxqU8/hF8cCOkMw4zSLPzuh07DifJRunjvS/jz6zagP+P084L9drm91S4g7IfqJDQcYqsoF/hQeW4udsMkXH3hJXg8sDuCeSWHYs2NlabAnGegmw8zxBRc8vtn4dwpwceOUN7+Ij7zkR/h316uFIcZAosuWYk/OlGumtAofn7jvfj21qJ1TK+7uWmh9rZj1pA90qYhl0m+qiwjI2NjF14hf3fXzRrqgYBrkk9yel3kZ1szYTbfQ7onAcwo4ahfX4Uvnj8lYJ0Je597Ah/+xH24dWs1MAPRnKX47LsWYZp8+Gh4wzp8+uYBlAvVMb/uxD8dWPy3VtwZm8kkuExqcbzckHV1+jcNtxrADFi/U1i9oqBMVTAHosiJaBrMERaedwFu+sAizHIXN2gMz915H977V0/hmf2hHkqHGaIbq973BlwkJ5hUGcCNf/MLPMHX+qzM1ZEdhsWpV4r+xKL7AyOsL6CLPVwRbPtUfbWBGcjb2y5DUVBmPDBn5WiiZV68+kL861VLcWSbbZ3ioR34zldvx2du3YF9wYtLBswQ6F12Fj63Sll8wqYf3oevcJrrCHN+/gJXa+5ChPq7ivJSlYQLzYlNjqp+BStVZkIw52auJnFiMIsuLH/bGvzzuxbhkBKfxMTY9sg6XPUXP8Ptm8spOrNgBtA1Dx/84Ik4XOqNd67H1f/0EgYtHyG3wkXOwokcPzS+iCvnXV4Lloeawwyq8hWsVJmaWOai4nWEuXsOrvjom3DNqpnoZizHQztw8z/chc99/1XsisNZc2GGwJJfOxf/90j1TiNhdLgXv/bHl+DSzHxA6ZB5cJ+ytkM7zn77m3HDm5waVHbj5mvvx23bcwoYN8zj1AXUBWZgIr+CVTOYnet2k2DuOfI4XP3ZlfitozrM7W0qY9PD63DVX/0cP95aTsuKfJiTMPfQXrnmDAACXQsW4E0LCmTMC6KEhScfjYVufHkr/vuf8zKPD2bT1iELnaevPjAD4/0VrFpa5qAfmlFmZuo4YBadOOktb8S17z8WS3vMLePKYD++df1duObW7cYlCOoktB1/Ov7lA4sxDUC89Rl87AuP47kKnEyF3w5sYJgIzKii73jm+sEMjOdXsGrqZhCKtUp9YG6btQDv/egq/PE509GpWR7DLx94GB//8jrcvz1Oy6ojCICYNgOnnTgfsyKgPG0TeoKZCE9+9zZccT/bRqGgz9xx2lm44R0LEXxdEQBoFPf90w9x3ZNqFJGO37gtTe8EYa5GjxatL8xAtb+CVXOYi4R6wNyGI849E1/+yOuwYlakfdryrldx07V34c/v2pmsYGTqLOJm2KZ98OXN+MnLIX3Zmrqnnxq+laxDjG0bXsb9Py/n6ipSnhGZ0EzI0Vd/mIFqfgXrVwRmMaUPV/zhKnz24j70KmeZxvD8PWvx0b95FD8byD1BVA9zVlLj2quwTGGYm+8zu6HYr2DVC2bdcKF8tYe5Y/HJ+PsvnYuL5vPdkwjx0BB2TzsCH/7MEZllpgUxfRamui/mZVclX64qmRrqqhrmzAlGQ2EGqtnbri4wJ59FHgv0U6t1MwS6lx6B8+a7W4EJRFNnYPnyGZll1iTUDeaqC88Qqc4yZz7y0WCYgdw7hXWGWR/wiGxvcXwwT4IwAZgnfhb1dDNSiG4CzECRGyt1hbm68KsPs0DvCSfg3a+fbnVM2xFzcixPO05aczY+fiLXXcFzdz+Mm5/zd4YK1+/g9JldgewbKw2DOV/Prz7MSZh63PH4w3cclr5EFwqihOMuXIHjrMgKbv/lz3Hzc0XqNxGYHQvdRJiB4GaNLctcs9BUn7locTW0zMULzYkdH8xA2o2VRsLsutBBLbWAmTD0swdxxQfWhd/czj3nYploeA9ecPdfqaK9Bu69B5dv7PTvK1bFFAGIMfBihrtRK5hTXOh84bTY8cMMhG6sNNQyE/ufpqV2lrk8sAMPDRTJ2rx15uEd/Vi7Iy25Rla+ZpbZ7bs8y5UXOzGYAe1yNAvmvNRauhkpMpMI5qD0pIW5mtAYmAF+Y6VpMPsWugWzGzlJYfZe+y6uqx4wA/p3CgsWWLSwaiyz0yYtmN3IyQyzIx5o0/wSagczQOF3ChvrZuSM8hbMhXVli9QBZi9PJt2B2NrCDASW7RoLc3HV1etqwWxE6gVzZqE5sbWHGUDW7qONgTnVPrdgLqwrW6S+MPs2uXkwg1J3H220ZXaapQVzYV3ZIo2wzM13M/jXwO6jjYM52Iepzya1YC4s00g3I4fnRsIMeLuPNhpmYv/HrytTpgVz/WD29GSVW3+YgZxfwapGUTWVyvK1qtWVKdOCuc4w51TFPaozzMB4XsHKFa8O5r37x6zj3p6SJ124XpnRLZiLl4dCME/tKVn69u0fC5TQOJgJQNRsy7xlh7279/y+7kK6MmVaMDfAMhP6ZnZZMdsGDjQVZiD1t76LKypaqaCbQcDmbcOWK33WibNydWWW14K5ITADwJL5U62+27ZzxC+vgTADwd/6Lq6oaKXSYAaAnzy6E7xVVp/Vh872vE1ZWjAbkebADAAXrpgL3ndPv7jblmkwzEBioVN+d7f+MAPAExsH8fK2/fp4+pQ2/PZFh1VfXgvmhsJ8xPypOOWYWfp4tBzjnnX9aCbMAOIIwN5qFRWtVB7MQNKO37vnVfCR/v7fPBLTp4TeDmvBbESaBzMAfOTtx0II02drH9+OfftHCxZbF5gBYCgCYU81iopWqgjMKtxwy0vYuXtMMz1zajv++oMnIIpSfwEkI7oFc/HyMC6YX39yHy55/QJug/D1H2wsWGzdYAaAwQgRdhVVVLRS1cAMEPbtL+Nvv7ORtw/OW96HD1+xODtzC+aGw3zY3B589U+W6V+yIAA/fWIH7v7Fq5ZoR3uE6b3uJsB1hRkA9pa6eg+/UAgc3yyYVXhq4yBOWzodi+Z167jTj5+B6VPb8cBjA37bt2BuOMzHHj4NN/3pmZg32yzXjZUJf/AXD6OfrXB0tEeY39eNKV2J2zg8WilYrwnBDCHwXKlr2sLjhcDKHNkiieOGGUja975HB/Dm18/FNOY/n3rMdLzumBl4dP0e7Nk3lqKzBXPx8lA1zKUIuHzV4bj+quWYM6PTkvrU9Y/jxw9v08cK5j17x7Bzzwj6ZiYv/CZQFytvPDADAATuKXVNWzRbCFyeJ1tPmFU4MFLB2id24aIz+9DTZe4YHj6vG7+1agGmT21H/84R7Nxj/8JOC+ai5aEqmGdN68Alb5iPL3/4NFy+ehHa2+xV3htv2YivfnuDPuYw79o7ikpM2D9cllCLDKhrADMAEviOmLVgxUKKSq80G2YeFs3two2feR0OZ+4HDxs3D2HDy/uxa+9orq7ioSAQjSwvs3Or1FUwRBEwZ0YHDp3VjWOPnI5SaOcWAq799np85Zvr9fhwYeb1CqcF6j4BmAFACLpMAMDMhWc/AeDEsFhjYVYys6e345r3HIvVK/oK5GmFRoXBfWP4+PWP49afbNFxWTAXlpkgzAAhIjquBABdvYctEQJnZ6kMqwjI1ABmADgwEuPWB/vx5Ma9OG3pdMuvboXGh9FyjBt/+CLe96V1ePy53Tq+CMwApPtRYe5H1m/WVA8zgK37dm74hACA6QvOPj8S+HGaylQVdYLZjS5FwDmnzsal587DRWf2obOjwCMorTDhUImBnz+9E3c8tA0/+umW5EEy1k1FYeYhydNl8tQGZgD45tCO9W9Tdy6imQvP3gjg8CKKGgmzG9FWEjjqsCmYP6cL06a2oavD/dHiohPAIqGWE8Dqy5y4qurb/sBojP6BYWwbGMHm7Qewf5j9zMUEYVYyVt7BUSc1XK+8upPAO/dvX3+DvhU3a+HZnyPgs5MZ5tZqRtHyMC6Yw7G1hVnraJM69hmoxwszgAoBi/bvWL/FXLvjthsAylwsbMHsRrZgLl4vewI4OhZjy/YDmD61HTOndUwEZoDo7v071m8B2PPQA1vuf4VA389W0YL5tQxze5vA/L5uDO4rTwhmFRTUM3o75G3y8cAMAPiGOrRnV9T2+ZDWFsxu5GsPZiC5zT08UkFPd0muT48fZhV6utsQE+HAcNlPzKklCCBgX0/U/j0VZQG9e/MDjwH4ga+iBfNrHWYVXt05jLGxGPP7ulGKqngRI6Bvem8HZkxtx5b+/Rgdy/5tnTQGBdE/bN/+1D4V7W8FRuJzkA/9t2B2I1/bMKuwbeAARnOhzod5Zm87Nvfvx2h5fDADGKZIfJknuWteGN77yqvdvQvnkhCnt2BGC+aUXEMHyujuLGFGbweGDpSdajQEZhDwj/t3rv82Tw7/OkN71ycB6s/SWyAhX6YF80EJswrbBoYDlroxMAMYIip/yc0RBHr3L+/dDRIfzapYTkK+TAvmgxpmFWyos8VrCDMAuubAwAuvuLGey6HC8N5Nj3X3LjwO43xoKVOmBfOvBMwqJO5HZNyPAKu1hRkbhmbGv4OBAe++SeZDEXGp7X0AvFHQgrkKmV9xmJWMttRz/IlijWGOhRDvxvPPj3gpyAF6z8sP7EIU/R9YWx20YC4s8xqBWYVtO32fusYwQwBf3Lfj2fvSNKS6HCoMD77yUuf0hVsF8JYWzFXIvMZgVl+HDpTR01XC9N4OlErJi7JbttcGZgD3De1c/3tZlcsFGgBGBjc90jVtwUwAZ1ZVqdToFszFy8NBA7MK+w6U0d1VwpSetgTmcd40ccJWErhobP/OwSxNhYAGgOG9Z9/ZNW3PqQCWFqpUanQL5uLl4aCDWUXtO1DGvgNjGCvn6SsE8x6U6ML92zc8n1ezwkADT9Pwohn/0TXccQo8qFswG5EWzOpbnGeYi8E8CtClQzs2rC1QuSK7j7Lw1FOju7tn/SYgfphXixbMr22Yq9KVnmWYBC4b2rnhrgIKAVRloWUYeL4yvGj6zV3DHScAdFxQpgVzC+ZqyktxM4SoXDK047k7CijUoXqgAWD79srw3s3f7exd2CkEzsmuXAvm4uWhBXMStiLGBUMDzz1cQKEVxge0rMrI3s0/7uyd/6wQ4s0A2lswt2CuqrxQFhL3U4SL9g+sz50AhkLeA62FwvT5Z54mEH8DwPGsZi2YC5eHFsxALAS+sG/H+j9F6p7l+WEiFlqHkb2bts6bffS/DJfHeiCwAiDRgrloeWjBDDwjhPjNfTvW31hQYWqoiYXmYcahp59LAn8L4NR0qRbMRuw1DfMQgM8P7Wz7CvBUTfZ1qznQMkQzFpx+JRGuAbDATmrBbMReszAPE/AvROUvhR4BnUioF9AAgPnzl/XsF+I9ROIPACxpwczFXnswE7BPCPGPBPprte1ArUNdgWYhmjn/9DfHoPcDuACu796CubCugxDmCojuBvCNnqj9e/yF1nqERgGtw9R5r+tri9ouIcRvAcRqEKaY1BbMxUuY1DBvBXAPCdwNwo/qZY1DoeFAW+GEEzpm7Oo+ATGdHAs6RUCcAKAPwAz5f6adoQWzddQ8mPcA2AdgnxAYIKLnSYhnI9AGEdOTe3dueLZAwXUJ/wOz7dJibKY7eQAAAABJRU5ErkJggg==">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ============================================================
+           PACIFIC NOIR  —  Riverton 24th Tongan Ward Calendar
+           Deep navy canvas · gold accents · Fraunces + Manrope
+           Manulua tapa motif · dark / light (Sacred Stone) modes
+           ============================================================ */
+        :root {
+            --navy-top: #0d1730;
+            --navy-mid: #1a2750;
+            --navy-deep: #0a1224;
+            --canvas: #0b1428;
+            --panel: #111d3a;
+            --panel-2: #16223f;
+            --panel-3: #1b2949;
+            --line: rgba(237, 200, 120, 0.18);
+            --line-soft: rgba(255, 255, 255, 0.07);
+            --gold: #edc878;
+            --gold-soft: #f6dfa6;
+            --gold-deep: #c9a253;
+            --ink: #eef1f8;
+            --ink-mid: #b6bfd6;
+            --ink-dim: #828ca6;
+            --danger: #f0767a;
+            --ok: #4fd6a0;
+            --radius: 14px;
+            --radius-sm: 9px;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            --serif: 'Fraunces', Georgia, serif;
+            --sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
+        [data-theme="light"] {
+            --navy-top: #efe9dc;
+            --navy-mid: #e7ded780;
+            --navy-deep: #f4f1ea;
+            --canvas: #f4f1ea;
+            --panel: #fffdf8;
+            --panel-2: #f7f2e8;
+            --panel-3: #efe7d6;
+            --line: rgba(176, 138, 58, 0.30);
+            --line-soft: rgba(13, 23, 48, 0.08);
+            --gold: #b6892f;
+            --gold-soft: #caa14a;
+            --gold-deep: #936c1f;
+            --ink: #15213d;
+            --ink-mid: #3f4d6b;
+            --ink-dim: #6c768e;
+            --shadow: 0 18px 44px rgba(13, 23, 48, 0.16);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { -webkit-text-size-adjust: 100%; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: var(--sans);
+            color: var(--ink);
+            background:
+                radial-gradient(1100px 620px at 82% -8%, rgba(237, 200, 120, 0.16), transparent 60%),
+                radial-gradient(900px 700px at 8% 108%, rgba(60, 90, 160, 0.18), transparent 60%),
+                linear-gradient(168deg, var(--navy-top) 0%, var(--navy-deep) 60%, var(--canvas) 100%);
+            background-attachment: fixed;
             min-height: 100vh;
-            padding: 20px;
+            padding: 22px 16px 48px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Manulua (joined-diamond) tapa lattice, used as a header texture */
+        .tapa {
+            background-image:
+                linear-gradient(135deg, var(--line) 1px, transparent 1px),
+                linear-gradient(225deg, var(--line) 1px, transparent 1px);
+            background-size: 26px 26px;
+            background-position: 0 0;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1320px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
             overflow: hidden;
         }
 
+        /* ---------- Header ---------- */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
             position: relative;
+            padding: 38px 30px 32px;
+            text-align: center;
+            color: var(--ink);
+            background:
+                radial-gradient(620px 240px at 80% -40%, rgba(237, 200, 120, 0.22), transparent 65%),
+                linear-gradient(160deg, var(--navy-mid), var(--navy-deep));
+            border-bottom: 1px solid var(--line);
             overflow: hidden;
         }
-
         .header::before {
             content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 15s linear infinite;
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(135deg, rgba(237,200,120,0.10) 1px, transparent 1px),
+                linear-gradient(225deg, rgba(237,200,120,0.10) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, #000 35%, transparent 78%);
+                    mask-image: radial-gradient(120% 120% at 50% 0%, #000 35%, transparent 78%);
         }
-
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .header h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
+        .header > * { position: relative; z-index: 1; }
+        .header .eyebrow {
+            font-family: var(--sans);
+            font-size: 0.72em;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--gold);
             font-weight: 700;
-            letter-spacing: 0.5px;
+            margin-bottom: 12px;
         }
-
+        .header h1 {
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: clamp(1.7em, 4.5vw, 2.6em);
+            line-height: 1.08;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+        }
+        .header h1 .accent { color: var(--gold); }
         .header p {
-            font-size: 1.1em;
-            opacity: 0.95;
+            margin-top: 10px;
+            color: var(--ink-mid);
+            font-size: 1em;
+        }
+        .header .gold-rule {
+            width: 64px; height: 2px;
+            margin: 16px auto 0;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
+        /* ---------- Language + theme toggles ---------- */
+        .top-toggles {
+            position: absolute; top: 16px; right: 16px;
+            display: flex; gap: 8px; z-index: 3;
+        }
+        .language-toggle, .theme-toggle {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--line);
+            color: var(--ink);
+            padding: 8px 13px;
+            border-radius: 999px;
+            font-family: var(--sans);
+            font-size: 0.82em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .18s, border-color .18s, transform .18s;
+            backdrop-filter: blur(6px);
+        }
+        .language-toggle:hover, .theme-toggle:hover {
+            background: rgba(237, 200, 120, 0.14);
+            border-color: var(--gold);
+            transform: translateY(-1px);
+        }
+        .theme-toggle { padding: 8px 11px; }
+        .language-flag { font-size: 1.05em; }
+
+        /* ---------- Controls bar ---------- */
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            gap: 18px;
             flex-wrap: wrap;
-            gap: 15px;
+            padding: 20px 26px;
+            background: var(--panel-2);
+            border-bottom: 1px solid var(--line-soft);
         }
-
         .month-nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            display: flex; align-items: center; gap: 14px;
         }
-
-        .month-nav button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1em;
+        .month-nav h2 {
+            font-family: var(--serif);
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-size: 1.5em;
+            color: var(--ink);
+            min-width: 220px;
+            text-align: center;
+            letter-spacing: -0.01em;
         }
-
+        .month-nav button {
+            background: var(--panel-3);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            padding: 9px 15px;
+            border-radius: var(--radius-sm);
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all .18s;
+        }
         .month-nav button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .month-nav button:active {
+            border-color: var(--gold);
+            color: var(--gold);
             transform: translateY(-1px);
         }
-
-        .month-nav h2 {
-            color: #2d3748;
-            font-size: 1.6em;
-            min-width: 200px;
-            text-align: center;
-            font-weight: 700;
-        }
-
         .action-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: flex; gap: 9px; flex-wrap: wrap; align-items: center;
         }
 
+        /* ---------- Buttons ---------- */
         .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95em;
+            font-family: var(--sans);
             font-weight: 600;
-            transition: all 0.3s;
+            font-size: 0.88em;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all .18s ease;
+            white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 6px;
         }
-
         .btn-primary {
-            background: #48bb78;
-            color: white;
+            background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+            color: #20180a;
+            border-color: var(--gold-deep);
+            box-shadow: 0 6px 16px rgba(237, 200, 120, 0.20);
         }
-
-        .btn-primary:hover {
-            background: #38a169;
-            transform: translateY(-2px);
-        }
-
+        .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
         .btn-secondary {
-            background: #ed8936;
-            color: white;
+            background: var(--panel-3);
+            color: var(--ink-mid);
+            border-color: var(--line);
         }
-
-        .btn-secondary:hover {
-            background: #dd6b20;
+        .btn-secondary:hover { color: var(--gold); border-color: var(--gold); transform: translateY(-1px); }
+        .btn-info {
+            background: rgba(79, 130, 214, 0.16);
+            color: #bcd3ff;
+            border-color: rgba(120, 160, 230, 0.4);
         }
-
+        .btn-info:hover { border-color: #8fb4ff; transform: translateY(-1px); }
         .btn-danger {
-            background: #f56565;
-            color: white;
+            background: rgba(240, 118, 122, 0.14);
+            color: var(--danger);
+            border-color: rgba(240, 118, 122, 0.45);
+        }
+        .btn-danger:hover { background: rgba(240, 118, 122, 0.24); transform: translateY(-1px); }
+
+        .filter-toggle-btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: var(--panel-3);
+            border: 1px solid var(--line);
+            color: var(--ink-mid);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--sans); font-weight: 600; font-size: 0.88em;
+            cursor: pointer; transition: all .18s;
+        }
+        .filter-toggle-btn:hover, .filter-toggle-btn.active {
+            color: var(--gold); border-color: var(--gold);
         }
 
-        .btn-danger:hover {
-            background: #e53e3e;
+        /* ---------- Filter bar ---------- */
+        .filter-bar {
+            padding: 22px 26px;
+            background: var(--panel-2);
+            border-bottom: 1px solid var(--line-soft);
+        }
+        .filter-section { margin-bottom: 20px; }
+        .filter-section:last-child { margin-bottom: 0; }
+        .filter-section h3 {
+            font-family: var(--sans);
+            font-size: 0.78em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-dim);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .search-box { position: relative; }
+        .search-input {
+            width: 100%;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            color: var(--ink);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--sans); font-size: 0.95em;
+            transition: border-color .18s, box-shadow .18s;
+        }
+        .search-input::placeholder { color: var(--ink-dim); }
+        .search-input:focus {
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(237, 200, 120, 0.16);
+        }
+        .clear-filters-btn {
+            background: none; border: 1px solid var(--line);
+            color: var(--ink-dim); padding: 6px 12px;
+            border-radius: 999px; font-family: var(--sans);
+            font-size: 0.8em; font-weight: 600; cursor: pointer; transition: all .18s;
+        }
+        .clear-filters-btn:hover { color: var(--danger); border-color: var(--danger); }
+
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .filter-chip {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            color: var(--ink-mid);
+            padding: 7px 13px;
+            border-radius: 999px;
+            font-family: var(--sans); font-size: 0.82em; font-weight: 600;
+            cursor: pointer; transition: all .16s;
+        }
+        .filter-chip:hover { border-color: var(--gold); }
+        .filter-chip.active {
+            background: rgba(237, 200, 120, 0.16);
+            border-color: var(--gold);
+            color: var(--gold-soft);
+        }
+        .filter-chip .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+
+        .active-filters-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .active-filter-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(237, 200, 120, 0.14);
+            border: 1px solid var(--line);
+            color: var(--gold-soft);
+            padding: 5px 11px; border-radius: 999px;
+            font-size: 0.8em; font-weight: 600;
         }
 
-        .calendar-container {
-            padding: 30px;
+        .view-switcher { display: flex; gap: 6px; flex-wrap: wrap; }
+        .view-btn {
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            color: var(--ink-mid);
+            padding: 8px 14px; border-radius: var(--radius-sm);
+            font-family: var(--sans); font-size: 0.84em; font-weight: 600;
+            cursor: pointer; transition: all .16s;
+        }
+        .view-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .view-btn.active {
+            background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+            color: #20180a; border-color: var(--gold-deep);
         }
 
+        /* ---------- Calendar container ---------- */
+        .calendar-container { padding: 24px 26px 30px; }
+
+        /* ---------- Legend ---------- */
         .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 12px;
+            display: flex; flex-wrap: wrap; gap: 8px 18px;
+            padding: 16px 18px;
+            background: var(--panel-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius);
+            margin-bottom: 22px;
         }
-
         .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9em;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.8em; color: var(--ink-mid); font-weight: 500;
         }
+        .legend-color { width: 12px; height: 12px; border-radius: 4px; flex: none; }
 
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-        }
+        /* ---------- Month grid ---------- */
+        .month-view, .week-view, .agenda-view, .list-view { display: none; }
+        .month-view.active, .week-view.active, .agenda-view.active, .list-view.active { display: block; }
 
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            background: #e2e8f0;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
+            gap: 6px;
         }
-
         .day-header {
-            background: #2d3748;
-            color: white;
-            padding: 15px;
             text-align: center;
+            padding: 12px 6px;
+            font-family: var(--sans);
+            font-size: 0.74em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             font-weight: 700;
-            font-size: 0.9em;
+            color: var(--ink-dim);
         }
-
         .day-cell {
-            background: white;
-            min-height: 120px;
+            min-height: 116px;
+            background: var(--panel-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius-sm);
             padding: 8px;
-            position: relative;
+            transition: border-color .16s, background .16s;
+            overflow: hidden;
+            cursor: pointer;
         }
-
-        .day-cell.other-month {
-            background: #f7fafc;
-            opacity: 0.5;
-        }
-
+        .day-cell:hover { border-color: var(--line); background: var(--panel-3); }
+        .day-cell.other-month { opacity: 0.4; }
         .day-cell.today {
-            background: #fef5e7;
-            border: 2px solid #f59e0b;
+            border-color: var(--gold);
+            box-shadow: inset 0 0 0 1px var(--gold), 0 0 22px rgba(237, 200, 120, 0.18);
+            background: rgba(237, 200, 120, 0.06);
         }
-
         .day-number {
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 5px;
+            font-family: var(--serif);
             font-size: 0.95em;
+            font-weight: 600;
+            color: var(--ink-mid);
+            margin-bottom: 6px;
+        }
+        .day-cell.today .day-number {
+            color: var(--gold);
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 24px; height: 24px;
         }
 
         .event {
-            font-size: 0.75em;
-            padding: 4px 6px;
-            margin: 3px 0;
-            border-radius: 4px;
+            font-size: 0.72em;
+            font-weight: 600;
+            padding: 4px 7px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            color: #fff;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             cursor: pointer;
-            transition: all 0.2s;
-            line-height: 1.3;
-            word-wrap: break-word;
+            transition: filter .14s, transform .14s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+        }
+        .event:hover { filter: brightness(1.12); transform: translateX(1px); }
+        .event.recurring::after { content: ' ⟳'; opacity: 0.85; }
+
+        /* Category colors (preserved palette) */
+        .event.temple { background: #7c3aed; }
+        .event.service { background: #10b981; }
+        .event.activity { background: #f59e0b; }
+        .event.young-men { background: #3b82f6; }
+        .event.young-women { background: #ec4899; }
+        .event.combined-youth { background: #8b5cf6; }
+        .event.primary { background: #fb923c; }
+        .event.relief-society { background: #f43f5e; }
+        .event.elders-quorum { background: #059669; }
+        .event.self-reliance { background: #dc2626; }
+        .event.baptism { background: #0ea5e9; }
+        .event.sunday { background: #6366f1; }
+        .event.stake { background: #d97706; }
+        .event.admin { background: #64748b; }
+        .event.ysa { background: #a855f7; }
+        .event.missionary { background: #14b8a6; }
+        .event.churchwide { background: #84cc16; }
+
+        /* ---------- Week view ---------- */
+        .week-header, .week-day-header {
+            font-family: var(--sans); font-weight: 700;
+            color: var(--ink-mid); padding: 10px; text-align: center;
+            font-size: 0.82em;
+        }
+        .week-grid { display: grid; gap: 6px; }
+        .week-day-slot, .week-time-slot {
+            background: var(--panel-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius-sm);
+            padding: 10px; min-height: 60px;
+        }
+        .week-time-label { color: var(--ink-dim); font-size: 0.78em; font-weight: 600; }
+        .week-event {
+            font-size: 0.78em; font-weight: 600; color: #fff;
+            padding: 5px 8px; border-radius: 6px; margin-bottom: 5px;
         }
 
-        .event:hover {
-            transform: translateX(2px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        /* ---------- Agenda + list views ---------- */
+        .agenda-date-group { margin-bottom: 24px; }
+        .agenda-date-header {
+            font-family: var(--serif); font-weight: 600; font-size: 1.1em;
+            color: var(--gold-soft); padding: 8px 0 12px;
+            border-bottom: 1px solid var(--line); margin-bottom: 12px;
+        }
+        .agenda-event-card, .list-event-card {
+            background: var(--panel-2);
+            border: 1px solid var(--line-soft);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px; margin-bottom: 10px;
+            cursor: pointer; transition: all .16s;
+        }
+        .agenda-event-card:hover, .list-event-card:hover {
+            border-color: var(--line); transform: translateX(2px);
+            background: var(--panel-3);
+        }
+        .agenda-event-title, .list-event-title {
+            font-family: var(--serif); font-weight: 600; font-size: 1.02em;
+            color: var(--ink); margin-bottom: 4px;
+        }
+        .agenda-event-details, .list-event-meta {
+            color: var(--ink-dim); font-size: 0.85em;
+        }
+        .list-event-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .list-event-category {
+            font-size: 0.72em; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.06em; color: #fff; padding: 3px 9px; border-radius: 999px;
         }
 
-        /* Event Category Colors - Distinct & Vibrant */
-        .event.temple { background: #7c3aed; color: white; }  /* Deep Purple */
-        .event.service { background: #10b981; color: white; }  /* Emerald Green */
-        .event.activity { background: #f59e0b; color: white; }  /* Amber */
-        .event.young-men { background: #3b82f6; color: white; }  /* Blue */
-        .event.young-women { background: #ec4899; color: white; }  /* Pink */
-        .event.combined-youth { background: #8b5cf6; color: white; }  /* Violet */
-        .event.primary { background: #fb923c; color: white; }  /* Orange */
-        .event.relief-society { background: #f43f5e; color: white; }  /* Rose */
-        .event.elders-quorum { background: #059669; color: white; }  /* Teal */
-        .event.self-reliance { background: #dc2626; color: white; }  /* Red */
-        .event.baptism { background: #0ea5e9; color: white; }  /* Sky Blue */
-        .event.sunday { background: #6366f1; color: white; }  /* Indigo */
-        .event.stake { background: #d97706; color: white; }  /* Amber-Orange */
-        .event.admin { background: #64748b; color: white; }  /* Slate */
-        .event.ysa { background: #a855f7; color: white; }  /* Purple */
-        .event.missionary { background: #14b8a6; color: white; }  /* Cyan */
-        .event.churchwide { background: #84cc16; color: white; }  /* Lime */
+        /* ---------- Empty state ---------- */
+        .empty-state { text-align: center; padding: 50px 20px; color: var(--ink-dim); }
+        .empty-state-icon { font-size: 2.6em; margin-bottom: 12px; opacity: 0.7; }
 
+        /* ---------- Modals ---------- */
         .modal {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
+            position: fixed; inset: 0;
+            background: rgba(6, 11, 24, 0.72);
+            backdrop-filter: blur(4px);
             z-index: 1000;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
+        .modal.active { display: flex; align-items: flex-start; justify-content: center; }
+        .modal-content {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%; max-width: 640px;
+            margin: 30px auto;
+            overflow: hidden;
+        }
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 22px 26px;
+            background: var(--panel-2);
+            border-bottom: 1px solid var(--line);
         }
-
         .modal-header h2 {
-            color: #2d3748;
-            font-size: 1.8em;
+            font-family: var(--serif); font-weight: 600; font-size: 1.4em; color: var(--ink);
         }
-
         .close-btn {
-            background: none;
-            border: none;
-            font-size: 2em;
-            cursor: pointer;
-            color: #a0aec0;
-            line-height: 1;
-            transition: color 0.3s;
+            background: none; border: none; color: var(--ink-dim);
+            font-size: 1.7em; line-height: 1; cursor: pointer; transition: color .16s;
         }
-
-        .close-btn:hover {
-            color: #2d3748;
+        .close-btn:hover { color: var(--danger); }
+        .modal-actions {
+            display: flex; gap: 10px; padding: 20px 26px;
+            border-top: 1px solid var(--line-soft); flex-wrap: wrap;
         }
-
-        .form-group {
-            margin-bottom: 20px;
+        .modal form, .event-details { padding: 24px 26px; }
+        .event-details { color: var(--ink-mid); }
+        .event-details h3 {
+            font-family: var(--serif); font-size: 1.3em; color: var(--ink); margin-bottom: 10px;
         }
+        .event-details h4 { color: var(--ink); margin: 14px 0 8px; }
+        .event-details p { margin: 7px 0; }
+        .event-details strong { color: var(--ink); }
+        .event-details a { color: var(--gold); }
 
+        /* ---------- Tabs ---------- */
+        .tab-container {
+            display: flex; gap: 4px; padding: 0 26px;
+            background: var(--panel-2); border-bottom: 1px solid var(--line-soft);
+        }
+        .tab {
+            background: none; border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--ink-dim);
+            padding: 14px 14px; font-family: var(--sans);
+            font-weight: 600; font-size: 0.88em; cursor: pointer; transition: all .16s;
+        }
+        .tab:hover { color: var(--ink); }
+        .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ---------- Forms ---------- */
+        .form-group { margin-bottom: 18px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2d3748;
+            display: block; margin-bottom: 7px;
+            font-family: var(--sans); font-size: 0.84em; font-weight: 600; color: var(--ink-mid);
         }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s;
+            background: var(--panel-2);
+            border: 1px solid var(--line);
+            color: var(--ink);
+            padding: 11px 13px;
+            border-radius: var(--radius-sm);
+            font-family: var(--sans); font-size: 0.95em;
+            transition: border-color .16s, box-shadow .16s;
         }
-
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--ink-dim); }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(237, 200, 120, 0.16);
         }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .event-details {
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 12px;
-        }
-
-        .event-details h3 {
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .event-details p {
-            margin: 10px 0;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .event-details strong {
-            color: #2d3748;
-        }
-
-        /* Template Styles */
-        .template-list {
-            display: grid;
-            gap: 15px;
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .template-item {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .template-item:hover {
-            background: #edf2f7;
-            transform: translateX(3px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .template-item h4 {
-            color: #2d3748;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .template-item p {
-            color: #718096;
-            font-size: 0.9em;
-            margin: 3px 0;
-        }
-
-        .template-item .category-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            color: white;
-            margin-top: 8px;
-        }
-
-        .template-actions {
-            margin-top: 12px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .template-actions button {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: all 0.2s;
-        }
-
-        .btn-use-template {
-            background: #48bb78;
-            color: white;
-        }
-
-        .btn-use-template:hover {
-            background: #38a169;
-        }
-
-        .btn-edit-template {
-            background: #4299e1;
-            color: white;
-        }
-
-        .btn-edit-template:hover {
-            background: #3182ce;
-        }
-
-        .btn-delete-template {
-            background: #f56565;
-            color: white;
-        }
-
-        .btn-delete-template:hover {
-            background: #e53e3e;
-        }
-
-        .template-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #9f7aea;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: 600;
-        }
+        .form-group select option { background: var(--panel-2); color: var(--ink); }
+        .form-group textarea { resize: vertical; min-height: 80px; }
 
         .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 15px 0;
-            padding: 12px;
-            background: #f7fafc;
-            border-radius: 8px;
+            display: flex; align-items: center; gap: 9px; cursor: pointer;
+            color: var(--ink-mid); font-size: 0.92em;
         }
-
         .checkbox-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .checkbox-container label {
-            margin: 0;
-            cursor: pointer;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #718096;
-        }
-
-        .empty-state-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .empty-state p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        /* Recurring Events Styles */
-        .recurring-section {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 2px solid #e2e8f0;
-        }
-
-        .recurring-section.active {
-            border-color: #667eea;
-            background: #edf2f7;
-        }
-
-        .recurring-pattern {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .weekday-selector {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .weekday-btn {
-            padding: 10px 5px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 600;
-            transition: all 0.2s;
-            text-align: center;
-        }
-
-        .weekday-btn:hover {
-            border-color: #667eea;
-        }
-
-        .weekday-btn.selected {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .recurring-badge {
-            display: inline-block;
-            background: #9f7aea;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7em;
-            margin-left: 5px;
-            font-weight: 600;
-        }
-
-        .recurrence-preview {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #667eea;
-        }
-
-        .recurrence-preview h4 {
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 1em;
-        }
-
-        .recurrence-preview ul {
-            list-style: none;
-            padding: 0;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .recurrence-preview li {
-            padding: 5px 0;
-            color: #4a5568;
-            font-size: 0.9em;
+            width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer;
         }
 
         .info-banner {
-            background: #e6fffa;
-            border-left: 4px solid #38b2ac;
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin: 15px 0;
+            background: rgba(79, 130, 214, 0.12);
+            border: 1px solid rgba(120, 160, 230, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 13px 15px; color: var(--ink-mid); font-size: 0.88em;
         }
-
-        .info-banner p {
-            color: #234e52;
-            margin: 0;
-            font-size: 0.9em;
-        }
-
-        /* Assignment Styles */
-        .assignment-list {
-            margin-top: 15px;
-        }
-
-        .assignment-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #667eea;
-            position: relative;
-        }
-
-        .assignment-item h4 {
-            color: #2d3748;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .assignment-item p {
-            color: #718096;
-            font-size: 0.9em;
-            margin: 3px 0;
-        }
-
-        .assignment-role {
-            display: inline-block;
-            background: #e6fffa;
-            color: #234e52;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        .remove-assignment-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #f56565;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: all 0.2s;
-        }
-
-        .remove-assignment-btn:hover {
-            background: #e53e3e;
-        }
-
-        .task-list {
-            margin-top: 15px;
-        }
-
-        .task-item {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-
-        .task-item:hover {
-            border-color: #667eea;
-        }
-
-        .task-item.completed {
-            background: #f0fdf4;
-            border-color: #86efac;
-        }
-
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: #9ca3af;
-        }
-
-        .task-checkbox {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .task-text {
-            flex: 1;
-            color: #2d3748;
-            font-size: 0.95em;
-        }
-
-        .task-assigned {
-            font-size: 0.85em;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .remove-task-btn {
-            background: none;
-            border: none;
-            color: #f56565;
-            cursor: pointer;
-            font-size: 1.2em;
-            padding: 0 5px;
-            transition: all 0.2s;
-        }
-
-        .remove-task-btn:hover {
-            color: #e53e3e;
-            transform: scale(1.2);
-        }
-
-        .add-assignment-form,
-        .add-task-form {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .assignment-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7em;
-            font-weight: 700;
-        }
-
+        .info-banner strong { color: var(--ink); }
         .my-assignments-banner {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .my-assignments-banner h3 {
-            margin-bottom: 5px;
-        }
-
-        /* Filtering & Views Styles */
-        .filter-bar {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .filter-section {
-            margin-bottom: 20px;
-        }
-
-        .filter-section h3 {
-            color: #2d3748;
-            font-size: 1.1em;
-            margin-bottom: 12px;
-        }
-
-        .filter-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .filter-chip {
-            padding: 8px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 20px;
-            background: white;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .filter-chip:hover {
-            border-color: #667eea;
-            transform: translateY(-1px);
-        }
-
-        .filter-chip.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .filter-chip .count {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.85em;
-        }
-
-        .filter-chip.active .count {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .view-switcher {
-            display: flex;
-            gap: 8px;
-            background: #f7fafc;
-            padding: 4px;
-            border-radius: 8px;
-        }
-
-        .view-btn {
-            padding: 10px 20px;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #718096;
-            transition: all 0.2s;
-        }
-
-        .view-btn:hover {
-            color: #2d3748;
-        }
-
-        .view-btn.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .filter-toggle-btn {
-            background: #4299e1;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .filter-toggle-btn:hover {
-            background: #3182ce;
-        }
-
-        /* Week View */
-        .week-view {
-            display: none;
-        }
-
-        .week-view.active {
-            display: block;
-        }
-
-        .week-header {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            gap: 2px;
-            background: #e2e8f0;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 2px;
-        }
-
-        .week-time-label {
-            background: #2d3748;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.85em;
-        }
-
-        .week-day-header {
-            background: #2d3748;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
-        .week-grid {
-            display: grid;
-            grid-template-columns: 80px repeat(7, 1fr);
-            gap: 2px;
-            background: #e2e8f0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .week-time-slot {
-            background: #f7fafc;
-            padding: 8px;
-            text-align: right;
-            font-size: 0.8em;
-            color: #718096;
-            border-right: 2px solid #e2e8f0;
-        }
-
-        .week-day-slot {
-            background: white;
-            min-height: 60px;
-            padding: 4px;
-            position: relative;
-        }
-
-        .week-event {
-            background: #667eea;
-            color: white;
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-bottom: 2px;
-            cursor: pointer;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        /* Agenda View */
-        .agenda-view {
-            display: none;
-        }
-
-        .agenda-view.active {
-            display: block;
-        }
-
-        .agenda-date-group {
-            margin-bottom: 25px;
-        }
-
-        .agenda-date-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
-
-        .agenda-event-card {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .agenda-event-card:hover {
-            transform: translateX(3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .agenda-event-title {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 5px;
-        }
-
-        .agenda-event-details {
-            color: #718096;
-            font-size: 0.9em;
-        }
-
-        /* List View */
-        .list-view {
-            display: none;
-        }
-
-        .list-view.active {
-            display: block;
-        }
-
-        .list-event-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .list-event-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .list-event-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 10px;
-        }
-
-        .list-event-title {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .list-event-category {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            font-weight: 600;
-            color: white;
-        }
-
-        .list-event-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            color: #718096;
-            font-size: 0.9em;
-        }
-
-        .active-filters-bar {
-            background: #edf2f7;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .active-filters-bar.visible {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .active-filter-tag {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .active-filter-tag .remove {
-            cursor: pointer;
-            font-weight: 700;
-        }
-
-        .clear-filters-btn {
-            background: #f56565;
-            color: white;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        /* Photo Gallery Styles */
-        .photo-gallery-section {
-            margin-top: 20px;
-        }
-
-        .photo-upload-area {
-            background: #f7fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .photo-upload-area:hover {
-            border-color: #667eea;
-            background: #edf2f7;
-        }
-
-        .photo-upload-area.dragover {
-            border-color: #667eea;
-            background: #e6f2ff;
-        }
-
-        .upload-icon {
-            font-size: 3em;
-            color: #cbd5e0;
-            margin-bottom: 10px;
-        }
-
-        .upload-text {
-            color: #4a5568;
-            font-size: 1em;
-        }
-
-        .upload-subtext {
-            color: #a0aec0;
-            font-size: 0.85em;
-            margin-top: 5px;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .photo-item {
-            position: relative;
-            aspect-ratio: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .photo-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-item .remove-photo {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #f56565;
-            color: white;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .photo-item:hover .remove-photo {
-            opacity: 1;
-        }
-
-        .photo-item .photo-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white;
-            padding: 8px;
-            font-size: 0.85em;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .photo-item:hover .photo-caption {
-            opacity: 1;
-        }
-
-        /* Photo Lightbox */
-        .photo-lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .photo-lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 8px;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .lightbox-nav:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .lightbox-prev {
-            left: -70px;
-        }
-
-        .lightbox-next {
-            right: -70px;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #f56565;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .lightbox-close:hover {
-            background: #e53e3e;
-        }
-
-        .lightbox-caption {
-            text-align: center;
-            color: white;
-            margin-top: 15px;
-            font-size: 1.1em;
-        }
-
-        .lightbox-counter {
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        .photo-count-badge {
-            background: #667eea;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            font-weight: 600;
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        .empty-gallery {
-            text-align: center;
-            padding: 40px 20px;
-            color: #a0aec0;
-        }
-
-        .empty-gallery-icon {
-            font-size: 4em;
-            margin-bottom: 15px;
-            opacity: 0.3;
-        }
-
-        .photo-badge-indicator {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #667eea;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7em;
-            font-weight: 700;
-        }
-
-        /* Language Toggle */
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 25px;
-            padding: 8px 16px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .language-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .language-flag {
-            font-size: 1.3em;
-        }
-
-        .language-text {
-            color: #2d3748;
-            font-size: 0.9em;
-        }
-
-        @media (max-width: 768px) {
-            .language-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 6px 12px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .month-nav {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .month-nav h2 {
-                order: -1;
-            }
-
-            .action-buttons {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .calendar {
-                gap: 1px;
-            }
-
-            .day-header {
-                padding: 10px 5px;
-                font-size: 0.8em;
-            }
-
-            .day-cell {
-                min-height: 100px;
-                padding: 5px;
-            }
-
-            .event {
-                font-size: 0.7em;
-                padding: 3px 4px;
-            }
+            background: rgba(237, 200, 120, 0.10);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 13px 15px; color: var(--gold-soft); font-size: 0.88em; margin-bottom: 16px;
+        }
+
+        /* ---------- Assignments + tasks ---------- */
+        .assignment-list, .task-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+        .assignment-item, .task-item {
+            display: flex; align-items: center; gap: 10px;
+            background: var(--panel-2);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+        }
+        .assignment-role { font-weight: 700; color: var(--gold-soft); font-size: 0.82em; min-width: 90px; }
+        .assignment-badge {
+            background: rgba(237, 200, 120, 0.14); color: var(--gold-soft);
+            border: 1px solid var(--line);
+            font-size: 0.72em; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+        }
+        .task-text { color: var(--ink-mid); flex: 1; }
+        .task-text.completed { text-decoration: line-through; color: var(--ink-dim); }
+        .task-assigned { font-size: 0.78em; color: var(--ink-dim); }
+        .task-checkbox { width: 18px; height: 18px; accent-color: var(--gold); cursor: pointer; }
+        .remove-assignment-btn, .remove-task-btn {
+            background: none; border: none; color: var(--ink-dim);
+            cursor: pointer; font-size: 1.1em; transition: color .16s;
+        }
+        .remove-assignment-btn:hover, .remove-task-btn:hover { color: var(--danger); }
+        .add-assignment-form, .add-task-form {
+            display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: end;
+            padding: 12px; background: var(--panel-2);
+            border: 1px dashed var(--line); border-radius: var(--radius-sm);
+        }
+
+        /* ---------- Recurring ---------- */
+        .recurring-section {
+            margin-top: 6px; padding: 0; max-height: 0; overflow: hidden;
+            transition: max-height .25s ease;
+        }
+        .recurring-section.active {
+            max-height: 1400px;
+            padding: 16px; margin-top: 12px;
+            background: var(--panel-2);
+            border: 1px solid var(--line); border-radius: var(--radius-sm);
+        }
+        .recurring-pattern { margin-bottom: 14px; }
+        .recurring-badge {
+            display: inline-block; background: rgba(237, 200, 120, 0.16);
+            color: var(--gold-soft); border: 1px solid var(--line);
+            font-size: 0.7em; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+        }
+        .recurrence-preview {
+            margin-top: 14px; padding: 14px;
+            background: rgba(79, 130, 214, 0.10);
+            border: 1px solid rgba(120, 160, 230, 0.28);
+            border-radius: var(--radius-sm);
+        }
+        .recurrence-preview h4 { color: var(--ink); font-size: 0.9em; margin-bottom: 8px; }
+        .recurrence-preview ul { list-style: none; }
+        .recurrence-preview li { color: var(--ink-mid); font-size: 0.85em; padding: 3px 0; }
+
+        .weekday-selector { display: flex; gap: 6px; flex-wrap: wrap; }
+        .weekday-btn {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: var(--panel-3); border: 1px solid var(--line);
+            color: var(--ink-mid); font-family: var(--sans); font-weight: 700; font-size: 0.8em;
+            cursor: pointer; transition: all .16s;
+        }
+        .weekday-btn:hover { border-color: var(--gold); }
+        .weekday-btn.active {
+            background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+            color: #20180a; border-color: var(--gold-deep);
+        }
+
+        /* ---------- Templates ---------- */
+        .template-list { display: flex; flex-direction: column; gap: 10px; }
+        .template-item {
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+            background: var(--panel-2); border: 1px solid var(--line-soft);
+            border-radius: var(--radius-sm); padding: 14px 16px;
+        }
+        .template-badge {
+            font-size: 0.7em; font-weight: 700; color: #fff;
+            padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .template-actions { display: flex; gap: 7px; }
+        .btn-use-template, .btn-edit-template, .btn-delete-template {
+            border: 1px solid var(--line); background: var(--panel-3);
+            color: var(--ink-mid); padding: 6px 11px; border-radius: var(--radius-sm);
+            font-family: var(--sans); font-size: 0.8em; font-weight: 600; cursor: pointer; transition: all .16s;
+        }
+        .btn-use-template:hover { color: var(--gold); border-color: var(--gold); }
+        .btn-edit-template:hover { color: #bcd3ff; border-color: #8fb4ff; }
+        .btn-delete-template:hover { color: var(--danger); border-color: var(--danger); }
+
+        /* ---------- Scrollbar ---------- */
+        ::-webkit-scrollbar { width: 11px; height: 11px; }
+        ::-webkit-scrollbar-track { background: var(--navy-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--panel-3); border-radius: 6px; border: 2px solid var(--navy-deep); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-deep); }
+
+        /* ---------- Auth / edit-mode gating ---------- */
+        .leader-only { display: none; }
+        body.is-leader .leader-only { display: inline-flex; }
+        .auth-bar {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            margin-left: auto;
+        }
+        .auth-status {
+            font-size: 0.78em; color: var(--ink-dim); display: inline-flex; align-items: center; gap: 6px;
+        }
+        .auth-status .lock { color: var(--gold); }
+        body.is-leader .auth-status .lock { color: var(--ok); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .container { border-radius: 16px; }
+            .controls { padding: 16px; gap: 12px; }
+            .month-nav { width: 100%; justify-content: space-between; }
+            .month-nav h2 { min-width: 0; font-size: 1.25em; }
+            .action-buttons { width: 100%; }
+            .calendar-container { padding: 16px; }
+        }
+        @media (max-width: 640px) {
+            body { padding: 12px 8px 36px; }
+            .header { padding: 30px 18px 26px; }
+            .top-toggles { position: static; justify-content: center; margin-bottom: 14px; }
+            .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+            .action-buttons .btn, .action-buttons .filter-toggle-btn { width: 100%; justify-content: center; font-size: 0.82em; padding: 11px 8px; }
+            .calendar { gap: 3px; }
+            .day-header { padding: 8px 2px; font-size: 0.62em; }
+            .day-cell { min-height: 78px; padding: 5px; border-radius: 7px; }
+            .day-number { font-size: 0.82em; margin-bottom: 3px; }
+            .event { font-size: 0.6em; padding: 3px 4px; }
+            .form-row, .add-assignment-form, .add-task-form { grid-template-columns: 1fr; }
+            .modal { padding: 0; }
+            .modal-content { margin: 0; border-radius: 0; min-height: 100vh; max-width: 100%; }
+            .tab-container { padding: 0 14px; overflow-x: auto; }
+            .modal form, .event-details { padding: 18px 16px; }
+            .modal-header, .modal-actions { padding: 16px; }
+            .month-nav h2 { font-size: 1.1em; }
         }
 
         @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
+            body { background: #fff; padding: 0; color: #000; }
+            .controls, .filter-bar, .top-toggles, .auth-bar, .month-nav button { display: none !important; }
+            .container { box-shadow: none; border: none; }
+            .day-cell, .legend { background: #fff !important; border-color: #ccc !important; }
+            .event { page-break-inside: avoid; }
+            * { color: #000 !important; }
+            .event, .event * { color: #fff !important; }
+        }
 
-            .controls,
-            .legend {
-                display: none;
-            }
-
-            .container {
-                box-shadow: none;
-            }
-
-            .event {
-                page-break-inside: avoid;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Debug Display -->
-    <div id="mobileDebug" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #ff6b6b; color: white; padding: 10px; z-index: 10000; font-size: 12px; max-height: 150px; overflow-y: auto;">
-        <strong>Debug Info:</strong>
-        <div id="debugMessages"></div>
-        <button onclick="document.getElementById('mobileDebug').style.display='none'" style="margin-top: 5px; background: white; color: #ff6b6b; border: none; padding: 5px 10px; border-radius: 5px;">Close</button>
-    </div>
-
-    <!-- Language Toggle -->
-    <div class="language-toggle" id="languageToggle">
-        <span class="language-flag" id="languageFlag">🇹🇴</span>
-        <span class="language-text" id="languageText">Lea Tonga</span>
-    </div>
-
     <div class="container">
         <div class="header">
-            <h1 id="headerWardName">🏛️ Riverton 24th Tongan Ward Calendar</h1>
+            <div class="top-toggles">
+                <button class="theme-toggle" id="themeToggle" title="Toggle light / dark" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <div class="language-toggle" id="languageToggle">
+                    <span class="language-flag" id="languageFlag">🇹🇴</span>
+                    <span class="language-text" id="languageText">Lea Tonga</span>
+                </div>
+            </div>
+            <div class="eyebrow" id="headerEyebrow">Riverton 24th Tongan Ward</div>
+            <h1 id="headerWardName">Ward <span class="accent">Calendar</span></h1>
             <p id="headerTagline">Strengthening Faith, Family, and Community</p>
+            <div class="gold-rule"></div>
         </div>
 
         <div class="controls">
@@ -1505,16 +818,21 @@
                 <button id="nextMonth"><span id="nextText">Next →</span></button>
             </div>
             <div class="action-buttons">
-                <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
-                <button class="btn btn-info" id="templatesBtn">📋 Templates</button>
+                <button class="btn btn-primary leader-only" id="addEventBtn">+ Add Event</button>
+                <button class="btn btn-info leader-only" id="templatesBtn">📋 Templates</button>
                 <button class="filter-toggle-btn" id="filterToggleBtn">
                     <span>🔍</span>
                     <span>Filters & Views</span>
                 </button>
-                <button class="btn btn-primary" id="wardInfoBtn">ℹ️ Ward Info</button>
-                <button class="btn btn-secondary" id="exportBtn">📥 Export Data</button>
-                <button class="btn btn-secondary" id="importBtn">📤 Import JSON</button>
-                <button class="btn btn-secondary" id="importICalBtn">📅 Import iCal</button>
+                <button class="btn btn-secondary" id="wardInfoBtn">ℹ️ Ward Info</button>
+                <button class="btn btn-secondary leader-only" id="exportBtn">📥 Export</button>
+                <button class="btn btn-secondary leader-only" id="importBtn">📤 Import JSON</button>
+                <button class="btn btn-secondary leader-only" id="importICalBtn">📅 Import iCal</button>
+                <div class="auth-bar">
+                    <span class="auth-status" id="authStatus"><span class="lock">🔒</span> <span id="authStatusText">View only</span></span>
+                    <button class="btn btn-secondary" id="signInBtn">Leader Sign In</button>
+                    <button class="btn btn-secondary leader-only" id="signOutBtn">Sign Out</button>
+                </div>
             </div>
         </div>
 
@@ -1556,19 +874,19 @@
         <div class="calendar-container">
             <div class="legend">
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #9f7aea;"></div>
+                    <div class="legend-color" style="background: #7c3aed;"></div>
                     <span data-translate-category="temple">Temple & Family History</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #48bb78;"></div>
+                    <div class="legend-color" style="background: #10b981;"></div>
                     <span data-translate-category="service">Service Projects</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #f6ad55;"></div>
+                    <div class="legend-color" style="background: #f59e0b;"></div>
                     <span data-translate-category="activity">Ward Activity</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #4299e1;"></div>
+                    <div class="legend-color" style="background: #3b82f6;"></div>
                     <span data-translate-category="youngMen">Young Men</span>
                 </div>
                 <div class="legend-item">
@@ -1647,6 +965,32 @@
         </div>
     </div>
 
+    <!-- Leader Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content" style="max-width: 440px;">
+            <div class="modal-header">
+                <h2 id="signInTitle">Leader Sign In</h2>
+                <button class="close-btn" id="closeSignInModal">&times;</button>
+            </div>
+            <div class="event-details">
+                <p style="color: var(--ink-dim); margin-bottom: 18px; font-size: 0.9em;" id="signInHint">Editing is limited to ward leaders. Sign in with your leader account to add or change events. Everyone else can view the calendar.</p>
+                <div class="form-group">
+                    <label for="signInEmail" id="signInEmailLabel">Email</label>
+                    <input type="email" id="signInEmail" autocomplete="username" placeholder="leader@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword" id="signInPasswordLabel">Password</label>
+                    <input type="password" id="signInPassword" autocomplete="current-password" placeholder="••••••••">
+                </div>
+                <p id="signInError" style="display:none; color: var(--danger); font-size: 0.85em; margin-top: 4px;"></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="confirmSignInBtn">Sign In</button>
+                <button class="btn btn-secondary" id="cancelSignInBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Add Event Modal -->
     <div class="modal" id="eventModal">
         <div class="modal-content">
@@ -1659,7 +1003,6 @@
             <div class="tab-container">
                 <button class="tab active" data-tab="detailsTab">📝 Details</button>
                 <button class="tab" data-tab="assignmentsTab">👥 Assignments</button>
-                <button class="tab" data-tab="photosTab">📸 Photos</button>
             </div>
 
             <form id="eventForm">
@@ -1730,7 +1073,7 @@
                 </div>
 
                 <div class="recurring-section" id="recurringSection" style="display: none;">
-                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.2em;">Recurrence Pattern</h3>
+                    <h3 style="color: var(--ink); margin-bottom: 15px; font-size: 1.2em;">Recurrence Pattern</h3>
                     
                     <div class="form-group">
                         <label for="recurringFrequency">Repeat *</label>
@@ -1743,7 +1086,7 @@
 
                     <!-- Weekly Options -->
                     <div id="weeklyOptions" style="display: none;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2d3748;">Repeat on:</label>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--ink);">Repeat on:</label>
                         <div class="weekday-selector">
                             <button type="button" class="weekday-btn" data-day="0">Sun</button>
                             <button type="button" class="weekday-btn" data-day="1">Mon</button>
@@ -1801,7 +1144,7 @@
                         </div>
                         <div class="form-group">
                             <label>&nbsp;</label>
-                            <p id="intervalLabel" style="padding: 12px; color: #4a5568;">week(s)</p>
+                            <p id="intervalLabel" style="padding: 12px; color: var(--ink-mid);">week(s)</p>
                         </div>
                     </div>
 
@@ -1843,8 +1186,8 @@
 
                 <!-- Assignments Tab -->
                 <div class="tab-content" id="assignmentsTab">
-                    <h3 style="color: #2d3748; margin-bottom: 15px;">Event Assignments</h3>
-                    <p style="color: #718096; margin-bottom: 20px;">Assign people and track responsibilities for this event.</p>
+                    <h3 style="color: var(--ink); margin-bottom: 15px;">Event Assignments</h3>
+                    <p style="color: var(--ink-dim); margin-bottom: 20px;">Assign people and track responsibilities for this event.</p>
 
                     <!-- Assignments List -->
                     <div id="assignmentsList" class="assignment-list">
@@ -1853,7 +1196,7 @@
 
                     <!-- Add Assignment Form -->
                     <div class="add-assignment-form">
-                        <h4 style="color: #2d3748; margin-bottom: 10px;">➕ Add Assignment</h4>
+                        <h4 style="color: var(--ink); margin-bottom: 10px;">➕ Add Assignment</h4>
                         <div class="form-group">
                             <label for="assignmentName">Name *</label>
                             <input type="text" id="assignmentName" placeholder="e.g., John Smith">
@@ -1876,8 +1219,8 @@
                     </div>
 
                     <!-- Tasks Section -->
-                    <h3 style="color: #2d3748; margin: 30px 0 15px;">Task Checklist</h3>
-                    <p style="color: #718096; margin-bottom: 20px;">Track preparation tasks and mark them as complete.</p>
+                    <h3 style="color: var(--ink); margin: 30px 0 15px;">Task Checklist</h3>
+                    <p style="color: var(--ink-dim); margin-bottom: 20px;">Track preparation tasks and mark them as complete.</p>
 
                     <!-- Tasks List -->
                     <div id="tasksList" class="task-list">
@@ -1886,7 +1229,7 @@
 
                     <!-- Add Task Form -->
                     <div class="add-task-form">
-                        <h4 style="color: #2d3748; margin-bottom: 10px;">➕ Add Task</h4>
+                        <h4 style="color: var(--ink); margin-bottom: 10px;">➕ Add Task</h4>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="taskDescription">Task Description *</label>
@@ -1902,39 +1245,6 @@
                         <button type="button" class="btn btn-primary" id="addTaskBtn">➕ Add Task</button>
                     </div>
                 </div><!-- End Assignments Tab -->
-
-                <!-- Photos Tab -->
-                <div class="tab-content" id="photosTab">
-                    <h3 style="color: #2d3748; margin-bottom: 15px;">📸 Event Photos</h3>
-                    <p style="color: #718096; margin-bottom: 20px;">Upload and share photos from this event. Create a visual archive of ward activities!</p>
-
-                    <!-- Photo Upload Area -->
-                    <div class="photo-upload-area" id="photoUploadArea">
-                        <div class="upload-icon">📸</div>
-                        <div class="upload-text">Click to upload photos or drag and drop</div>
-                        <div class="upload-subtext">Supports JPG, PNG, GIF (Max 5MB per photo)</div>
-                        <input type="file" id="photoInput" accept="image/*" multiple style="display: none;">
-                    </div>
-
-                    <!-- Photo Gallery -->
-                    <div id="photoGallery" class="photo-gallery-section">
-                        <h4 style="color: #2d3748; margin-bottom: 15px;">
-                            Gallery
-                            <span class="photo-count-badge" id="photoCount">0 photos</span>
-                        </h4>
-                        <div id="photoGrid" class="photo-grid">
-                            <!-- Photos will be displayed here -->
-                        </div>
-                        <div id="emptyGallery" class="empty-gallery">
-                            <div class="empty-gallery-icon">🖼️</div>
-                            <p>No photos yet. Upload photos to document this event!</p>
-                        </div>
-                    </div>
-
-                    <div class="info-banner" style="margin-top: 20px;">
-                        <p>💡 <strong>Tip:</strong> Photos are stored locally in your browser. Export your calendar data regularly to back up photos!</p>
-                    </div>
-                </div><!-- End Photos Tab -->
 
                 <div class="modal-actions">
                     <button type="submit" class="btn btn-primary">💾 Save Event</button>
@@ -1953,8 +1263,8 @@
             </div>
             <div class="event-details" id="eventDetailsContent"></div>
             <div class="modal-actions">
-                <button class="btn btn-primary" id="editEventBtn">✏️ Edit</button>
-                <button class="btn btn-danger" id="deleteEventBtn">🗑️ Delete</button>
+                <button class="btn btn-primary leader-only" id="editEventBtn">✏️ Edit</button>
+                <button class="btn btn-danger leader-only" id="deleteEventBtn">🗑️ Delete</button>
                 <button class="btn btn-secondary" id="closeViewBtn">Close</button>
             </div>
         </div>
@@ -1971,14 +1281,14 @@
                 <h3 id="wardNameHeader">🏛️ Riverton 24th Tongan Ward</h3>
                 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;" id="sundayServiceTimesLabel">Sunday Service Times</h4>
-                    <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
+                    <h4 style="margin-bottom: 15px; color: var(--ink);" id="sundayServiceTimesLabel">Sunday Service Times</h4>
+                    <div style="font-size: 1.2em; font-weight: 600; color: var(--gold); margin: 10px 0;">
                         <span id="sacramentLabel">Sacrament Meeting:</span> <span id="sacramentTimeDisplay">9:00 AM - 10:00 AM</span>
                     </div>
                 </div>
 
-                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="locationLabel">📍 Location</h4>
+                <div style="margin: 20px 0; padding: 20px; background: var(--panel-2); border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);" id="locationLabel">📍 Location</h4>
                     <p style="margin: 5px 0;" id="addressLine1">12288 South 1840 West</p>
                     <p style="margin: 5px 0;" id="addressLine2">Riverton, Utah 84065</p>
                     <button class="btn btn-primary" id="openInMapsBtn" style="margin-top: 10px;">
@@ -1987,29 +1297,29 @@
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;" id="shareWardInfoLabel">📱 Share Ward Info</h4>
-                    <p style="margin-bottom: 15px; color: #4a5568;" id="scanQRLabel">Scan QR Code to share service times and location</p>
+                    <h4 style="margin-bottom: 15px; color: var(--ink);" id="shareWardInfoLabel">📱 Share Ward Info</h4>
+                    <p style="margin-bottom: 15px; color: var(--ink-mid);" id="scanQRLabel">Scan QR Code to share service times and location</p>
                     <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
                     <button class="btn btn-secondary" id="downloadQRBtn" style="margin-top: 10px;">
                         <span id="downloadQRLabel">💾 Download QR Code</span>
                     </button>
                 </div>
 
-                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="contactInfoLabel">📞 Contact Information</h4>
+                <div style="margin: 20px 0; padding: 20px; background: var(--panel-2); border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);" id="contactInfoLabel">📞 Contact Information</h4>
                     <p style="margin: 5px 0;"><strong id="bishopLabel">Bishop:</strong> <span id="bishopNameValue">[Bishop Name]</span></p>
                     <p style="margin: 5px 0;"><strong id="clerkLabel">Ward Clerk:</strong> <span id="clerkNameValue">[Clerk Name]</span></p>
                     <p style="margin: 5px 0;"><strong id="phoneLabel">Phone:</strong> <span id="wardPhoneValue">[Ward Phone]</span></p>
                 </div>
 
-                <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
-                    <p style="margin: 0; font-style: italic; color: #4a5568;" id="scriptureQuote">
+                <div style="margin: 20px 0; padding: 15px; background: var(--panel-2); border-radius: 8px; border-left: 4px solid var(--gold);">
+                    <p style="margin: 0; font-style: italic; color: var(--ink-mid);" id="scriptureQuote">
                         "And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me." - Ether 12:27
                     </p>
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="btn btn-primary" id="editWardInfoBtn"><span id="editWardInfoBtnText">✏️ Edit Ward Info</span></button>
+                <button class="btn btn-primary leader-only" id="editWardInfoBtn"><span id="editWardInfoBtnText">✏️ Edit Ward Info</span></button>
                 <button class="btn btn-secondary" id="closeWardInfoBtn"><span id="closeWardInfoBtnText">Close</span></button>
             </div>
         </div>
@@ -2066,7 +1376,7 @@
                 <button class="close-btn" id="closeTemplatesModal">&times;</button>
             </div>
             <div class="event-details">
-                <p id="templatesDescription" style="margin-bottom: 20px; color: #4a5568;">Save frequently used events as templates for quick creation. Perfect for recurring meetings, activities, and standard events.</p>
+                <p id="templatesDescription" style="margin-bottom: 20px; color: var(--ink-mid);">Save frequently used events as templates for quick creation. Perfect for recurring meetings, activities, and standard events.</p>
                 
                 <div id="templatesList" class="template-list">
                     <!-- Templates will be populated here -->
@@ -2075,7 +1385,7 @@
                 <div id="emptyTemplatesState" class="empty-state" style="display: none;">
                     <div class="empty-state-icon">📋</div>
                     <p id="noTemplatesText">No templates yet!</p>
-                    <p id="noTemplatesHint" style="font-size: 0.9em; color: #718096;">Create an event and check "Save as template" to get started.</p>
+                    <p id="noTemplatesHint" style="font-size: 0.9em; color: var(--ink-dim);">Create an event and check "Save as template" to get started.</p>
                 </div>
             </div>
             <div class="modal-actions">
@@ -2094,7 +1404,7 @@
             <div class="form-group">
                 <label for="templateName" id="templateNameLabel">Template Name *</label>
                 <input type="text" id="templateName" placeholder="e.g., Ward Council Meeting" required>
-                <p id="templateNameHint" style="margin-top: 8px; font-size: 0.9em; color: #718096;">Give this template a descriptive name so you can easily find it later.</p>
+                <p id="templateNameHint" style="margin-top: 8px; font-size: 0.9em; color: var(--ink-dim);">Give this template a descriptive name so you can easily find it later.</p>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-primary" id="confirmSaveTemplate"><span id="saveTemplateText">💾 Save Template</span></button>
@@ -2103,17 +1413,6 @@
         </div>
     </div>
 
-    <!-- Photo Lightbox -->
-    <div class="photo-lightbox" id="photoLightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" id="closeLightbox">×</button>
-            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
-            <img class="lightbox-image" id="lightboxImage" src="" alt="">
-            <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
-            <div class="lightbox-caption" id="lightboxCaption"></div>
-            <div class="lightbox-counter" id="lightboxCounter"></div>
-        </div>
-    </div>
 
     <!-- Import Help Modal -->
     <div class="modal" id="importHelpModal">
@@ -2124,8 +1423,8 @@
             </div>
             <div class="event-details">
                 <h3 id="googleCalendarHeading">Exporting from Google Calendar</h3>
-                <ol style="line-height: 1.8; color: #4a5568;" id="googleSteps">
-                    <li id="googleStep1">Go to <a href="https://calendar.google.com" target="_blank" style="color: #667eea;">calendar.google.com</a></li>
+                <ol style="line-height: 1.8; color: var(--ink-mid);" id="googleSteps">
+                    <li id="googleStep1">Go to <a href="https://calendar.google.com" target="_blank" style="color: var(--gold);">calendar.google.com</a></li>
                     <li id="googleStep2">Click the <strong>Settings gear</strong> (⚙️) → <strong>Settings</strong></li>
                     <li id="googleStep3">In the left sidebar, click your calendar name</li>
                     <li id="googleStep4">Scroll down to <strong>"Integrate calendar"</strong></li>
@@ -2135,7 +1434,7 @@
                 </ol>
 
                 <h3 id="outlookHeading" style="margin-top: 25px;">Exporting from Outlook</h3>
-                <ol style="line-height: 1.8; color: #4a5568;" id="outlookSteps">
+                <ol style="line-height: 1.8; color: var(--ink-mid);" id="outlookSteps">
                     <li id="outlookStep1">Open Outlook Calendar</li>
                     <li id="outlookStep2">Click <strong>File</strong> → <strong>Save Calendar</strong></li>
                     <li id="outlookStep3">Choose date range</li>
@@ -2145,7 +1444,7 @@
                 </ol>
 
                 <h3 id="appleHeading" style="margin-top: 25px;">Exporting from Apple Calendar</h3>
-                <ol style="line-height: 1.8; color: #4a5568;" id="appleSteps">
+                <ol style="line-height: 1.8; color: var(--ink-mid);" id="appleSteps">
                     <li id="appleStep1">Open Calendar app on Mac</li>
                     <li id="appleStep2">Select the calendar in the sidebar</li>
                     <li id="appleStep3">Click <strong>File</strong> → <strong>Export</strong> → <strong>Export</strong></li>
@@ -2153,9 +1452,9 @@
                     <li id="appleStep5">Click <strong>📅 Import iCal</strong> button and select the file</li>
                 </ol>
 
-                <div style="margin-top: 25px; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #48bb78;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="smartFeaturesHeading">✨ Smart Import Features:</h4>
-                    <ul style="line-height: 1.8; color: #4a5568; margin-left: 20px;" id="smartFeaturesList">
+                <div style="margin-top: 25px; padding: 15px; background: var(--panel-2); border-radius: 8px; border-left: 4px solid #48bb78;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);" id="smartFeaturesHeading">✨ Smart Import Features:</h4>
+                    <ul style="line-height: 1.8; color: var(--ink-mid); margin-left: 20px;" id="smartFeaturesList">
                         <li id="feature1">Automatically detects event categories based on keywords</li>
                         <li id="feature2">Preserves event titles, dates, times, locations, and descriptions</li>
                         <li id="feature3">Option to merge with existing events or replace all</li>
@@ -2163,9 +1462,9 @@
                     </ul>
                 </div>
 
-                <div style="margin-top: 20px; padding: 15px; background: #fef5e7; border-radius: 8px; border-left: 4px solid #f59e0b;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;" id="tipsHeading">💡 Tips:</h4>
-                    <ul style="line-height: 1.8; color: #4a5568; margin-left: 20px;" id="tipsList">
+                <div style="margin-top: 20px; padding: 15px; background: rgba(237,200,120,0.10); border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);" id="tipsHeading">💡 Tips:</h4>
+                    <ul style="line-height: 1.8; color: var(--ink-mid); margin-left: 20px;" id="tipsList">
                         <li id="tip1">Review imported events after upload - you can edit any details</li>
                         <li id="tip2">Categories are auto-assigned but can be changed</li>
                         <li id="tip3">Large files may take a moment to process</li>
@@ -2187,6 +1486,7 @@
         // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
         // Your Firebase configuration
         const firebaseConfig = {
@@ -2201,11 +1501,21 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
         // Make Firebase available globally
         window.db = db;
+        window.auth = auth;
         window.firestore = { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy };
+        window.firebaseAuth = { signInWithEmailAndPassword, signOut };
         window.firebaseInitialized = true;
+
+        // Leader edit-mode gating: only signed-in users can write
+        onAuthStateChanged(auth, (user) => {
+            window.currentLeader = user || null;
+            document.body.classList.toggle('is-leader', !!user);
+            if (typeof window.updateAuthUI === 'function') window.updateAuthUI(user);
+        });
 
         console.log('✅ Firebase initialized successfully!');
     </script>
@@ -2221,8 +1531,6 @@
         let selectedWeekdays = new Set();
         let currentAssignments = [];
         let currentTasks = [];
-        let currentPhotos = [];
-        let currentLightboxIndex = 0;
         let currentView = 'month';
         let currentLanguage = localStorage.getItem('calendarLanguage') || 'en';
         let activeFilters = {
@@ -2343,19 +1651,7 @@
         // Save event to Firebase
         // Helper function to show mobile debug messages
         function showMobileDebug(message, isError = false) {
-            const debugDiv = document.getElementById('mobileDebug');
-            const messagesDiv = document.getElementById('debugMessages');
-            if (debugDiv && messagesDiv) {
-                debugDiv.style.display = 'block';
-                const time = new Date().toLocaleTimeString();
-                messagesDiv.innerHTML += `<div>${time}: ${message}</div>`;
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }
-            if (isError) {
-                console.error(message);
-            } else {
-                console.log(message);
-            }
+            if (isError) { console.error(message); } else { console.log(message); }
         }
 
         async function saveEventToFirebase(event) {
@@ -2509,7 +1805,6 @@
                 // Tabs
                 details: '📝 Details',
                 assignments: '👥 Assignments',
-                photos: '📸 Photos',
                 
                 // Recurring
                 makeRecurring: '🔄 Make this a recurring event',
@@ -2700,7 +1995,6 @@
                 // Tabs
                 details: '📝 Ngaahi Fakamatala',
                 assignments: '👥 Ngaahi Tohi',
-                photos: '📸 Ngaahi Fakaʻata',
                 
                 // Recurring
                 makeRecurring: '🔄 Ngaohi ko ha fai fakamaʻu',
@@ -2821,15 +2115,15 @@
             populateTemplateDropdown();
             populateCategoryFilters();
             applyLanguage();
+            initTheme();
             renderCalendar();
             setupEventListeners();
         });
 
         function updateHeaderWardName() {
-            const header = document.getElementById('headerWardName');
-            if (header) {
-                header.textContent = `🏛️ ${wardInfo.wardName} Calendar`;
-            }
+            const eyebrow = document.getElementById('headerEyebrow');
+            if (eyebrow) eyebrow.textContent = wardInfo.wardName;
+            document.title = `${wardInfo.wardName} Calendar`;
         }
 
         function getEventCountByCategory(category) {
@@ -2955,38 +2249,95 @@
                 btn.addEventListener('click', () => switchView(btn.dataset.view));
             });
 
-            // Photo upload listeners
-            document.getElementById('photoUploadArea').addEventListener('click', () => {
-                document.getElementById('photoInput').click();
-            });
-            document.getElementById('photoInput').addEventListener('change', handlePhotoUpload);
-            
-            // Drag and drop for photos
-            const uploadArea = document.getElementById('photoUploadArea');
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.classList.add('dragover');
-            });
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.classList.remove('dragover');
-            });
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.classList.remove('dragover');
-                const files = e.dataTransfer.files;
-                processPhotoFiles(files);
-            });
-
-            // Lightbox listeners
-            document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
-            document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
-            document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
-            document.getElementById('photoLightbox').addEventListener('click', (e) => {
-                if (e.target.id === 'photoLightbox') closeLightbox();
-            });
-
             // Language toggle listener
             document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+            // Leader auth
+            document.getElementById('signInBtn').addEventListener('click', openSignInModal);
+            document.getElementById('closeSignInModal').addEventListener('click', closeSignInModal);
+            document.getElementById('cancelSignInBtn').addEventListener('click', closeSignInModal);
+            document.getElementById('confirmSignInBtn').addEventListener('click', doSignIn);
+            document.getElementById('signOutBtn').addEventListener('click', doSignOut);
+            document.getElementById('signInPassword').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') doSignIn();
+            });
+        }
+
+        /* ---------- Theme (dark / light Sacred Stone) ---------- */
+        function initTheme() {
+            const saved = localStorage.getItem('calendarTheme') || 'dark';
+            applyTheme(saved);
+        }
+        function applyTheme(mode) {
+            if (mode === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                document.getElementById('themeIcon').textContent = '\u2600\uFE0F';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.getElementById('themeIcon').textContent = '\uD83C\uDF19';
+            }
+            localStorage.setItem('calendarTheme', mode);
+        }
+        function toggleTheme() {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            applyTheme(isLight ? 'dark' : 'light');
+        }
+
+        /* ---------- Leader edit-mode auth ---------- */
+        window.updateAuthUI = function(user) {
+            const statusText = document.getElementById('authStatusText');
+            const signInBtn = document.getElementById('signInBtn');
+            if (!statusText) return;
+            if (user) {
+                statusText.textContent = (user.email ? user.email.split('@')[0] : 'Leader');
+                statusText.parentElement.querySelector('.lock').textContent = '🔓';
+                if (signInBtn) signInBtn.style.display = 'none';
+            } else {
+                statusText.textContent = 'View only';
+                statusText.parentElement.querySelector('.lock').textContent = '🔒';
+                if (signInBtn) signInBtn.style.display = '';
+            }
+        };
+        function openSignInModal() {
+            document.getElementById('signInError').style.display = 'none';
+            document.getElementById('signInModal').classList.add('active');
+            document.getElementById('signInEmail').focus();
+        }
+        function closeSignInModal() {
+            document.getElementById('signInModal').classList.remove('active');
+        }
+        async function doSignIn() {
+            const email = document.getElementById('signInEmail').value.trim();
+            const pass = document.getElementById('signInPassword').value;
+            const errEl = document.getElementById('signInError');
+            if (!email || !pass) {
+                errEl.textContent = 'Enter your email and password.';
+                errEl.style.display = 'block';
+                return;
+            }
+            try {
+                await window.firebaseAuth.signInWithEmailAndPassword(window.auth, email, pass);
+                document.getElementById('signInPassword').value = '';
+                closeSignInModal();
+            } catch (err) {
+                errEl.textContent = 'Sign in failed. Check your email and password.';
+                errEl.style.display = 'block';
+                console.error('Sign in error:', err.code || err.message);
+            }
+        }
+        async function doSignOut() {
+            try { await window.firebaseAuth.signOut(window.auth); } catch (e) { console.error(e); }
+        }
+        // Guard: block writes unless signed in as a leader
+        function requireLeader() {
+            if (!window.currentLeader) {
+                openSignInModal();
+                return false;
+            }
+            return true;
         }
 
         function renderCalendar() {
@@ -3127,6 +2478,7 @@
 
         function saveEvent(e) {
             e.preventDefault();
+            if (!requireLeader()) return;
 
             const startDate = document.getElementById('eventStartDate').value;
             const endDate = document.getElementById('eventEndDate').value;
@@ -3146,8 +2498,7 @@
                 location: document.getElementById('eventLocation').value,
                 description: document.getElementById('eventDescription').value,
                 assignments: currentAssignments,
-                tasks: currentTasks,
-                photos: currentPhotos
+                tasks: currentTasks
             };
 
             // Handle recurring events
@@ -3296,14 +2647,14 @@
             // Format assignments display
             let assignmentsHTML = '';
             if (event.assignments && event.assignments.length > 0) {
-                assignmentsHTML = '<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">👥 Assignments:</h4>';
+                assignmentsHTML = '<div style="margin-top: 20px;"><h4 style="color: var(--ink); margin-bottom: 10px;">👥 Assignments:</h4>';
                 event.assignments.forEach(assign => {
                     assignmentsHTML += `
-                        <div style="background: white; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid #667eea;">
-                            <strong style="color: #2d3748;">${assign.name}</strong>
-                            <span style="background: #e6fffa; color: #234e52; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; margin-left: 8px;">${assign.role}</span>
-                            ${assign.phone ? `<p style="margin: 3px 0; font-size: 0.9em; color: #718096;">📞 ${assign.phone}</p>` : ''}
-                            ${assign.email ? `<p style="margin: 3px 0; font-size: 0.9em; color: #718096;">✉️ ${assign.email}</p>` : ''}
+                        <div style="background: white; padding: 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--gold);">
+                            <strong style="color: var(--ink);">${assign.name}</strong>
+                            <span style="background: rgba(79,130,214,0.10); color: #234e52; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; margin-left: 8px;">${assign.role}</span>
+                            ${assign.phone ? `<p style="margin: 3px 0; font-size: 0.9em; color: var(--ink-dim);">📞 ${assign.phone}</p>` : ''}
+                            ${assign.email ? `<p style="margin: 3px 0; font-size: 0.9em; color: var(--ink-dim);">✉️ ${assign.email}</p>` : ''}
                         </div>
                     `;
                 });
@@ -3313,36 +2664,21 @@
             // Format tasks display
             let tasksHTML = '';
             if (event.tasks && event.tasks.length > 0) {
-                tasksHTML = '<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">✅ Tasks:</h4>';
+                tasksHTML = '<div style="margin-top: 20px;"><h4 style="color: var(--ink); margin-bottom: 10px;">✅ Tasks:</h4>';
                 event.tasks.forEach(task => {
                     const checkIcon = task.completed ? '✅' : '⬜';
-                    const textStyle = task.completed ? 'text-decoration: line-through; color: #9ca3af;' : 'color: #2d3748;';
+                    const textStyle = task.completed ? 'text-decoration: line-through; color: #9ca3af;' : 'color: var(--ink);';
                     tasksHTML += `
                         <div style="padding: 8px; margin-bottom: 5px;">
                             <span style="margin-right: 8px;">${checkIcon}</span>
                             <span style="${textStyle}">${task.description}</span>
-                            ${task.assignedTo ? `<span style="color: #667eea; font-size: 0.85em; margin-left: 8px;">→ ${task.assignedTo}</span>` : ''}
+                            ${task.assignedTo ? `<span style="color: var(--gold); font-size: 0.85em; margin-left: 8px;">→ ${task.assignedTo}</span>` : ''}
                         </div>
                     `;
                 });
                 tasksHTML += '</div>';
             }
 
-            // Format photos display
-            let photosHTML = '';
-            if (event.photos && event.photos.length > 0) {
-                photosHTML = `<div style="margin-top: 20px;"><h4 style="color: #2d3748; margin-bottom: 10px;">📸 Photos (${event.photos.length}):</h4>`;
-                photosHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;">';
-                event.photos.forEach((photo, index) => {
-                    photosHTML += `
-                        <div style="aspect-ratio: 1; border-radius: 6px; overflow: hidden; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
-                             onclick="viewEventPhoto('${event.id}', ${index})">
-                            <img src="${photo.dataUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="Event photo">
-                        </div>
-                    `;
-                });
-                photosHTML += '</div></div>';
-            }
 
             const content = `
                 <h3>${event.title}</h3>
@@ -3353,20 +2689,10 @@
                 ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
                 ${assignmentsHTML}
                 ${tasksHTML}
-                ${photosHTML}
             `;
 
             document.getElementById('eventDetailsContent').innerHTML = content;
             document.getElementById('viewEventModal').classList.add('active');
-        }
-
-        function viewEventPhoto(eventId, photoIndex) {
-            const event = events.find(e => e.id === eventId);
-            if (!event || !event.photos) return;
-            
-            currentPhotos = event.photos;
-            currentLightboxIndex = photoIndex;
-            openLightbox();
         }
 
         function editCurrentEvent() {
@@ -3385,7 +2711,6 @@
             // Load assignments and tasks
             currentAssignments = event.assignments || [];
             currentTasks = event.tasks || [];
-            currentPhotos = event.photos || [];
             renderAssignments();
             renderTasks();
             renderPhotoGallery();
@@ -3396,6 +2721,7 @@
         }
 
         function deleteCurrentEvent() {
+            if (!requireLeader()) return;
             if (confirm('Are you sure you want to delete this event?')) {
                 const eventToDelete = currentEventId;
                 events = events.filter(e => e.id !== currentEventId);
@@ -3429,6 +2755,7 @@
         }
 
         function importData(e) {
+            if (!requireLeader()) return;
             const file = e.target.files[0];
             if (!file) return;
 
@@ -3451,6 +2778,7 @@
         }
 
         function importICalData(e) {
+            if (!requireLeader()) return;
             const file = e.target.files[0];
             if (!file) return;
 
@@ -3684,6 +3012,7 @@
 
         function saveWardInfo(e) {
             e.preventDefault();
+            if (!requireLeader()) return;
             
             wardInfo = {
                 wardName: document.getElementById('wardName').value,
@@ -3715,20 +3044,20 @@
                 <h3>🏛️ ${wardInfo.wardName}</h3>
                 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;">Sunday Service Times</h4>
-                    <div style="font-size: 1.2em; font-weight: 600; color: #667eea; margin: 10px 0;">
+                    <h4 style="margin-bottom: 15px; color: var(--ink);">Sunday Service Times</h4>
+                    <div style="font-size: 1.2em; font-weight: 600; color: var(--gold); margin: 10px 0;">
                         Sacrament Meeting: ${wardInfo.sacramentTime}
                     </div>
-                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                    <div style="font-size: 1.1em; color: var(--ink-mid); margin: 10px 0;">
                         Sunday School: ${wardInfo.sundaySchoolTime}
                     </div>
-                    <div style="font-size: 1.1em; color: #4a5568; margin: 10px 0;">
+                    <div style="font-size: 1.1em; color: var(--ink-mid); margin: 10px 0;">
                         Priesthood/Relief Society: ${wardInfo.priesthoodTime}
                     </div>
                 </div>
 
-                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;">📍 Location</h4>
+                <div style="margin: 20px 0; padding: 20px; background: var(--panel-2); border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);">📍 Location</h4>
                     <p style="margin: 5px 0;">${wardInfo.wardAddress}</p>
                     <button class="btn btn-primary" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(wardInfo.wardAddress)}', '_blank')" style="margin-top: 10px;">
                         📍 Open in Maps
@@ -3736,8 +3065,8 @@
                 </div>
 
                 <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                    <h4 style="margin-bottom: 15px; color: #2d3748;">📱 Share Ward Info</h4>
-                    <p style="margin-bottom: 15px; color: #4a5568;">Scan QR Code to share service times and location</p>
+                    <h4 style="margin-bottom: 15px; color: var(--ink);">📱 Share Ward Info</h4>
+                    <p style="margin-bottom: 15px; color: var(--ink-mid);">Scan QR Code to share service times and location</p>
                     <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
                     <button class="btn btn-secondary" id="downloadQRBtn" onclick="downloadQRCode()" style="margin-top: 10px;">
                         💾 Download QR Code
@@ -3745,16 +3074,16 @@
                 </div>
 
                 ${wardInfo.bishopName || wardInfo.clerkName || wardInfo.wardPhone ? `
-                <div style="margin: 20px 0; padding: 20px; background: #f7fafc; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #2d3748;">📞 Contact Information</h4>
+                <div style="margin: 20px 0; padding: 20px; background: var(--panel-2); border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px; color: var(--ink);">📞 Contact Information</h4>
                     ${wardInfo.bishopName ? `<p style="margin: 5px 0;"><strong>Bishop:</strong> ${wardInfo.bishopName}</p>` : ''}
                     ${wardInfo.clerkName ? `<p style="margin: 5px 0;"><strong>Ward Clerk:</strong> ${wardInfo.clerkName}</p>` : ''}
                     ${wardInfo.wardPhone ? `<p style="margin: 5px 0;"><strong>Phone:</strong> ${wardInfo.wardPhone}</p>` : ''}
                 </div>
                 ` : ''}
 
-                <div style="margin: 20px 0; padding: 15px; background: #edf2f7; border-radius: 8px; border-left: 4px solid #667eea;">
-                    <p style="margin: 0; font-style: italic; color: #4a5568;">
+                <div style="margin: 20px 0; padding: 15px; background: var(--panel-2); border-radius: 8px; border-left: 4px solid var(--gold);">
+                    <p style="margin: 0; font-style: italic; color: var(--ink-mid);">
                         "And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me." - Ether 12:27
                     </p>
                 </div>
@@ -3966,6 +3295,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
         }
 
         function saveTemplate() {
+            if (!requireLeader()) return;
             const templateName = document.getElementById('templateName').value.trim();
             
             if (!templateName) {
@@ -4364,7 +3694,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
             const container = document.getElementById('assignmentsList');
             
             if (currentAssignments.length === 0) {
-                container.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">No assignments yet. Add people using the form below.</p>';
+                container.innerHTML = '<p style="color: var(--ink-dim); text-align: center; padding: 20px;">No assignments yet. Add people using the form below.</p>';
                 return;
             }
 
@@ -4421,7 +3751,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
             const container = document.getElementById('tasksList');
             
             if (currentTasks.length === 0) {
-                container.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">No tasks yet. Add tasks using the form below.</p>';
+                container.innerHTML = '<p style="color: var(--ink-dim); text-align: center; padding: 20px;">No tasks yet. Add tasks using the form below.</p>';
                 return;
             }
 
@@ -4458,7 +3788,6 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
         function resetAssignmentsForm() {
             currentAssignments = [];
             currentTasks = [];
-            currentPhotos = [];
             renderAssignments();
             renderTasks();
             updateTaskAssigneeDropdown();
@@ -4525,7 +3854,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 activeFiltersBar.classList.add('visible');
                 clearBtn.style.display = 'inline-block';
                 
-                let filtersHTML = '<strong style="color: #2d3748;">Active Filters:</strong>';
+                let filtersHTML = '<strong style="color: var(--ink);">Active Filters:</strong>';
                 
                 activeFilters.categories.forEach(cat => {
                     const catName = document.querySelector(`[data-category="${cat}"]`).textContent.trim();
@@ -4721,7 +4050,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 html += `</div>`;
             });
 
-            container.innerHTML = html || '<p style="text-align: center; color: #718096; padding: 40px;">No events to display</p>';
+            container.innerHTML = html || '<p style="text-align: center; color: var(--ink-dim); padding: 40px;">No events to display</p>';
         }
 
         function renderListView() {
@@ -4778,7 +4107,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 `;
             }).join('');
 
-            container.innerHTML = html || '<p style="text-align: center; color: #718096; padding: 40px;">No events to display</p>';
+            container.innerHTML = html || '<p style="text-align: center; color: var(--ink-dim); padding: 40px;">No events to display</p>';
         }
 
         function getCategoryColor(category) {
@@ -4863,129 +4192,6 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
         };
 
         // Photo Management Functions
-        function handlePhotoUpload(e) {
-            const files = e.target.files;
-            processPhotoFiles(files);
-            e.target.value = ''; // Reset input
-        }
-
-        function processPhotoFiles(files) {
-            const maxSize = 5 * 1024 * 1024; // 5MB
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-
-            Array.from(files).forEach(file => {
-                if (!allowedTypes.includes(file.type)) {
-                    alert(`${file.name} is not a supported image format. Please use JPG, PNG, or GIF.`);
-                    return;
-                }
-
-                if (file.size > maxSize) {
-                    alert(`${file.name} is too large. Maximum size is 5MB.`);
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const photo = {
-                        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-                        dataUrl: e.target.result,
-                        filename: file.name,
-                        uploadDate: new Date().toISOString(),
-                        caption: ''
-                    };
-
-                    currentPhotos.push(photo);
-                    renderPhotoGallery();
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function renderPhotoGallery() {
-            const photoGrid = document.getElementById('photoGrid');
-            const emptyGallery = document.getElementById('emptyGallery');
-            const photoCount = document.getElementById('photoCount');
-
-            photoCount.textContent = `${currentPhotos.length} photo${currentPhotos.length !== 1 ? 's' : ''}`;
-
-            if (currentPhotos.length === 0) {
-                photoGrid.style.display = 'none';
-                emptyGallery.style.display = 'block';
-                return;
-            }
-
-            photoGrid.style.display = 'grid';
-            emptyGallery.style.display = 'none';
-
-            photoGrid.innerHTML = currentPhotos.map((photo, index) => `
-                <div class="photo-item" onclick="openLightbox(${index})">
-                    <img src="${photo.dataUrl}" alt="${photo.filename}">
-                    <button class="remove-photo" onclick="removePhoto(event, '${photo.id}')">×</button>
-                    ${photo.caption ? `<div class="photo-caption">${photo.caption}</div>` : ''}
-                </div>
-            `).join('');
-        }
-
-        function removePhoto(event, photoId) {
-            event.stopPropagation();
-            if (confirm('Remove this photo?')) {
-                currentPhotos = currentPhotos.filter(p => p.id !== photoId);
-                renderPhotoGallery();
-            }
-        }
-
-        function openLightbox(index = 0) {
-            if (currentPhotos.length === 0) return;
-            
-            currentLightboxIndex = index;
-            updateLightboxContent();
-            document.getElementById('photoLightbox').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('photoLightbox').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function navigateLightbox(direction) {
-            currentLightboxIndex += direction;
-            if (currentLightboxIndex < 0) {
-                currentLightboxIndex = currentPhotos.length - 1;
-            } else if (currentLightboxIndex >= currentPhotos.length) {
-                currentLightboxIndex = 0;
-            }
-            updateLightboxContent();
-        }
-
-        function updateLightboxContent() {
-            if (currentPhotos.length === 0) return;
-
-            const photo = currentPhotos[currentLightboxIndex];
-            document.getElementById('lightboxImage').src = photo.dataUrl;
-            document.getElementById('lightboxCaption').textContent = photo.caption || photo.filename;
-            document.getElementById('lightboxCounter').textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
-
-            // Show/hide navigation buttons
-            const prevBtn = document.getElementById('lightboxPrev');
-            const nextBtn = document.getElementById('lightboxNext');
-            prevBtn.style.display = currentPhotos.length > 1 ? 'block' : 'none';
-            nextBtn.style.display = currentPhotos.length > 1 ? 'block' : 'none';
-        }
-
-        // Keyboard navigation for lightbox
-        document.addEventListener('keydown', (e) => {
-            const lightbox = document.getElementById('photoLightbox');
-            if (!lightbox.classList.contains('active')) return;
-
-            if (e.key === 'Escape') {
-                closeLightbox();
-            } else if (e.key === 'ArrowLeft') {
-                navigateLightbox(-1);
-            } else if (e.key === 'ArrowRight') {
-                navigateLightbox(1);
-            }
-        });
 
         // Language Functions
         function toggleLanguage() {
@@ -5029,13 +4235,21 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
         }
 
         function updateStaticText() {
-            // Update header if it exists
+            // Eyebrow = ward name (localized); h1 stays "Ward Calendar" with gold accent
+            const eyebrowEl = document.getElementById('headerEyebrow');
+            if (eyebrowEl) {
+                eyebrowEl.textContent = (currentLanguage === 'to')
+                    ? 'Livatoni Hono 24 Tonga Uooti'
+                    : 'Riverton 24th Tongan Ward';
+            }
             const headerElement = document.getElementById('headerWardName');
             if (headerElement) {
-                if (currentLanguage === 'to') {
-                    headerElement.textContent = `🏛️ Livatoni Hono 24 Tonga Uooti ${t('wardCalendar')}`;
+                const words = t('wardCalendar').trim().split(' ');
+                if (words.length > 1) {
+                    const last = words.pop();
+                    headerElement.innerHTML = `${words.join(' ')} <span class="accent">${last}</span>`;
                 } else {
-                    headerElement.textContent = `🏛️ Riverton 24th Tongan Ward ${t('wardCalendar')}`;
+                    headerElement.innerHTML = `<span class="accent">${t('wardCalendar')}</span>`;
                 }
             }
 
@@ -5184,8 +4398,6 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                     tab.textContent = t('details');
                 } else if (dataTab === 'assignmentsTab') {
                     tab.textContent = t('assignments');
-                } else if (dataTab === 'photosTab') {
-                    tab.textContent = t('photos');
                 }
             });
 
@@ -5256,7 +4468,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 document.getElementById('googleCalendarHeading').textContent = 'Exporting from Google Calendar';
                 
                 // Google steps
-                document.getElementById('googleStep1').innerHTML = 'Go to <a href="https://calendar.google.com" target="_blank" style="color: #667eea;">calendar.google.com</a>';
+                document.getElementById('googleStep1').innerHTML = 'Go to <a href="https://calendar.google.com" target="_blank" style="color: var(--gold);">calendar.google.com</a>';
                 document.getElementById('googleStep2').textContent = 'Click the Settings gear (⚙️) → Settings';
                 document.getElementById('googleStep3').textContent = 'In the left sidebar, click your calendar name';
                 document.getElementById('googleStep4').textContent = 'Scroll down to "Integrate calendar"';
@@ -5306,7 +4518,7 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 document.getElementById('googleCalendarHeading').textContent = 'Hū mei Google Calendar';
                 
                 // Google steps in Tongan
-                document.getElementById('googleStep1').innerHTML = 'ʻAlu ki <a href="https://calendar.google.com" target="_blank" style="color: #667eea;">calendar.google.com</a>';
+                document.getElementById('googleStep1').innerHTML = 'ʻAlu ki <a href="https://calendar.google.com" target="_blank" style="color: var(--gold);">calendar.google.com</a>';
                 document.getElementById('googleStep2').textContent = 'Liki ʻa e Settings gear (⚙️) → Settings';
                 document.getElementById('googleStep3').textContent = 'ʻI he sidebar toʻohema, liki ho hingoa kalenda';
                 document.getElementById('googleStep4').textContent = 'Sikalolo hifo ki he "Integrate calendar"';
@@ -5634,6 +4846,13 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 `;
             }).join('');
         };
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => {/* offline cache optional */});
+            });
+        }
     </script>
 </body>
 </html>
