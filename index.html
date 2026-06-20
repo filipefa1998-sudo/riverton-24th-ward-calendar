@@ -973,14 +973,14 @@
                 <button class="close-btn" id="closeSignInModal">&times;</button>
             </div>
             <div class="event-details">
-                <p style="color: var(--ink-dim); margin-bottom: 18px; font-size: 0.9em;" id="signInHint">Editing is limited to ward leaders. Sign in with your leader account to add or change events. Everyone else can view the calendar.</p>
+                <p style="color: var(--ink-dim); margin-bottom: 18px; font-size: 0.9em;" id="signInHint">Editing is limited to ward leaders. Sign in to add or change events. Everyone else can view the calendar.</p>
                 <div class="form-group">
-                    <label for="signInEmail" id="signInEmailLabel">Email</label>
-                    <input type="email" id="signInEmail" autocomplete="username" placeholder="leader@email.com">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" autocomplete="username" placeholder="leaders@riverton24.org">
                 </div>
                 <div class="form-group">
-                    <label for="signInPassword" id="signInPasswordLabel">Password</label>
-                    <input type="password" id="signInPassword" autocomplete="current-password" placeholder="••••••••">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" autocomplete="current-password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022">
                 </div>
                 <p id="signInError" style="display:none; color: var(--danger); font-size: 0.85em; margin-top: 4px;"></p>
             </div>
@@ -1607,6 +1607,12 @@
 
         // Migrate existing local events to Firebase
         async function migrateLocalEventsToFirebase() {
+            // Only a signed-in leader may write; viewers with stale local data must not attempt writes
+            if (!window.currentLeader) {
+                console.log('👀 Viewer mode — skipping local-to-Firebase migration');
+                renderCalendar();
+                return;
+            }
             const { collection, addDoc } = window.firestore;
             const eventsRef = collection(window.db, 'events');
             
@@ -2291,13 +2297,14 @@
             const statusText = document.getElementById('authStatusText');
             const signInBtn = document.getElementById('signInBtn');
             if (!statusText) return;
+            const lock = statusText.parentElement.querySelector('.lock');
             if (user) {
                 statusText.textContent = (user.email ? user.email.split('@')[0] : 'Leader');
-                statusText.parentElement.querySelector('.lock').textContent = '🔓';
+                if (lock) lock.textContent = '🔓';
                 if (signInBtn) signInBtn.style.display = 'none';
             } else {
                 statusText.textContent = 'View only';
-                statusText.parentElement.querySelector('.lock').textContent = '🔒';
+                if (lock) lock.textContent = '🔒';
                 if (signInBtn) signInBtn.style.display = '';
             }
         };
@@ -2331,14 +2338,11 @@
         async function doSignOut() {
             try { await window.firebaseAuth.signOut(window.auth); } catch (e) { console.error(e); }
         }
-        // Guard: block writes unless signed in as a leader
         function requireLeader() {
-            if (!window.currentLeader) {
-                openSignInModal();
-                return false;
-            }
+            if (!window.currentLeader) { openSignInModal(); return false; }
             return true;
         }
+
 
         function renderCalendar() {
             const year = currentDate.getFullYear();
