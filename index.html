@@ -2618,7 +2618,7 @@
                 'relief-society': 'Relief Society',
                 'elders-quorum': 'Elders Quorum',
                 'missionary': 'Missionary Work',
-                'selfReliance': 'Self-Reliance',
+                'self-reliance': 'Self-Reliance',
                 'baptism': 'Baptism',
                 'sunday': 'Sunday',
                 'stake': 'Stake Event',
@@ -2717,7 +2717,6 @@
             currentTasks = event.tasks || [];
             renderAssignments();
             renderTasks();
-            renderPhotoGallery();
 
             document.getElementById('modalTitle').textContent = 'Edit Event';
             closeViewModal();
@@ -3178,13 +3177,17 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 'young-men': 'Young Men Activity',
                 'young-women': 'Young Women Activity',
                 'combined-youth': 'Combined Youth Activity',
+                'ysa': 'YSA (Young Single Adult)',
                 'primary': 'Primary Activity',
                 'relief-society': 'Relief Society',
                 'elders-quorum': 'Elders Quorum',
+                'missionary': 'Missionary Work',
+                'self-reliance': 'Self-Reliance',
                 'emergency': 'Emergency Preparedness',
                 'baptism': 'Baptism',
                 'sunday': 'Sunday',
                 'stake': 'Stake Event',
+                'churchwide': 'Churchwide Event',
                 'admin': 'Administrative'
             };
 
@@ -3795,7 +3798,6 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
             renderAssignments();
             renderTasks();
             updateTaskAssigneeDropdown();
-            renderPhotoGallery();
         }
 
         // Update the add event button to reset assignments
@@ -4072,13 +4074,17 @@ ${wardInfo.bishopName ? 'Bishop: ' + wardInfo.bishopName + '\n' : ''}${wardInfo.
                 'young-men': 'Young Men',
                 'young-women': 'Young Women',
                 'combined-youth': 'Combined Youth',
+                'ysa': 'YSA',
                 'primary': 'Primary',
                 'relief-society': 'Relief Society',
                 'elders-quorum': 'Elders Quorum',
+                'missionary': 'Missionary Work',
+                'self-reliance': 'Self-Reliance',
                 'emergency': 'Emergency Prep',
                 'baptism': 'Baptism',
                 'sunday': 'Sunday',
                 'stake': 'Stake Event',
+                'churchwide': 'Churchwide',
                 'admin': 'Administrative'
             };
 
